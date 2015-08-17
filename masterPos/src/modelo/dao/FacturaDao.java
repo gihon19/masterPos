@@ -188,8 +188,9 @@ public class FacturaDao {
 				+ "isv18,"
 				+ "pago,"
 				+ "usuario,"
-				+ "total_letras)"
-				+ " VALUES (now(),?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ "total_letras,"
+				+ "codigo_vendedor)"
+				+ " VALUES (now(),?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		
 		try 
 		{
@@ -207,9 +208,8 @@ public class FacturaDao {
 			agregarFactura.setBigDecimal(10, myFactura.getTotalImpuesto18());
 			agregarFactura.setBigDecimal(11, myFactura.getPago());
 			agregarFactura.setString(12, conexion.getUsuarioLogin().getUser());
-			
-			
 			agregarFactura.setString(13, NumberToLetterConverter.convertNumberToLetter(myFactura.getTotal().setScale(0, BigDecimal.ROUND_HALF_EVEN).doubleValue()));
+			agregarFactura.setInt(14, myFactura.getVendedor().getCodigo());
 			
 			
 			

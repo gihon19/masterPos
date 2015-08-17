@@ -28,11 +28,15 @@ import modelo.AbstractJasperReports;
 import modelo.Articulo;
 import modelo.dao.ArticuloDao;
 import modelo.dao.CierreCajaDao;
+import modelo.dao.EmpleadoDao;
+import modelo.dao.ImpuestoDao;
 import modelo.Cliente; 
 import modelo.dao.ClienteDao;
 import modelo.Conexion;
 import modelo.DetalleFactura;
+import modelo.Empleado;
 import modelo.Factura;
+import modelo.Impuesto;
 import modelo.dao.FacturaDao;
 import view.tablemodel.TablaModeloFactura;
 import view.tablemodel.TablaModeloMarca;
@@ -50,6 +54,7 @@ public class CtlFacturar  implements ActionListener, MouseListener, TableModelLi
 	private ClienteDao clienteDao=null;//=new ClienteDao();
 	private Articulo myArticulo=null;
 	private ArticuloDao myArticuloDao=null;
+	private EmpleadoDao myEmpleadoDao=null;
 	private Cliente myCliente=null;
 	private Conexion conexion=null;
 	private int filaPulsada=0;
@@ -70,8 +75,9 @@ public class CtlFacturar  implements ActionListener, MouseListener, TableModelLi
 		myArticuloDao=new ArticuloDao(conexion);
 		clienteDao=new ClienteDao(conexion);
 		facturaDao=new FacturaDao(conexion);
-		
+		myEmpleadoDao=new EmpleadoDao(conexion);
 		this.setEmptyView();
+		cargarComboBox();
 		/*view.getModeloTabla().agregarDetalle();
 		myFactura=new Factura();
 		myArticuloDao=new ArticuloDao(conexion);
@@ -94,6 +100,20 @@ public class CtlFacturar  implements ActionListener, MouseListener, TableModelLi
 		//viewListaArticulo.conectarControladorBuscar(ctlArticulo);
 	
 		
+	}
+	
+	private void cargarComboBox(){
+		//se crea el objeto para obtener de la bd los impuestos
+		myEmpleadoDao=new EmpleadoDao(conexion);
+	
+		//se obtiene la lista de los impuesto y se le pasa al modelo de la lista
+		this.view.getModeloEmpleados().setLista(myEmpleadoDao.todoEmpleadosVendedores());
+		
+		
+		//se remueve la lista por defecto
+		this.view.getCbxEmpleados().removeAllItems();
+	
+		this.view.getCbxEmpleados().setSelectedIndex(1);
 	}
 	private static boolean isNumber(String string){
 		return string !=null && numberPattern.matcher(string).matches();
@@ -208,6 +228,10 @@ public class CtlFacturar  implements ActionListener, MouseListener, TableModelLi
 		myFactura.setCliente(myCliente);
 		myFactura.setDetalles(this.view.getModeloTabla().getDetalles());
 		myFactura.setFecha(facturaDao.getFechaSistema());
+		//Se establece el vendedor seleccionado
+		Empleado emp= (Empleado) this.view .getCbxEmpleados().getSelectedItem();
+		myFactura.setVendedor(emp);
+		//myArticulo.setImpuestoObj(imp);
 		//JOptionPane.showMessageDialog(view, myCliente);*/
 		
 	}
@@ -890,6 +914,7 @@ public void calcularTotal(DetalleFactura detalle){
 		this.view.getTxtIdcliente().setText("1");;
 		this.view.getTxtNombrecliente().setText("Consumidor final");
 		
+		
 		this.myCliente=null;
 		
 		this.view.getTxtArticulo().setText("");
@@ -900,6 +925,7 @@ public void calcularTotal(DetalleFactura detalle){
 		this.view.getTxtPrecio().setText("0.00");
 		this.view.getTxtSubtotal().setText("0.00");
 		this.view.getTxtTotal().setText("0.00");
+		this.myFactura.setObservacion("");
 		
 		//se estable el focus de la view en la caja de texto buscar
 		this.view.getTxtBuscar().requestFocusInWindow();

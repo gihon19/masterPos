@@ -1,9 +1,7 @@
 package modelo;
 
-public class Usuario {
+public class Usuario extends Persona {
 	private int codigo;
-	private String nombre="";
-	private String apellido="";
 	private String user="";
 	private String permiso="";
 	private String pwd="";
@@ -20,20 +18,6 @@ public class Usuario {
 	}
 	public int getTipoPermiso(){
 		return tipo_permiso;
-	}
-	
-	public void setNombre(String n){
-		nombre=n;
-	}
-	public String getNombre(){
-		return nombre;
-	}
-	
-	public void setApellido(String p){
-		apellido=p;
-	}
-	public String getApellido(){
-		return apellido;
 	}
 	
 	public void setUser(String u){
@@ -58,7 +42,19 @@ public class Usuario {
 		return pwd;
 	}
 	
-	
+	@Override
+	public String toString(){
+		return "Codigo: "
+				+this.codigo+ ","
+						+ "User: "
+						+ this.user+", "
+							+ super.toString()+ ","
+								+ "Tipo de permiso: "
+								+ this.tipo_permiso+ ", "
+										+ "Permiso: "
+										+ this.permiso;
+						
+	}
 			
 
 }

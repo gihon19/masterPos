@@ -42,7 +42,14 @@ import view.botones.BotonCancelar;
 import view.botones.BotonCobrar;
 import view.botones.BotonGuardar;
 import view.rendes.RenderizadorTablaFactura;
+import view.tablemodel.CbxTmEmpleado;
+import view.tablemodel.ComboBoxImpuesto;
 import view.tablemodel.TablaModeloFactura;
+
+import javax.swing.JList;
+import javax.swing.AbstractListModel;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class ViewFacturar extends JDialog {
 	private JTable tableDetalle;
@@ -86,6 +93,10 @@ public class ViewFacturar extends JDialog {
 	private JTextField txtPrecio;
 	private JTextField txtImpuesto18;
 	private JButton btnPendientes;
+	
+	private JComboBox cbxEmpleados;
+	//se crea el modelo de la lista de los impuestos
+	private CbxTmEmpleado modeloEmpleado;//=new ComboBoxImpuesto();
 	
 	public ViewFacturar(Window view) {
 		
@@ -213,41 +224,51 @@ public class ViewFacturar extends JDialog {
 		panelDatosFactura.add(lblCodigoCliente);
 		
 		txtIdcliente = new JTextField();
-		txtIdcliente.setBounds(156, 44, 104, 29);
+		txtIdcliente.setBounds(156, 44, 67, 29);
 		panelDatosFactura.add(txtIdcliente);
 		txtIdcliente.setColumns(10);
 		
 		txtNombrecliente = new JTextField();
 		txtNombrecliente.setToolTipText("Nombre Cliente");
-		txtNombrecliente.setBounds(280, 44, 256, 29);
+		txtNombrecliente.setBounds(233, 44, 214, 29);
 		panelDatosFactura.add(txtNombrecliente);
 		txtNombrecliente.setColumns(10);
 		
 		grupoOpciones = new ButtonGroup();
 		rdbtnCredito = new JRadioButton("");
 		rdbtnCredito.setEnabled(false);
-		rdbtnCredito.setBounds(674, 44, 21, 23);
+		rdbtnCredito.setBounds(526, 47, 21, 23);
 		grupoOpciones.add(rdbtnCredito);
 		panelDatosFactura.add(rdbtnCredito);
 		
 		rdbtnContado = new JRadioButton("");
 		rdbtnContado.setVerticalAlignment(SwingConstants.TOP);
 		rdbtnContado.setSelected(true);
-		rdbtnContado.setBounds(573, 44, 21, 23);
+		rdbtnContado.setBounds(468, 47, 21, 23);
 		grupoOpciones.add(rdbtnContado);
 		panelDatosFactura.add(rdbtnContado);
 		
 		lblNombreCliente = new JLabel("Nombre Cliente");
-		lblNombreCliente.setBounds(280, 23, 104, 14);
+		lblNombreCliente.setBounds(233, 23, 104, 14);
 		panelDatosFactura.add(lblNombreCliente);
 		
 		lblContado = new JLabel("Contado");
-		lblContado.setBounds(563, 23, 56, 14);
+		lblContado.setBounds(454, 23, 49, 14);
 		panelDatosFactura.add(lblContado);
 		
 		lblCredito = new JLabel("Credito");
-		lblCredito.setBounds(664, 23, 46, 14);
+		lblCredito.setBounds(513, 23, 46, 14);
 		panelDatosFactura.add(lblCredito);
+		
+		JLabel lblVendedor = new JLabel("Vendedor");
+		lblVendedor.setBounds(581, 23, 61, 14);
+		panelDatosFactura.add(lblVendedor);
+		
+		cbxEmpleados = new JComboBox();
+		this.modeloEmpleado=new CbxTmEmpleado();
+		cbxEmpleados.setModel(modeloEmpleado);//comentar para moder ver la vista de diseño
+		cbxEmpleados.setBounds(581, 48, 199, 20);
+		panelDatosFactura.add(cbxEmpleados);
 		
 		
 		tableDetalle = new JTable();
@@ -352,7 +373,12 @@ public class ViewFacturar extends JDialog {
 		this.pack();
 		
 	}
-	
+	public JComboBox getCbxEmpleados(){
+		return cbxEmpleados;
+	}
+	public CbxTmEmpleado getModeloEmpleados(){
+		return this.modeloEmpleado;
+	}
 	
 	public JRadioButton getRdbtnContado(){
 		return rdbtnContado;

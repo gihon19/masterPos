@@ -23,8 +23,14 @@ public class Factura {
 	private BigDecimal pago=new BigDecimal(0.0);
 	private BigDecimal cambio=new BigDecimal(0.0);
 	private String observacion="";
+	private Empleado vendedor=new Empleado();
 	
-	
+	public void setVendedor(Empleado v){
+		vendedor=v;
+	}
+	public Empleado getVendedor(){
+		return vendedor;
+	}
 	public void setObservacion(String o){
 		observacion=o;
 	}

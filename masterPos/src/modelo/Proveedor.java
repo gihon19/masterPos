@@ -8,12 +8,9 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-public class Proveedor {
+public class Proveedor extends Persona {
 	private int id;
-	private String nombre;
-	private String telefono;
 	private String celular;
-	private String direccion;
 	//Conexion conex= new Conexion();
 	
 	//contructor vacio
@@ -29,13 +26,7 @@ public class Proveedor {
 		telefono=t;
 		direccion=d;
 	}
-	public void setNombre(String n){
-		nombre=n;
-	}
-	public String getNombre(){
-		return nombre;
-	}
-	
+		
 	public void setId(int i){
 		id=i;
 	}
@@ -43,13 +34,6 @@ public class Proveedor {
 		return id;
 	}
 	
-	public void setTelefono(String t){
-		
-		telefono=t;
-	}
-	public String getTelefono(){
-		return telefono;
-	}
 	
 	public void setCelular(String c){
 		
@@ -59,14 +43,7 @@ public class Proveedor {
 		return celular;
 	}
 	
-	public void setDireccion(String d){
-		direccion=d;
 		
-	}
-	public String getDireccion(){
-		return direccion;
-	}
-	
 	@Override
 	public String toString(){
 		return "Id:"+id+", Nombre:"+nombre+", Telefono:"+telefono+", Celular:"+celular+"\n Direccion:"+direccion;
