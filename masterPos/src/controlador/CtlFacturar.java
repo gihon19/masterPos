@@ -635,7 +635,19 @@ public void calcularTotal(DetalleFactura detalle){
 													this.buscarMasOmenos(netBuscar);
 												}
 													
-											}
+											}else
+												if(e.getKeyCode()==KeyEvent.VK_LEFT){
+													if(filaPulsada>=0){
+														 this.view.getModeloTabla().getDetalle(filaPulsada).getArticulo().netPrecio();
+														 this.calcularTotales();
+													 }
+												}else
+													if(e.getKeyCode()==KeyEvent.VK_RIGHT){
+														if(filaPulsada>=0){
+															 this.view.getModeloTabla().getDetalle(filaPulsada).getArticulo().lastPrecio();
+															 this.calcularTotales();
+														 }
+													}
 								 
 							
 								

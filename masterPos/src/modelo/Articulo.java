@@ -1,5 +1,6 @@
 package modelo;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -17,6 +18,8 @@ public class Articulo {
 	private double precioVenta=0;
 	private double precioCompra=0;
 	private int tipoArticulo=0;
+	private List<PrecioArticulo> preciosVenta=new ArrayList<PrecioArticulo>();
+	private int  posicionPrecio=0;
 	public Articulo(){
 		
 	}
@@ -28,6 +31,38 @@ public class Articulo {
 		imp=i;
 		codigos=cods;
 		precioVenta=p;
+	}
+	public void setPreciosVenta(List<PrecioArticulo> precios){
+		preciosVenta=precios;
+	}
+	
+	public List<PrecioArticulo> getPreciosVenta(){
+		return preciosVenta;
+	}
+	public void netPrecio(){
+		posicionPrecio++;
+		if(posicionPrecio==preciosVenta.size()-1){
+			precioVenta=preciosVenta.get(preciosVenta.size()-1).getPrecio().setScale(2, BigDecimal.ROUND_HALF_EVEN).doubleValue();
+			//posicionPrecio--;
+		}
+		else{
+			if(posicionPrecio>=preciosVenta.size()){
+				posicionPrecio=preciosVenta.size()-1;
+				precioVenta=preciosVenta.get(posicionPrecio).getPrecio().setScale(2, BigDecimal.ROUND_HALF_EVEN).doubleValue();
+			}else
+				precioVenta=preciosVenta.get(posicionPrecio).getPrecio().setScale(2, BigDecimal.ROUND_HALF_EVEN).doubleValue();
+		}
+	}
+	public void lastPrecio(){
+		posicionPrecio--;
+		if(posicionPrecio<=0){
+			precioVenta=preciosVenta.get(0).getPrecio().setScale(2, BigDecimal.ROUND_HALF_EVEN).doubleValue();
+			posicionPrecio=0;
+		}
+		else{
+			//posicionPrecio--;
+			precioVenta=preciosVenta.get(posicionPrecio).getPrecio().setScale(2, BigDecimal.ROUND_HALF_EVEN).doubleValue();
+		}
 	}
 	public void setTipoArticulo(int t){
 		tipoArticulo=t;
