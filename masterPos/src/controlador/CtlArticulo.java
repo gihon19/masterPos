@@ -8,19 +8,24 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 
 
+
+import java.util.List;
+
 import javax.swing.JOptionPane;
 
 import modelo.Articulo;
 import modelo.dao.ArticuloDao;
+import modelo.dao.PrecioArticuloDao;
+import modelo.Cliente;
 import modelo.CodBarra;
 import modelo.Conexion;
 import modelo.Impuesto;
+import modelo.PrecioArticulo;
 import modelo.dao.ImpuestoDao;
 import modelo.Marca;
 import view.ViewCrearArticulo;
@@ -36,12 +41,26 @@ public class CtlArticulo extends MouseAdapter implements ActionListener,KeyListe
 	private boolean resultaOperacion=false;
 	private Conexion conexion;
 	private ImpuestoDao myImpuestoDao;
+	private PrecioArticuloDao precioDao=null;
 	
 	public CtlArticulo(ViewCrearArticulo view, ArticuloDao a,Conexion conn){
 		conexion=conn;
 		this.view=view;
 		this.myArticuloDao=a;
+		precioDao= new PrecioArticuloDao(conexion);
+		
+		cargarTabla(precioDao.getTipoPrecios());
 		cargarComboBox();
+	}
+	
+	
+	
+	public void cargarTabla(List<PrecioArticulo> precios){
+		//JOptionPane.showMessageDialog(view, articulos);
+		this.view.getModeloPrecio().limpiar();
+		for(int c=0;c<precios.size();c++){
+			this.view.getModeloPrecio().agregarPrecio(precios.get(c));
+		}
 	}
 
 	@Override
@@ -144,6 +163,8 @@ public class CtlArticulo extends MouseAdapter implements ActionListener,KeyListe
 		
 		cargarDatosArticuloView();
 		
+		
+		
 		//se ejecuta la accion de guardar
 		if(myArticuloDao.registrarArticulo(myArticulo)){
 			
@@ -176,6 +197,9 @@ public class CtlArticulo extends MouseAdapter implements ActionListener,KeyListe
 		
 		//se establece el precion de articulo
 		myArticulo.setPrecioVenta(Double.parseDouble(this.view.getTxtPrecio().getText()));
+		
+		//se Estable los precios de veta del articulo
+		myArticulo.setPreciosVenta(view.getModeloPrecio().getPrecios());
 		
 		int x=this.view.getCbxTipo().getSelectedIndex();
 		if(x==0){

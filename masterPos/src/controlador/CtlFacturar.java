@@ -1,7 +1,6 @@
 package controlador;
 
 
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -11,35 +10,26 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.math.BigDecimal;
-
-
-
-
-
 import java.sql.SQLException;
 import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import javax.swing.table.DefaultTableModel;
 
 import modelo.AbstractJasperReports;
 import modelo.Articulo;
 import modelo.dao.ArticuloDao;
 import modelo.dao.CierreCajaDao;
 import modelo.dao.EmpleadoDao;
-import modelo.dao.ImpuestoDao;
+import modelo.dao.PrecioArticuloDao;
 import modelo.Cliente; 
 import modelo.dao.ClienteDao;
 import modelo.Conexion;
 import modelo.DetalleFactura;
 import modelo.Empleado;
 import modelo.Factura;
-import modelo.Impuesto;
 import modelo.dao.FacturaDao;
-import view.tablemodel.TablaModeloFactura;
-import view.tablemodel.TablaModeloMarca;
 import view.ViewCambioPago;
 import view.ViewFacturar;
 import view.ViewListaArticulo;
@@ -55,6 +45,7 @@ public class CtlFacturar  implements ActionListener, MouseListener, TableModelLi
 	private Articulo myArticulo=null;
 	private ArticuloDao myArticuloDao=null;
 	private EmpleadoDao myEmpleadoDao=null;
+	private PrecioArticuloDao preciosDao=null;
 	private Cliente myCliente=null;
 	private Conexion conexion=null;
 	private int filaPulsada=0;
@@ -76,6 +67,7 @@ public class CtlFacturar  implements ActionListener, MouseListener, TableModelLi
 		clienteDao=new ClienteDao(conexion);
 		facturaDao=new FacturaDao(conexion);
 		myEmpleadoDao=new EmpleadoDao(conexion);
+		preciosDao=new PrecioArticuloDao(conexion);
 		this.setEmptyView();
 		cargarComboBox();
 		/*view.getModeloTabla().agregarDetalle();
@@ -127,6 +119,10 @@ public class CtlFacturar  implements ActionListener, MouseListener, TableModelLi
 		switch(comando){
 		case "BUSCARARTICULO2":
 				if(myArticulo!=null){
+					//conseguir los precios del producto
+					myArticulo.setPreciosVenta(this.preciosDao.getPreciosArticulo(myArticulo.getId()));
+					
+					//agregar el articulo a las lista
 					this.view.getModeloTabla().setArticulo(myArticulo);
 					//this.view.getModelo().getDetalle(row).setCantidad(1);
 					
@@ -141,7 +137,8 @@ public class CtlFacturar  implements ActionListener, MouseListener, TableModelLi
 				}else{
 					String busca=this.view.getTxtBuscar().getText();
 					//if(this.isNumber(busca)){
-						
+						//conseguir los precios del producto
+						myArticulo.setPreciosVenta(this.preciosDao.getPreciosArticulo(myArticulo.getId()));
 						this.myArticulo=this.myArticuloDao.buscarArticuloBarraCod(busca);
 						if(myArticulo!=null){
 							this.view.getModeloTabla().setArticulo(myArticulo);
@@ -896,6 +893,8 @@ public void calcularTotal(DetalleFactura detalle){
 		//JOptionPane.showMessageDialog(view, myArticulo1);
 		//se comprueba si le regreso un articulo valido
 		if(myArticulo1!=null && myArticulo1.getId()!=-1){
+			
+			myArticulo1.setPreciosVenta(this.preciosDao.getPreciosArticulo(myArticulo1.getId()));
 			this.view.getModeloTabla().setArticulo(myArticulo1);
 			//this.view.getModelo().getDetalle(row).setCantidad(1);
 			

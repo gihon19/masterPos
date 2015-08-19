@@ -21,6 +21,68 @@ public class PrecioArticuloDao {
 		// TODO Auto-generated constructor stub
 		conexion=conn;
 	}
+	
+	/*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Metodo para seleccionar todos los precios de un articulo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+	public List<PrecioArticulo> getTipoPrecios(){
+		
+		
+		
+        Connection con = null;
+        
+        
+      
+       	List<PrecioArticulo> precios=new ArrayList<PrecioArticulo>();
+		
+		ResultSet res=null;
+		
+		boolean existe=false;
+		try {
+			con = conexion.getPoolConexion().getConnection();
+			
+			buscarPorArticulo = con.prepareStatement("SELECT * FROM precios ;");
+			//buscarPorArticulo.setInt(1,id);
+			res = buscarPorArticulo.executeQuery();
+			while(res.next()){
+				PrecioArticulo unPrecio=new PrecioArticulo();
+				existe=true;
+				
+				//unPrecio.setCodigoArticulo(res.getInt("codigo_articulo"));
+				unPrecio.setCodigoPrecio(res.getInt("codigo_precio"));
+				unPrecio.setDecripcion(res.getString("descripcion"));
+				//unPrecio.setPrecio(res.getBigDecimal("precio_articulo"));
+				
+				
+				precios.add(unPrecio);
+			 }
+					
+			} catch (SQLException e) {
+					JOptionPane.showMessageDialog(null, "Error, no se conecto");
+					System.out.println(e);
+			}
+		finally
+		{
+			try{
+				
+				if(res != null) res.close();
+                if(buscarPorArticulo != null)buscarPorArticulo.close();
+                if(con != null) con.close();
+                
+				
+				} // fin de try
+				catch ( SQLException excepcionSql )
+				{
+					excepcionSql.printStackTrace();
+					//conexion.desconectar();
+				} // fin de catch
+		} // fin de finally
+		
+		
+			if (existe) {
+				return precios;
+			}
+			else return null;
+		
+	}
 	/*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Metodo para seleccionar todos los precios de un articulo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 	public List<PrecioArticulo> getPreciosArticulo(int id){
 		

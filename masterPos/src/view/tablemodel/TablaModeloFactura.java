@@ -204,8 +204,8 @@ public class TablaModeloFactura extends AbstractTableModel {
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
 		boolean resul=false;
-		if(columnIndex==0)
-			resul= true;
+		/*if(columnIndex==0)
+			resul= true;*/
 		
 		if(columnIndex==3)
 			resul=true;

@@ -35,7 +35,7 @@ public class ArticuloDao {
 		conexion=conn;
 		
 		myCodBarraDao=new CodBarraDao(conexion);
-		preciosDao=new PrecioArticuloDao(conexion);
+		//preciosDao=new PrecioArticuloDao(conexion);
 		/*try{
 			conexionBD=conexion.getPoolConexion().getConnection();
 			
@@ -124,7 +124,7 @@ public class ArticuloDao {
 				unArticulo.getImpuestoObj().setId(res.getInt("codigo_impuesto"));
 				unArticulo.setPrecioVenta(res.getDouble("precio_articulo"));
 				unArticulo.setTipoArticulo(res.getInt("tipo_articulo"));
-				unArticulo.setPreciosVenta(preciosDao.getPreciosArticulo(unArticulo.getId()));
+				//unArticulo.setPreciosVenta(preciosDao.getPreciosArticulo(unArticulo.getId()));
 				articulos.add(unArticulo);
 			 }
 					
@@ -178,7 +178,7 @@ public class ArticuloDao {
 				unArticulo.getImpuestoObj().setId(res.getInt("codigo_impuesto"));
 				unArticulo.setPrecioVenta(res.getDouble("precio_articulo"));
 				unArticulo.setTipoArticulo(res.getInt("tipo_articulo"));
-				unArticulo.setPreciosVenta(preciosDao.getPreciosArticulo(unArticulo.getId()));
+				//unArticulo.setPreciosVenta(preciosDao.getPreciosArticulo(unArticulo.getId()));
 				articulos.add(unArticulo);
 			 }
 					
@@ -230,7 +230,7 @@ public class ArticuloDao {
 				unArticulo.getImpuestoObj().setId(res.getInt("codigo_impuesto"));
 				unArticulo.setPrecioVenta(res.getDouble("precio_articulo"));
 				unArticulo.setTipoArticulo(res.getInt("tipo_articulo"));
-				unArticulo.setPreciosVenta(preciosDao.getPreciosArticulo(unArticulo.getId()));
+				//unArticulo.setPreciosVenta(preciosDao.getPreciosArticulo(unArticulo.getId()));
 				
 			 }
 					
@@ -288,7 +288,7 @@ public class ArticuloDao {
 				unArticulo.getImpuestoObj().setId(res.getInt("codigo_impuesto"));
 				unArticulo.setPrecioVenta(res.getDouble("precio_articulo"));
 				unArticulo.setTipoArticulo(res.getInt("tipo_articulo"));
-				unArticulo.setPreciosVenta(preciosDao.getPreciosArticulo(unArticulo.getId()));
+				//unArticulo.setPreciosVenta(preciosDao.getPreciosArticulo(unArticulo.getId()));
 				
 			 }
 					
@@ -347,7 +347,7 @@ public class ArticuloDao {
 				unArticulo.getImpuestoObj().setId(res.getInt("codigo_impuesto"));
 				unArticulo.setPrecioVenta(res.getDouble("precio_articulo"));
 				unArticulo.setTipoArticulo(res.getInt("tipo_articulo"));
-				unArticulo.setPreciosVenta(preciosDao.getPreciosArticulo(unArticulo.getId()));
+				//unArticulo.setPreciosVenta(preciosDao.getPreciosArticulo(unArticulo.getId()));
 				
 			 }
 					
@@ -400,7 +400,7 @@ public class ArticuloDao {
 				unArticulo.getImpuestoObj().setId(res.getInt("codigo_impuesto"));
 				unArticulo.setPrecioVenta(res.getDouble("precio_articulo"));
 				unArticulo.setTipoArticulo(res.getInt("tipo_articulo"));
-				unArticulo.setPreciosVenta(preciosDao.getPreciosArticulo(unArticulo.getId()));
+				//unArticulo.setPreciosVenta(preciosDao.getPreciosArticulo(unArticulo.getId()));
 				
 			 }
 			//JOptionPane.showMessageDialog(null, unArticulo);		
@@ -461,7 +461,7 @@ public class ArticuloDao {
 				unArticulo.getImpuestoObj().setId(res.getInt("codigo_impuesto"));
 				unArticulo.setPrecioVenta(res.getDouble("precio_articulo"));
 				unArticulo.setTipoArticulo(res.getInt("tipo_articulo"));
-				unArticulo.setPreciosVenta(preciosDao.getPreciosArticulo(unArticulo.getId()));
+				//unArticulo.setPreciosVenta(preciosDao.getPreciosArticulo(unArticulo.getId()));
 				
 			 }
 			//JOptionPane.showMessageDialog(null, unArticulo);		
@@ -620,7 +620,7 @@ public class ArticuloDao {
 				unArticulo.getImpuestoObj().setId(res.getInt("codigo_impuesto"));
 				unArticulo.setPrecioVenta(res.getDouble("precio_articulo"));
 				unArticulo.setTipoArticulo(res.getInt("tipo_articulo"));
-				unArticulo.setPreciosVenta(preciosDao.getPreciosArticulo(unArticulo.getId()));
+				//unArticulo.setPreciosVenta(preciosDao.getPreciosArticulo(unArticulo.getId()));
 				
 				
 				articulos.add(unArticulo);

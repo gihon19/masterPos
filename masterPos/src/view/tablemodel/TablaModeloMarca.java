@@ -51,7 +51,7 @@ public class TablaModeloMarca extends AbstractTableModel {
 	@Override
 	public int getColumnCount() {
 		// TODO Auto-generated method stub
-		return 3;
+		return columnNames.length;
 	}
 
 	@Override
