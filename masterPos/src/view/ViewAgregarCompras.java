@@ -52,6 +52,7 @@ import view.botones.BotonActualizar;
 import view.botones.BotonCancelar;
 import view.botones.BotonGuardar;
 import view.tablemodel.DmtFacturaProveedores;
+import javax.swing.JComboBox;
 
 
 public class ViewAgregarCompras extends JDialog {
@@ -90,7 +91,7 @@ public class ViewAgregarCompras extends JDialog {
 		
 		panelProveedor=new JPanel();
 		panelProveedor.setBorder(new TitledBorder(new LineBorder(new Color(130, 135, 144)), "Proveedor", TitledBorder.LEFT, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panelProveedor.setBounds(10, 95, 764, 60);
+		panelProveedor.setBounds(10, 82, 764, 60);
 		panelProveedor.setLayout(null);
 		
 		//JPanel panelProveedor = new JPanel();
@@ -130,7 +131,7 @@ public class ViewAgregarCompras extends JDialog {
 		txtTelefonoProveedor.setColumns(10);
 		
 		JPanel panelInfoCompra = new JPanel();
-		panelInfoCompra.setBounds(10, 24, 764, 60);
+		panelInfoCompra.setBounds(10, 11, 764, 60);
 		panelInfoCompra.setBorder(new TitledBorder(new LineBorder(new Color(130, 135, 144)), "Datos de la Compra", TitledBorder.LEFT, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		getContentPane().add(panelInfoCompra);
 		panelInfoCompra.setLayout(null);
@@ -244,6 +245,14 @@ public class ViewAgregarCompras extends JDialog {
 		txtSubtotal.setBounds(580, 415, 177, 20);
 		getContentPane().add(txtSubtotal);
 		txtSubtotal.setColumns(10);
+		
+		JLabel lblDepartementoDeLa = new JLabel("Departemento de la compra");
+		lblDepartementoDeLa.setBounds(10, 153, 150, 14);
+		getContentPane().add(lblDepartementoDeLa);
+		
+		JComboBox cbxDepart = new JComboBox();
+		cbxDepart.setBounds(148, 150, 28, 20);
+		getContentPane().add(cbxDepart);
 		
 		///DetalleFacturaProveedor uno= new DetalleFacturaProveedor();
 		
@@ -378,5 +387,4 @@ public class ViewAgregarCompras extends JDialog {
 		 tablaArticulos.setColumnSelectionAllowed(true);
 		 tablaArticulos.setRowSelectionAllowed(true);
 	}
-	
 }

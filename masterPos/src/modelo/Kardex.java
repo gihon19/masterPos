@@ -4,7 +4,7 @@ public class Kardex {
 	private int id;
 	private String noDocumento;
 	private Articulo articulo=new Articulo();
-	private Bodega bodega=new Bodega();
+	private Departamento bodega=new Departamento();
 	private double entrada=0;
 	private double salida=0.0;
 	private double existencia=0.0;
@@ -66,10 +66,10 @@ public class Kardex {
 	}
 	
 
-	public void setBodega(Bodega b){
+	public void setBodega(Departamento b){
 		bodega=b;
 	}
-	public Bodega getBodega(){
+	public Departamento getBodega(){
 		return bodega;
 	}
 

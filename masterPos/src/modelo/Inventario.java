@@ -1,7 +1,7 @@
 package modelo;
 
 public class Inventario {
-	private Bodega bodega=new Bodega();;
+	private Departamento bodega=new Departamento();;
 	private Articulo articulo=new Articulo();;
 	private double existencia=0.0;
 	//private double precioVenta=0.0;
@@ -9,10 +9,10 @@ public class Inventario {
 	public Inventario(){
 	}
 	
-	public void setBodega(Bodega b){
+	public void setBodega(Departamento b){
 		bodega=b;
 	}
-	public Bodega getBodega(){
+	public Departamento getBodega(){
 		return bodega;
 	}
 	

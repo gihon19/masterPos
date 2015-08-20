@@ -1,22 +1,24 @@
 package modelo;
 
 public class Departamento {
+	private int id;
+	private String descripcion;
 	
-	private int codigo_depart;
-	private String nombre;
-	
-	public void setNombre(String n){
-		nombre=n;
+	public void setId(int i){
+		id=i;
 	}
-	public String  getNombre(){
-		return nombre;
+	public int getId(){
+		return id;
 	}
-	
-	public void setCodigo_departento(int c){
-		codigo_depart=c;
+	public void setDescripcion(String d){
+		descripcion =d;
 	}
-	public int getCodigo_departento(){
-		return codigo_depart;
+	public String getDescripcion(){
+		return descripcion;
+	}
+	@Override
+	public String toString(){
+		return "Id:"+id+", Descripcion:"+descripcion;
 	}
 
 }

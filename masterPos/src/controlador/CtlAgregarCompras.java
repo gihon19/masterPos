@@ -98,12 +98,14 @@ public class CtlAgregarCompras implements ActionListener,MouseListener,TableMode
 				//se obtine el numero de factura de compra para incoorporarla al modelo
 				myFactura.setIdFactura(this.view.getTxtNofactura().getText());
 				
-				//si la factura el al credito se completa la fecha de vencimiento de la factura 
+				//si la factura es al credito se completa la fecha de vencimiento de la factura 
 				if(myFactura.getTipoFactura()==2){
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 					String date = sdf.format(this.view.getDateVencFactura().getDate());
 					myFactura.setFechaVencimento(date);
 				}
+				
+				myFactura.setDetalles(view.getModelo().getDetalles());
 				
 				boolean result=this.myFacturaDao.registrarFactura(myFactura);
 				if(result){

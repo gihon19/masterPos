@@ -5,14 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import modelo.Bodega;
+import modelo.Departamento;
 import modelo.Conexion;
 
-public class BodegaDao {
+public class DepartamentoDao {
 	
 	private Conexion conexion=null;
 	private PreparedStatement buscarBodega=null;
-	public BodegaDao(Conexion conn){
+	public DepartamentoDao(Conexion conn){
 		conexion=conn;
 		/*try {
 			buscarBodega=conexion.getConnection().prepareStatement("SELECT * FROM bodega where codigo_bodega=?");
@@ -23,8 +23,8 @@ public class BodegaDao {
 	}
 	
 	
-	public Bodega buscarBodega(int id){
-		Bodega myBodega=new Bodega();
+	public Departamento buscarBodega(int id){
+		Departamento myBodega=new Departamento();
 		ResultSet res=null;
 		Connection conn=null;
 		boolean existe=false;

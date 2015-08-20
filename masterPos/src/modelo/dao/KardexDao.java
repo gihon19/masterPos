@@ -83,7 +83,7 @@ public class KardexDao {
 		Connection conn=null;
 		ResultSet res=null;
 		ArticuloDao articuloDao=new ArticuloDao(conexion);
-		BodegaDao bodegaDao=new BodegaDao(conexion);
+		DepartamentoDao bodegaDao=new DepartamentoDao(conexion);
 		
 		try {
 			conn=conexion.getPoolConexion().getConnection();
