@@ -17,9 +17,16 @@ public class FacturaCompra {
 	private String fechaVencimento=null;
 	private String estado;
 	private int agregadoAkardex;
+	private Departamento depart;
 	
 	public FacturaCompra(){
 		
+	}
+	public void setDepartamento(Departamento d){
+		depart=d;
+	}
+	public Departamento getDepartamento(){
+		return depart;
 	}
 	public int getAgregadoAkardex(){
 		return agregadoAkardex;

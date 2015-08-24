@@ -9,6 +9,7 @@ import java.awt.Window;
 
 
 
+
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -20,11 +21,14 @@ import javax.swing.border.TitledBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import view.tablemodel.CbxTmDepartamento;
 import view.tablemodel.TabloModeloRequisicion;
 import controlador.CtlRequisicion;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
+import javax.swing.JComboBox;
 
 public class ViewRequisicion extends JDialog {
 	
@@ -36,15 +40,18 @@ public class ViewRequisicion extends JDialog {
 	private TabloModeloRequisicion modeloTabla;
 	private JLabel label;
 	private JTextField txtFecha;
-	private JTextField txtIdDepartamento;
-	private JLabel lblIdDepartamento;
 	private JLabel lblDepartamento;
-	private JTextField txtDepartmento;
 	
 	private JTextField txtBuscar;
 	private JTextField txtArticulo;
 	private JTextField txtPrecio;
 	private JTextField txtTotal;
+	private CbxTmDepartamento cbxModeloOrigen;
+	private CbxTmDepartamento cbxModeloDestino;
+	private JComboBox cbxDepatOrigen;
+	private JComboBox cbxDepartDestino;
+
+	
 	
 	
 	public ViewRequisicion(Window view){
@@ -74,33 +81,35 @@ public class ViewRequisicion extends JDialog {
 		getContentPane().add(panelDatosFactura);
 		
 		label = new JLabel("Fecha");
-		label.setBounds(76, 11, 40, 29);
+		label.setBounds(10, 11, 40, 29);
 		panelDatosFactura.add(label);
 		
 		txtFecha = new JTextField();
 		txtFecha.setEditable(false);
 		txtFecha.setColumns(10);
-		txtFecha.setBounds(76, 32, 104, 29);
+		txtFecha.setBounds(10, 32, 104, 29);
 		panelDatosFactura.add(txtFecha);
 		
-		txtIdDepartamento = new JTextField();
-		txtIdDepartamento.setColumns(10);
-		txtIdDepartamento.setBounds(207, 32, 119, 29);
-		panelDatosFactura.add(txtIdDepartamento);
-		
-		lblIdDepartamento = new JLabel("Id Departamento");
-		lblIdDepartamento.setBounds(207, 11, 104, 29);
-		panelDatosFactura.add(lblIdDepartamento);
-		
-		lblDepartamento = new JLabel("Departamento");
-		lblDepartamento.setBounds(360, 11, 122, 29);
+		lblDepartamento = new JLabel("Departamento Origen de los Articulos");
+		lblDepartamento.setBounds(124, 11, 235, 29);
 		panelDatosFactura.add(lblDepartamento);
 		
-		txtDepartmento = new JTextField();
-		txtDepartmento.setToolTipText("Nombre Cliente");
-		txtDepartmento.setColumns(10);
-		txtDepartmento.setBounds(360, 32, 299, 29);
-		panelDatosFactura.add(txtDepartmento);
+		cbxModeloOrigen= new CbxTmDepartamento();
+		cbxModeloDestino= new CbxTmDepartamento();
+		
+		cbxDepatOrigen = new JComboBox();
+		cbxDepatOrigen.setModel(cbxModeloOrigen);//comentar para ver la view
+		cbxDepatOrigen.setBounds(124, 32, 235, 30);
+		panelDatosFactura.add(cbxDepatOrigen);
+		
+		JLabel lblDepartamentoDestinoDe = new JLabel("Departamento Destino de los Articulos");
+		lblDepartamentoDestinoDe.setBounds(399, 11, 235, 29);
+		panelDatosFactura.add(lblDepartamentoDestinoDe);
+		
+		cbxDepartDestino = new JComboBox();
+		cbxDepartDestino.setModel(cbxModeloDestino);//comentar para ver la view
+		cbxDepartDestino.setBounds(399, 32, 235, 29);
+		panelDatosFactura.add(cbxDepartDestino);
 		
 		
 		
@@ -167,6 +176,20 @@ public class ViewRequisicion extends JDialog {
 		
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+	}
+	
+	public CbxTmDepartamento getCbxModeloOrigen(){
+		return cbxModeloOrigen;
+	}
+	public CbxTmDepartamento getCbxModeloDestino(){
+		return cbxModeloDestino;
+	}
+	
+	public JComboBox getCbxDepartDestino(){
+		return cbxDepartDestino;
+	}
+	public JComboBox getCbxDepatOrigen(){
+		return cbxDepatOrigen;
 	}
 
 
@@ -253,5 +276,4 @@ public void conectarContralador(CtlRequisicion c){
 		//this.addWindowListener(c);
 		//this.addw
 	}
-
 }

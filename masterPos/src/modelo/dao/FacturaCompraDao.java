@@ -21,11 +21,13 @@ public class FacturaCompraDao {
 	private PreparedStatement seleccionarFacturas=null;
 	private ProveedorDao myProveedorDao=null;
 	private PreparedStatement actualizarFactura = null;
+	private KardexDao kardexDao=null;
 	
 	public FacturaCompraDao(Conexion conn){
 		conexion=conn;
 		detallesDao=new DetalleFacturaProveedorDao(conexion);
 		myProveedorDao=new ProveedorDao(conexion);
+		kardexDao=new KardexDao(conexion);
 		/*try {
 			agregarFactura=conexion.getConnection().prepareStatement( "INSERT INTO encabezado_factura_compra(fecha,subtotal,impuesto,total,codigo_cliente,no_factura_compra,tipo_factura,fecha_vencimiento,estado_factura,fecha_ingreso) VALUES (?,?,?,?,?,?,?,?,?,now())");
 		} catch (SQLException e) {
@@ -74,7 +76,31 @@ public class FacturaCompraDao {
 			
 			//JOptionPane.showMessageDialog(null,""+idFactura);
 			for(int x=0;x<fac.getDetalles().size();x++){
-				detallesDao.agregarDetalle(fac.getDetalles().get(x), idFactura);
+				//solo los articulos validos que no tengan id nulos
+				if(fac.getDetalles().get(x).getArticulo().getId()>0){
+					boolean resul=detallesDao.agregarDetalle(fac.getDetalles().get(x), idFactura);
+					
+					//si el detalle se agrego correctamente
+					if(resul){
+						//se comprueba que exista el kardex para el detalle
+						if(!kardexDao.comprobarKardex(fac.getDetalles().get(x).getArticulo().getId(), fac.getDepartamento().getId())){
+							
+							//se registra el nuevo kardex
+							int codigoKardex=kardexDao.registrarKardex(fac.getDetalles().get(x).getArticulo().getId(), fac.getDepartamento().getId());
+							
+							//comprabamos si se creo el kardex correctamente
+							if(codigoKardex>0){
+								//se agrega el movimiento
+								int idMov=kardexDao.agregarDetalle(codigoKardex,fac.getIdFactura());
+								
+								//comprobamos que se creo el detalle
+								if(idMov>0){
+									kardexDao.agregarMovimiento(idMov,fac.getDetalles().get(x).getCantidad(),fac.getDetalles().get(x).getPrecioCompra());
+								}
+							}
+						}
+					}
+				}
 			}
 			
 			resultado= true;

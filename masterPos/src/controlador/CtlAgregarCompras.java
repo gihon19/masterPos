@@ -18,9 +18,13 @@ import javax.swing.event.TableModelListener;
 
 import modelo.Articulo;
 import modelo.dao.ArticuloDao;
+import modelo.dao.DepartamentoDao;
+import modelo.dao.ImpuestoDao;
 import modelo.Conexion;
+import modelo.Departamento;
 import modelo.DetalleFacturaProveedor;
 import modelo.FacturaCompra;
+import modelo.Impuesto;
 import modelo.dao.FacturaCompraDao;
 import modelo.Proveedor;
 import modelo.dao.ProveedorDao;
@@ -38,6 +42,7 @@ public class CtlAgregarCompras implements ActionListener,MouseListener,TableMode
 	private ProveedorDao myProveedorDao;
 	private FacturaCompra myFactura;
 	private FacturaCompraDao myFacturaDao;
+	private DepartamentoDao deptDao=null;
 	 
 	public CtlAgregarCompras(ViewAgregarCompras v,Conexion conn){
 		//se asigna las variales recibida a las variables locales
@@ -50,6 +55,8 @@ public class CtlAgregarCompras implements ActionListener,MouseListener,TableMode
 		this.myArticuloDao=new ArticuloDao(conexion);
 		this.myProveedorDao=new ProveedorDao(conexion);
 		this.myFacturaDao=new FacturaCompraDao(conexion);
+		
+		deptDao=new DepartamentoDao(conexion);
 		// view.getTablaArticulos().getModel().addTableModelListener(this);
 		///this.view.getTablaArticulos().getSelectionModel().set
 		
@@ -57,6 +64,7 @@ public class CtlAgregarCompras implements ActionListener,MouseListener,TableMode
 		view.getModelo().agregarDetalle();
 		//this.view.getTxtFechaIngreso().setText(myFacturaDao.getFechaSistema());
 		//this.view.setVisible(true);
+		cargarComboBox();
 		view.setVisible(true);
 		
 	}
@@ -104,9 +112,14 @@ public class CtlAgregarCompras implements ActionListener,MouseListener,TableMode
 					String date = sdf.format(this.view.getDateVencFactura().getDate());
 					myFactura.setFechaVencimento(date);
 				}
-				
+				//se consiguie los detalles de la factura de la view y se psa al modelo
 				myFactura.setDetalles(view.getModelo().getDetalles());
 				
+				//Se establece el departamento seleccionado
+				Departamento depart= (Departamento) this.view.getCbxDepart().getSelectedItem();
+				myFactura.setDepartamento(depart);
+				
+				//se manda a guardar la factura y se procesa el resultadoa
 				boolean result=this.myFacturaDao.registrarFactura(myFactura);
 				if(result){
 					JOptionPane.showMessageDialog(view,"Se guarda la factura");
@@ -133,6 +146,21 @@ public class CtlAgregarCompras implements ActionListener,MouseListener,TableMode
 				this.view.setVisible(false);
 			break;
 		}
+	}
+	
+	
+	private void cargarComboBox(){
+		//se crea el objeto para obtener de la bd los impuestos
+		//myImpuestoDao=new ImpuestoDao(conexion);
+	
+		//se obtiene la lista de los impuesto y se le pasa al modelo de la lista
+		this.view.getModeloCbx().setLista(this.deptDao.todos());
+		
+		
+		//se remueve la lista por defecto
+		this.view.getCbxDepart().removeAllItems();
+	
+		this.view.getCbxDepart().setSelectedIndex(1);
 	}
 
 	@Override

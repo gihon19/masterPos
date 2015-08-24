@@ -35,7 +35,11 @@ public class TabloModeloRequisicion extends AbstractTableModel  {
 		fireTableDataChanged();
 		//JOptionPane.showMessageDialog(null,detallesFactura.size() );
 	}
-	
+	public void eliminarDetalle(int index){
+		detallesRequi.remove(index);
+		fireTableDataChanged();
+		
+	}
 	public void agregarDetalle(DetalleFacturaProveedor detalle) {
 		detallesRequi.add(detalle);
         fireTableDataChanged();

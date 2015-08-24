@@ -17,7 +17,9 @@ import javax.swing.event.TableModelListener;
 
 import modelo.Articulo;
 import modelo.dao.ArticuloDao;
+import modelo.dao.DepartamentoDao;
 import modelo.Conexion;
+import modelo.Departamento;
 import modelo.DetalleFacturaProveedor;
 import modelo.Factura;
 import modelo.dao.KardexDao;
@@ -33,6 +35,7 @@ public class CtlRequisicion implements ActionListener, MouseListener, TableModel
 	private ArticuloDao myArticuloDao=null;
 	private int filaPulsada=0;
 	private KardexDao myKardex;
+	private DepartamentoDao deptDao=null;
 	
 	public CtlRequisicion(ViewRequisicion v,Conexion conn){
 		view=v;
@@ -43,6 +46,8 @@ public class CtlRequisicion implements ActionListener, MouseListener, TableModel
 		myArticuloDao=new ArticuloDao(conexion);
 		view.conectarContralador(this);
 		myKardex=new KardexDao(conexion);
+		deptDao=new DepartamentoDao(conexion);
+		cargarComboBox();
 		view.setVisible(true);
 	}
 
@@ -146,7 +151,8 @@ public class CtlRequisicion implements ActionListener, MouseListener, TableModel
 		
 			case TableModelEvent.UPDATE:
 				
-				
+				//Se establece el departamento seleccionado
+				Departamento depart= (Departamento) this.view.getCbxDepatOrigen().getSelectedItem();
 				//JOptionPane.showMessageDialog(view, "Se modifico el dato en la celda "+e.getColumn()+", "+e.getFirstRow());
 				if(colum==0){
 					
@@ -165,28 +171,35 @@ public class CtlRequisicion implements ActionListener, MouseListener, TableModel
 						this.myArticulo=this.myArticuloDao.buscarArticulo(identificador);
 					}
 					
-			        
+			        //si el articulo se encontro se procesa
 					if(myArticulo!=null){
 						
 						
-						//se consigue el articulo en la bd
-						this.view.getModelo().setArticulo(myArticulo, row);
 						
-						//se consiguie el precio de costo 
-						this.view.getModelo().setPricioCompra(myKardex.buscarKardexPrecio(myArticulo.getId(), 1), row);
-						//this.view.getModelo().getDetalle(row).setCantidad(1);
-						boolean toggle = false;
-						boolean extend = false;
-						this.view.getTablaArticulos().requestFocus();
+						//se comprueba que exista el producto en el inventario
+						boolean resul=myKardex.comprobarKardex(myArticulo.getId(), depart.getId());
+						if(resul){
+							//se consigue el articulo en la bd
+							this.view.getModelo().setArticulo(myArticulo, row);
 							
-						this.view.getTablaArticulos().changeSelection(row,colum+2, toggle, extend);
+							//se consiguie el precio de costo 
+							this.view.getModelo().setPricioCompra(myKardex.buscarKardexPrecio(myArticulo.getId(), depart.getId()), row);
+							//this.view.getModelo().getDetalle(row).setCantidad(1);
+							boolean toggle = false;
+							boolean extend = false;
+							this.view.getTablaArticulos().requestFocus();
+								
+							this.view.getTablaArticulos().changeSelection(row,colum+2, toggle, extend);
+								
+							//
 							
-						//
-						
-						//se agrega otra fila en la tabla
-						this.view.getModelo().agregarDetalle();
-						
-						calcularTotales();
+							//se agrega otra fila en la tabla
+							this.view.getModelo().agregarDetalle();
+							
+							calcularTotales();
+						}else{
+							JOptionPane.showMessageDialog(view, "El articulo no se encuentra en la "+depart.getDescripcion());  
+						}
 					}else{
 						JOptionPane.showMessageDialog(view, "No se encuentra el articulo");
 						
@@ -203,7 +216,20 @@ public class CtlRequisicion implements ActionListener, MouseListener, TableModel
 					
 				}
 				if(colum==2){
-					calcularTotales();
+					BigDecimal cantidadSaldoKardex=myKardex.buscarCantidadSaldo(myArticulo.getId(), depart.getId());
+					
+					BigDecimal cantidadSaldoItem=view.getModelo().getDetalle(row).getCantidad();
+					
+					BigDecimal diferencia=cantidadSaldoKardex.subtract(cantidadSaldoItem);
+					
+					if(diferencia.doubleValue()>0.00){
+						calcularTotales();
+					}else{
+						JOptionPane.showMessageDialog(view, "No se puede requerir la cantidad de "+cantidadSaldoItem.setScale(0, BigDecimal.ROUND_HALF_EVEN).doubleValue()+" del articulo en la bodega "+depart.getDescripcion());  
+						view.getModelo().eliminarDetalle(row);
+					}
+					
+					
 				}
 				
 			break;
@@ -296,25 +322,51 @@ public void calcularTotales(){
 		switch (comando){
 		case "BUSCARARTICULO2":
 			if(myArticulo!=null){
-				this.view.getModelo().setArticulo(myArticulo);
-				
-				
-				this.view.getModelo().agregarDetalle();
-				view.getTxtArticulo().setText("");
-				view.getTxtPrecio().setText("");
-				view.getTxtBuscar().setText("");
-				
-				
-				int row =  this.view.getTablaArticulos().getRowCount () - 2;
-				//this.view.getModelo().getDetalle(row).setCantidad(1);
-				JOptionPane.showMessageDialog(view, row);
-				this.view.getModelo().setPricioCompra(myKardex.buscarKardexPrecio(myArticulo.getId(), 1), row);
-				calcularTotales();
-				selectRowInset();
+				//Se establece el departamento seleccionado
+				Departamento depart= (Departamento) this.view.getCbxDepatOrigen().getSelectedItem();
+				//se comprueba que exista el producto en el inventario
+				boolean resul=myKardex.comprobarKardex(myArticulo.getId(), depart.getId());
+				if(resul){
+					this.view.getModelo().setArticulo(myArticulo);
+					
+					
+					this.view.getModelo().agregarDetalle();
+					view.getTxtArticulo().setText("");
+					view.getTxtPrecio().setText("");
+					view.getTxtBuscar().setText("");
+					
+					
+					int row =  this.view.getTablaArticulos().getRowCount () - 2;
+					//this.view.getModelo().getDetalle(row).setCantidad(1);
+					JOptionPane.showMessageDialog(view, row);
+					this.view.getModelo().setPricioCompra(myKardex.buscarKardexPrecio(myArticulo.getId(), 1), row);
+					calcularTotales();
+					selectRowInset();
+				}else{
+					JOptionPane.showMessageDialog(view, "El articulo no se encuentra en la "+depart.getDescripcion());  
+				}
 			}
 			break;
 		}
 		
+	}
+	
+	private void cargarComboBox(){
+		//se crea el objeto para obtener de la bd los impuestos
+		//myImpuestoDao=new ImpuestoDao(conexion);
+	
+		//se obtiene la lista de los impuesto y se le pasa al modelo de la lista
+		this.view.getCbxModeloOrigen().setLista(this.deptDao.todos());
+		//se obtiene la lista de los impuesto y se le pasa al modelo de la lista
+		this.view.getCbxModeloDestino().setLista(this.deptDao.todos());
+		
+		
+		//se remueve la lista por defecto
+		this.view.getCbxDepartDestino().removeAllItems();
+		this.view.getCbxDepatOrigen().removeAllItems();
+	
+		this.view.getCbxDepartDestino().setSelectedIndex(0);
+		this.view.getCbxDepatOrigen().setSelectedIndex(1);
 	}
 	private void selectRowInset(){
 		/*<<<<<<<<<<<<<<<selecionar la ultima fila creada>>>>>>>>>>>>>>>*/

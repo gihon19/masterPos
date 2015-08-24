@@ -699,9 +699,9 @@ public class ArticuloDao {
 			myCodBarraDao.registrarCodsBarra(myArticulo.getCodBarra());
 			//myArticulo.getCodBarra().size();
 			
-			insertarNuevaArticulo=con.prepareStatement( "INSERT INTO articulo_kardex(codigo_articulo,codigo_bodega,cantidad_maxima,cantidad_minima,metodo) VALUES (?,1,10,100,'Promedio ponderado')");
+			/*insertarNuevaArticulo=con.prepareStatement( "INSERT INTO articulo_kardex(codigo_articulo,codigo_bodega,cantidad_maxima,cantidad_minima,metodo) VALUES (?,1,10,100,'Promedio ponderado')");
 			insertarNuevaArticulo.setInt( 1, this.getIdArticuloRegistrado() );
-			insertarNuevaArticulo.executeUpdate();
+			insertarNuevaArticulo.executeUpdate();*/
 			return true;
 			
 		} catch (SQLException e) {

@@ -18,7 +18,7 @@ public class Departamento {
 	}
 	@Override
 	public String toString(){
-		return "Id:"+id+", Descripcion:"+descripcion;
+		return descripcion;
 	}
 
 }

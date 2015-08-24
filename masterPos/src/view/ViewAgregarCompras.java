@@ -14,6 +14,7 @@ import java.awt.Window;
 
 
 
+
 import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -23,6 +24,7 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 import controlador.CtlAgregarCompras;
+
 
 
 
@@ -51,7 +53,9 @@ import javax.swing.SwingConstants;
 import view.botones.BotonActualizar;
 import view.botones.BotonCancelar;
 import view.botones.BotonGuardar;
+import view.tablemodel.CbxTmDepartamento;
 import view.tablemodel.DmtFacturaProveedores;
+
 import javax.swing.JComboBox;
 
 
@@ -83,6 +87,9 @@ public class ViewAgregarCompras extends JDialog {
 	private JTextField txtTotal;
 	private JLabel lblFechaVencimiento;
 	private JTextField txtSubtotal;
+	
+	private CbxTmDepartamento modeloCbx;
+	private JComboBox cbxDepart;
 	
 	
 	public ViewAgregarCompras(Window view) {
@@ -247,11 +254,14 @@ public class ViewAgregarCompras extends JDialog {
 		txtSubtotal.setColumns(10);
 		
 		JLabel lblDepartementoDeLa = new JLabel("Departemento de la compra");
-		lblDepartementoDeLa.setBounds(10, 153, 150, 14);
+		lblDepartementoDeLa.setBounds(10, 153, 168, 14);
 		getContentPane().add(lblDepartementoDeLa);
 		
-		JComboBox cbxDepart = new JComboBox();
-		cbxDepart.setBounds(148, 150, 28, 20);
+		modeloCbx=new CbxTmDepartamento();
+		
+		cbxDepart = new JComboBox();
+		cbxDepart.setModel(modeloCbx);
+		cbxDepart.setBounds(182, 150, 240, 20);
 		getContentPane().add(cbxDepart);
 		
 		///DetalleFacturaProveedor uno= new DetalleFacturaProveedor();
@@ -268,6 +278,12 @@ public class ViewAgregarCompras extends JDialog {
 
 		
 		
+	}
+	public JComboBox getCbxDepart(){
+		return cbxDepart;
+	}
+	public CbxTmDepartamento getModeloCbx(){
+		return modeloCbx;
 	}
 	public JTextField getTxtNofactura(){
 		return txtNofactura;
