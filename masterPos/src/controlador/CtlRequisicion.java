@@ -3,6 +3,8 @@ package controlador;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -18,16 +20,21 @@ import javax.swing.event.TableModelListener;
 import modelo.Articulo;
 import modelo.dao.ArticuloDao;
 import modelo.dao.DepartamentoDao;
+import modelo.dao.RequisicionDao;
+import modelo.Cliente;
 import modelo.Conexion;
 import modelo.Departamento;
 import modelo.DetalleFacturaProveedor;
+import modelo.Empleado;
 import modelo.Factura;
 import modelo.dao.KardexDao;
 import modelo.Requisicion;
 import view.tablemodel.TablaModeloMarca;
+import view.tablemodel.TabloModeloRequisicion;
+import view.ViewListaArticulo;
 import view.ViewRequisicion;
 
-public class CtlRequisicion implements ActionListener, MouseListener, TableModelListener, KeyListener   {
+public class CtlRequisicion implements ActionListener, MouseListener, TableModelListener, KeyListener, ItemListener   {
 	private ViewRequisicion view=null;
 	private Conexion conexion=null;
 	private Requisicion myRequisicion=null;
@@ -36,18 +43,28 @@ public class CtlRequisicion implements ActionListener, MouseListener, TableModel
 	private int filaPulsada=0;
 	private KardexDao myKardex;
 	private DepartamentoDao deptDao=null;
+	private RequisicionDao myRequiDao=null;
 	
 	public CtlRequisicion(ViewRequisicion v,Conexion conn){
 		view=v;
 		conexion=conn;
 		myRequisicion=new Requisicion();
 		
-		view.getModelo().agregarDetalle();
+		
 		myArticuloDao=new ArticuloDao(conexion);
 		view.conectarContralador(this);
 		myKardex=new KardexDao(conexion);
 		deptDao=new DepartamentoDao(conexion);
+		
+		myRequiDao=new RequisicionDao(conexion);
+		
+		view.getTxtFecha().setText(myRequiDao.getFechaSistema());
+		
 		cargarComboBox();
+		view.getModelo().agregarDetalle();
+
+
+		
 		view.setVisible(true);
 	}
 
@@ -338,7 +355,7 @@ public void calcularTotales(){
 					
 					int row =  this.view.getTablaArticulos().getRowCount () - 2;
 					//this.view.getModelo().getDetalle(row).setCantidad(1);
-					JOptionPane.showMessageDialog(view, row);
+					//JOptionPane.showMessageDialog(view, row);
 					this.view.getModelo().setPricioCompra(myKardex.buscarKardexPrecio(myArticulo.getId(), 1), row);
 					calcularTotales();
 					selectRowInset();
@@ -347,7 +364,133 @@ public void calcularTotales(){
 				}
 			}
 			break;
+			
+		case "BUSCARARTICULO":
+			this.buscarArticulo();
+		break;
+		
+		case "CERRAR":
+			this.salir();
+			
+			break;
+		case "GUARDAR":
+			this.guardar();
+			break;
 		}
+		
+	}
+	private void guardar(){
+		
+		if(view.getModelo().getRowCount()>1){
+			setRequisicion();
+		}else
+		{
+			JOptionPane.showMessageDialog(view, "Se debe tener articulos para crear la requision. Agrege Articulos primero.");
+		}
+		
+		/*setFactura();
+		facturaDao.registrarFacturaTemp(myFactura);
+		myFactura.setIdFactura(facturaDao.getIdFacturaGuardada());
+		resultado=true;
+		//this.view.setVisible(false);
+		setEmptyView();*/
+		
+	}
+	private void setRequisicion() {
+		
+		Departamento depart= (Departamento) this.view.getCbxDepatOrigen().getSelectedItem();
+		Departamento departDestino= (Departamento) this.view.getCbxModeloDestino().getSelectedItem();
+		
+		this.myRequisicion.setDepartamentoOrigen(depart);
+		this.myRequisicion.setDepartamentoDestino(departDestino);
+		this.myRequisicion.setDetalles(view.getModelo().getDetalles());
+		//fasdf
+		/*/sino se ingreso un cliente en particular que coge el cliente por defecto
+		if(myCliente==null){
+			myCliente=new Cliente();
+			myCliente.setId(Integer.parseInt(this.view.getTxtIdcliente().getText()));
+			myCliente.setNombre(this.view.getTxtNombrecliente().getText());
+			
+		}
+		
+		if(this.view.getRdbtnContado().isSelected()){
+			myFactura.setTipoFactura(1);
+		}
+		
+		if(this.view.getRdbtnCredito().isSelected()){
+			myFactura.setTipoFactura(2);
+		}
+		
+		myFactura.setCliente(myCliente);
+		myFactura.setDetalles(this.view.getModeloTabla().getDetalles());
+		myFactura.setFecha(facturaDao.getFechaSistema());
+		//Se establece el vendedor seleccionado
+		Empleado emp= (Empleado) this.view .getCbxEmpleados().getSelectedItem();
+		myFactura.setVendedor(emp);*/
+		//myArticulo.setImpuestoObj(imp);
+		//JOptionPane.showMessageDialog(view, myCliente);*/
+		
+	}
+
+	private void salir(){
+		//facturaDao.desconectarBD();
+		//this.clienteDao.desconectarBD();
+		//this.myArticuloDao.desconectarBD();
+		//this.myFactura.setIdFactura(-1);
+		this.view.setVisible(false);
+		
+		
+	}
+	
+	private void buscarArticulo(){
+		
+		//se llama el metodo que mostrar la ventana para buscar el articulo
+		ViewListaArticulo viewListaArticulo=new ViewListaArticulo(view);
+		CtlArticuloBuscar ctlArticulo=new CtlArticuloBuscar(viewListaArticulo,conexion);
+		
+		viewListaArticulo.pack();
+		ctlArticulo.view.getTxtBuscar().setText("");
+		ctlArticulo.view.getTxtBuscar().selectAll();
+		//ctlArticulo.view.getTxtBuscar().requestFocus(true);
+		//ctlArticulo.view.getTxtBuscar().selectAll();
+		view.getTxtBuscar().requestFocusInWindow();
+		viewListaArticulo.conectarControladorBuscar(ctlArticulo);
+		Articulo myArticulo1=ctlArticulo.buscarArticulo(view);
+		
+		//JOptionPane.showMessageDialog(view, myArticulo1);
+		//se comprueba si le regreso un articulo valido
+		if(myArticulo1!=null && myArticulo1.getId()!=-1){
+			
+			//Se establece el departamento seleccionado
+			Departamento depart= (Departamento) this.view.getCbxDepatOrigen().getSelectedItem();
+			//se comprueba que exista el producto en el inventario
+			boolean resul=myKardex.comprobarKardex(myArticulo1.getId(), depart.getId());
+			if(resul){
+				this.view.getModelo().setArticulo(myArticulo1);
+				
+				
+				this.view.getModelo().agregarDetalle();
+				view.getTxtArticulo().setText("");
+				view.getTxtPrecio().setText("");
+				view.getTxtBuscar().setText("");
+				
+				
+				int row =  this.view.getTablaArticulos().getRowCount () - 2;
+				//this.view.getModelo().getDetalle(row).setCantidad(1);
+				//JOptionPane.showMessageDialog(view, row);
+				this.view.getModelo().setPricioCompra(myKardex.buscarKardexPrecio(myArticulo1.getId(), 1), row);
+				calcularTotales();
+				selectRowInset();
+			}else{
+				JOptionPane.showMessageDialog(view, "El articulo no se encuentra en la "+depart.getDescripcion());  
+			}
+			
+			selectRowInset();
+		}
+		
+		myArticulo=null;
+		viewListaArticulo.dispose();
+		ctlArticulo=null;
 		
 	}
 	
@@ -357,16 +500,19 @@ public void calcularTotales(){
 	
 		//se obtiene la lista de los impuesto y se le pasa al modelo de la lista
 		this.view.getCbxModeloOrigen().setLista(this.deptDao.todos());
-		//se obtiene la lista de los impuesto y se le pasa al modelo de la lista
-		this.view.getCbxModeloDestino().setLista(this.deptDao.todos());
+		
 		
 		
 		//se remueve la lista por defecto
-		this.view.getCbxDepartDestino().removeAllItems();
+		
 		this.view.getCbxDepatOrigen().removeAllItems();
-	
-		this.view.getCbxDepartDestino().setSelectedIndex(0);
+		
+		
 		this.view.getCbxDepatOrigen().setSelectedIndex(1);
+		
+	
+		
+		
 	}
 	private void selectRowInset(){
 		/*<<<<<<<<<<<<<<<selecionar la ultima fila creada>>>>>>>>>>>>>>>*/
@@ -375,8 +521,34 @@ public void calcularTotales(){
 		this.view.getTablaArticulos().scrollRectToVisible(rect);
 		this.view.getTablaArticulos().clearSelection();
 		this.view.getTablaArticulos().setRowSelectionInterval(row, row);
-		TablaModeloMarca modelo = (TablaModeloMarca)this.view.getTablaArticulos().getModel();
+		TabloModeloRequisicion modelo = (TabloModeloRequisicion)this.view.getTablaArticulos().getModel();
 		modelo.fireTableDataChanged();
+	}
+
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		// TODO Auto-generated method stub
+		if (e.getStateChange() == ItemEvent.SELECTED) {
+	          //Object item = e.getItem();
+	          // do something with object
+			//se remueve la lista por defecto
+			//this.view.getCbxDepatOrigen().removeAllItems();
+			
+			//Se establece el departamento seleccionado
+			view.getModelo().setEmptyDetalles();
+			
+			Departamento depart= (Departamento) this.view.getCbxDepatOrigen().getSelectedItem();
+			
+			
+			//se obtiene la lista de los impuesto y se le pasa al modelo de la lista
+			this.view.getCbxModeloDestino().setLista(this.deptDao.todosExecto(depart.getId()));
+			//se remueve la lista por defecto
+			this.view.getCbxDepartDestino().removeAllItems();
+			this.view.getCbxDepartDestino().setSelectedIndex(0);
+			view.getModelo().agregarDetalle();
+			
+			
+	       }
 	}
 
 }

@@ -9,12 +9,14 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import modelo.Articulo;
 import modelo.Conexion;
 import modelo.PrecioArticulo;
 
 public class PrecioArticuloDao {
 	
 	private PreparedStatement buscarPorArticulo=null;
+	private PreparedStatement registrar=null;
 	private Conexion conexion=null;
 	
 	public PrecioArticuloDao(Conexion conn) {
@@ -143,6 +145,50 @@ public class PrecioArticuloDao {
 			}
 			else return null;
 		
+	}
+	
+	/*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Metodo para agreagar Articulo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+	public boolean registrar(PrecioArticulo precio)
+	{
+		
+		int resultado=0;
+		ResultSet rs=null;
+		Connection con = null;
+		
+		try 
+		{
+			con = conexion.getPoolConexion().getConnection();
+			
+			registrar=con.prepareStatement( "INSERT INTO precios_articulos(codigo_articulo,precio_articulo,codigo_precio) VALUES (?,?,?)");
+			
+			registrar.setInt(1, precio.getCodigoArticulo());
+			registrar.setFloat(2, precio.getPrecio().floatValue());
+			registrar.setInt(3, precio.getCodigoPrecio());
+			
+			
+			resultado=registrar.executeUpdate();
+			
+			
+			return true;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			//conexion.desconectar();
+            return false;
+		}
+		finally
+		{
+			try{
+				if(rs!=null)rs.close();
+				 if(registrar != null)registrar.close();
+	              if(con != null) con.close();
+			} // fin de try
+			catch ( SQLException excepcionSql )
+			{
+				excepcionSql.printStackTrace();
+				//conexion.desconectar();
+			} // fin de catch
+		} // fin de finally
 	}
 
 }

@@ -6,7 +6,7 @@ public class PrecioArticulo {
 	
 	private int codigoPrecio=-1;
 	private String descripcion="";
-	private BigDecimal precio=new BigDecimal(0.00);
+	private BigDecimal precio=new BigDecimal(-1.00);
 	private int codigoArticulo=-1;
 	
 

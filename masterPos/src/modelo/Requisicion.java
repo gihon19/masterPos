@@ -3,13 +3,21 @@ package modelo;
 
 public class Requisicion  extends FacturaCompra{
 	private int noRequisicion;
-	private Departamento departamento=new Departamento();
+	private Departamento departamentoOrigen=new Departamento();
+	private Departamento departamentoDestino=new Departamento();
 	
-	public void setDepartamento(Departamento d){
-		departamento=d;
+	public void setDepartamentoOrigen(Departamento d){
+		departamentoOrigen=d;
 	}
-	public Departamento getDepartamento(){
-		return departamento;
+	public Departamento getDepartamentoOrigen(){
+		return departamentoOrigen;
+	}
+	
+	public void setDepartamentoDestino(Departamento d){
+		departamentoDestino=d;
+	}
+	public Departamento getDepartamentoDestino(){
+		return departamentoDestino;
 	}
 	
 	public void setNoRequisicion(int n){

@@ -10,6 +10,8 @@ import java.awt.Window;
 
 
 
+
+
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -21,10 +23,14 @@ import javax.swing.border.TitledBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import view.botones.BotonBuscar1;
+import view.botones.BotonCancelar;
+import view.botones.BotonGuardar;
 import view.tablemodel.CbxTmDepartamento;
 import view.tablemodel.TabloModeloRequisicion;
 import controlador.CtlRequisicion;
 
+import java.awt.event.ItemListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -50,6 +56,10 @@ public class ViewRequisicion extends JDialog {
 	private CbxTmDepartamento cbxModeloDestino;
 	private JComboBox cbxDepatOrigen;
 	private JComboBox cbxDepartDestino;
+	
+	private BotonGuardar btnGuardar;
+	private BotonCancelar btnCerrar;
+	private BotonBuscar1 btnBuscar;
 
 	
 	
@@ -171,6 +181,23 @@ public class ViewRequisicion extends JDialog {
 		getContentPane().add(txtTotal);
 		txtTotal.setColumns(10);
 		
+		btnGuardar = new BotonGuardar();
+		btnGuardar.setHorizontalAlignment(SwingConstants.LEFT);
+		btnGuardar.setText("F4 Guardar");
+		btnGuardar.setBounds(10, 73, 144, 38);
+		panelAcciones.add(btnGuardar);
+		
+		btnCerrar = new BotonCancelar();
+		btnCerrar.setHorizontalAlignment(SwingConstants.LEFT);
+		btnCerrar.setText("Esc Cerrar");
+		btnCerrar.setBounds(10, 122, 144, 38);
+		panelAcciones.add(btnCerrar);
+		
+		btnBuscar = new BotonBuscar1();
+		btnBuscar.setHorizontalAlignment(SwingConstants.LEFT);
+		btnBuscar.setBounds(10, 24,144, 38);
+		panelAcciones.add(btnBuscar);
+		
 		this.setSize(1024, 605);
 		getContentPane().setLayout(null);
 		
@@ -217,6 +244,9 @@ public class ViewRequisicion extends JDialog {
 	public JTextField getTxtPrecio(){
 		return txtPrecio;
 	}
+	public JTextField getTxtFecha(){
+		return txtFecha;
+	}
 	
 public void conectarContralador(CtlRequisicion c){
 		
@@ -232,32 +262,34 @@ public void conectarContralador(CtlRequisicion c){
 		
 		/*txtIdcliente.addKeyListener(c);
 		txtNombrecliente.addKeyListener(c);
-		txtFechafactura.addKeyListener(c);
+		txtFechafactura.addKeyListener(c);*/
 		
 		this.btnBuscar.addKeyListener(c);
 		this.btnBuscar.addActionListener(c);
-		this.btnBuscar.setActionCommand("BUSCARARTICULO");*/
+		this.btnBuscar.setActionCommand("BUSCARARTICULO");
 		txtBuscar.addKeyListener(c);
 		txtBuscar.addActionListener(c);
 		txtBuscar.setActionCommand("BUSCARARTICULO2");
 		
-		/*this.btnCerrar.addKeyListener(c);
+		cbxDepatOrigen.addItemListener(c);
+		
+		this.btnCerrar.addKeyListener(c);
 		this.btnCerrar.addActionListener(c);
 		this.btnCerrar.setActionCommand("CERRAR");
 		
-		this.btnCliente.addKeyListener(c);
+		/*this.btnCliente.addKeyListener(c);
 		this.btnCliente.addActionListener(c);
 		this.btnCliente.setActionCommand("BUSCARCLIENTES");
 		
 		this.btnCobrar.addKeyListener(c);
 		this.btnCobrar.addActionListener(c);
-		this.btnCobrar.setActionCommand("COBRAR");
+		this.btnCobrar.setActionCommand("COBRAR");*/
 		
 		this.btnGuardar.addKeyListener(c);
 		this.btnGuardar.addActionListener(c);
 		this.btnGuardar.setActionCommand("GUARDAR");
 		
-		btnActualizar.addKeyListener(c);
+		/*btnActualizar.addKeyListener(c);
 		this.btnActualizar.addActionListener(c);
 		this.btnActualizar.setActionCommand("ACTUALIZAR");
 		

@@ -35,6 +35,7 @@ public class ArticuloDao {
 		conexion=conn;
 		
 		myCodBarraDao=new CodBarraDao(conexion);
+		preciosDao=new PrecioArticuloDao(conexion);
 		//preciosDao=new PrecioArticuloDao(conexion);
 		/*try{
 			conexionBD=conexion.getPoolConexion().getConnection();
@@ -697,6 +698,18 @@ public class ArticuloDao {
 			}
 			
 			myCodBarraDao.registrarCodsBarra(myArticulo.getCodBarra());
+			
+			//se recorren los precios de los articulos para guardarlos
+			for(int y=0; y<myArticulo.getPreciosVenta().size();y++){
+				//se comprueba que el precio del articulo sea valido
+				if(myArticulo.getPreciosVenta().get(y).getPrecio().doubleValue()>0){
+					//se completa el codigo de articulo para el precios
+					myArticulo.getPreciosVenta().get(y).setCodigoArticulo(idArticuloRegistrado);
+					this.preciosDao.registrar(myArticulo.getPreciosVenta().get(y));
+				}
+			}
+			
+			//myArticulo.setp
 			//myArticulo.getCodBarra().size();
 			
 			/*insertarNuevaArticulo=con.prepareStatement( "INSERT INTO articulo_kardex(codigo_articulo,codigo_bodega,cantidad_maxima,cantidad_minima,metodo) VALUES (?,1,10,100,'Promedio ponderado')");

@@ -35,6 +35,13 @@ public class TabloModeloRequisicion extends AbstractTableModel  {
 		fireTableDataChanged();
 		//JOptionPane.showMessageDialog(null,detallesFactura.size() );
 	}
+	
+	public void setEmptyDetalles(){
+		
+		detallesRequi.clear();
+	
+		fireTableDataChanged();
+	}
 	public void eliminarDetalle(int index){
 		detallesRequi.remove(index);
 		fireTableDataChanged();
@@ -178,8 +185,8 @@ public class TabloModeloRequisicion extends AbstractTableModel  {
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
 		boolean resul=false;
-		if(columnIndex==0)
-			resul= true;
+		/*if(columnIndex==0)
+			resul= true;*/
 		if(columnIndex==1)
 			resul=false;
 		if(columnIndex==2)

@@ -51,7 +51,7 @@ public class TmPrecios extends AbstractTableModel {
             return precios.get(rowIndex).getDescripcion();
         case 1:
         	
-        	if(precios.get(rowIndex).getPrecio().doubleValue()!=0){
+        	if(precios.get(rowIndex).getPrecio().doubleValue()>0){
         		return precios.get(rowIndex).getPrecio().setScale(2, BigDecimal.ROUND_HALF_EVEN);
 			}else
 				return null;

@@ -196,9 +196,9 @@ public class CtlArticulo extends MouseAdapter implements ActionListener,KeyListe
 		myArticulo.setCodBarras(this.view.getModeloCodBarra().getCodsBarras());
 		
 		//se establece el precion de articulo
-		myArticulo.setPrecioVenta(Double.parseDouble(this.view.getTxtPrecio().getText()));
+		//myArticulo.setPrecioVenta(Double.parseDouble(this.view.getTxtPrecio().getText()));
 		
-		//se Estable los precios de veta del articulo
+		//se Estable los precios de ventas del articulo
 		myArticulo.setPreciosVenta(view.getModeloPrecio().getPrecios());
 		
 		int x=this.view.getCbxTipo().getSelectedIndex();
