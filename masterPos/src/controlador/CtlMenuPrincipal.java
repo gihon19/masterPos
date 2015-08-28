@@ -21,6 +21,7 @@ import view.ViewListaFactura;
 import view.ViewListaFacturasCompra;
 import view.ViewListaMarca;
 import view.ViewListaProveedor;
+import view.ViewListaRequisiciones;
 import view.ViewMenuPrincipal;
 import view.ViewRequisicion;
 
@@ -51,12 +52,19 @@ public class CtlMenuPrincipal implements ActionListener {
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		switch(comando){
 		
-			case "REQUISICIONES":
+			case "REQUISICION":
 					ViewRequisicion viewRequi=new ViewRequisicion(view);
 					CtlRequisicion ctlRequi=new CtlRequisicion(viewRequi,conexion);
 					viewRequi.dispose();
 					ctlRequi=null;
 				break;
+				
+			case "REQUISICIONES":
+				ViewListaRequisiciones viewRequiLista=new ViewListaRequisiciones(view);
+				CtlRequisicionesLista ctlRequiLista=new CtlRequisicionesLista(viewRequiLista,conexion);
+				viewRequiLista.dispose();
+				ctlRequiLista=null;
+			break;
 	
 			case "CERRARFACTURACION":
 				try {

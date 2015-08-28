@@ -11,13 +11,13 @@ public class BotonesApp extends JButton {
 	
 	public BotonesApp(){
 		this.setSize(ancho, alto);
-		this.setPreferredSize(dim);
+		//this.setPreferredSize(dim);
 		
 	}
 	public BotonesApp(String titulo){
 		super(titulo);
 		this.setSize(ancho, alto);
-		this.setPreferredSize(dim);
+		//this.setPreferredSize(dim);
 		
 	}
 	

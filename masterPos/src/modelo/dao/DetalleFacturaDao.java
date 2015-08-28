@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import modelo.Articulo;
 import modelo.Conexion;
 import modelo.DetalleFactura;
+import modelo.DetalleFacturaProveedor;
 import modelo.Inventario;
 import modelo.Kardex;
 
@@ -70,6 +71,55 @@ public class DetalleFacturaDao {
 			agregarDetalle.setBigDecimal(8, detalle.getTotal());
 			agregarDetalle.executeUpdate();
 				
+			resultado=true;
+		}catch (SQLException e) {
+			e.printStackTrace();
+			//conexion.desconectar();
+			resultado= false;
+		}
+		finally
+		{
+			try{
+				
+				//if(res != null) res.close();
+                if(agregarDetalle != null)agregarDetalle.close();
+                if(conn != null) conn.close();
+                
+				
+				} // fin de try
+				catch ( SQLException excepcionSql )
+				{
+					excepcionSql.printStackTrace();
+					//conexion.desconectar();
+				} // fin de catch
+		} // fin de finally
+		return resultado;
+	}
+	
+	/*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Metodo para agreagar detalles de facturas>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+	public boolean agregarDetalleRequi(DetalleFacturaProveedor detalle, int idRequi) {
+		boolean resultado=false;
+		
+		String sql="INSERT INTO detalle_requisicion("
+				+ "codigo_requisicion,"
+				+ "codigo_articulo,"
+				+ "precio_unidad,"
+				+ "cantidad,"
+				+ "total"
+				+ ") VALUES (?,?,?,?,?)";
+		Connection conn=null;
+		
+		try{
+			conn=conexion.getPoolConexion().getConnection();
+			agregarDetalle=conn.prepareStatement( sql);
+			
+			agregarDetalle.setInt(1, idRequi);
+			agregarDetalle.setInt(2, detalle.getArticulo().getId());
+			agregarDetalle.setBigDecimal(3, detalle.getPrecioCompra());
+			agregarDetalle.setBigDecimal(4, detalle.getCantidad());
+			agregarDetalle.setBigDecimal(5, detalle.getTotal());
+			agregarDetalle.executeUpdate();
+			
 			resultado=true;
 		}catch (SQLException e) {
 			e.printStackTrace();

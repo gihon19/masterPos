@@ -383,6 +383,15 @@ public void calcularTotales(){
 		
 		if(view.getModelo().getRowCount()>1){
 			setRequisicion();
+			boolean resul=myRequiDao.registrar(myRequisicion);
+			
+			if(resul){
+				JOptionPane.showMessageDialog(view, "Se guardo correctamente.");
+				view.setVisible(false);
+			}
+			else{
+				JOptionPane.showMessageDialog(view, "No se guardo correctamente.");
+			}
 		}else
 		{
 			JOptionPane.showMessageDialog(view, "Se debe tener articulos para crear la requision. Agrege Articulos primero.");
@@ -403,6 +412,9 @@ public void calcularTotales(){
 		
 		this.myRequisicion.setDepartamentoOrigen(depart);
 		this.myRequisicion.setDepartamentoDestino(departDestino);
+		
+		String total=view.getTxtTotal().getText();
+		this.myRequisicion.setTotal(new BigDecimal(total));
 		this.myRequisicion.setDetalles(view.getModelo().getDetalles());
 		//fasdf
 		/*/sino se ingreso un cliente en particular que coge el cliente por defecto

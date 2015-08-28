@@ -90,7 +90,7 @@ public class CierreCajaDao {
 		
         Connection con = null;
         
-    	String sql="select * from v_cierre_caja;";
+    	String sql="select * from v_cierre_caja where v_cierre_caja.usuario = ?";
         //Statement stmt = null;
     	CierreCaja unaCierre=new CierreCaja();
 		
@@ -102,7 +102,7 @@ public class CierreCajaDao {
 			
 			seleccionarCierre = con.prepareStatement(sql);
 			
-			
+			seleccionarCierre.setString(1, conexion.getUsuarioLogin().getUser());
 			res = seleccionarCierre.executeQuery();
 			while(res.next()){
 				
@@ -142,11 +142,11 @@ public class CierreCajaDao {
 				} // fin de catch
 		} // fin de finally
 		
-		
-			if (existe) {
+		return unaCierre;
+			/*if (existe) {
 				return unaCierre;
 			}
-			else return null;
+			else return null;*/
 		
 	}
 

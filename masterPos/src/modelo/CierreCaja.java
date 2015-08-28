@@ -5,8 +5,8 @@ import java.math.BigDecimal;
 public class CierreCaja {
 	private Integer id;
 	private String fecha;
-	private Integer noFacturaInicio;
-	private Integer noFacturaFinal;
+	private Integer noFacturaInicio=0;
+	private Integer noFacturaFinal=0;
 	private BigDecimal total=new BigDecimal(0.0);
 	private BigDecimal efectivo=new BigDecimal(0.0);
 	private BigDecimal tarjeta=new BigDecimal(0.0);

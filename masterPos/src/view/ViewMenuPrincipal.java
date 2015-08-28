@@ -38,6 +38,11 @@ public class ViewMenuPrincipal extends JFrame {
 	private JMenuItem mntmFacturasIngresadas;
 	private JMenuItem mntmRequisicion;
 	private JLabel lblUserName;
+	private JMenu mnArchivo;
+	private JMenuItem mntmUsuarios;
+	private JMenuItem mntmSalir;
+	private JMenu mnRequisiciones;
+	private JMenuItem mntmVerRequi;
 	
 	public ViewMenuPrincipal() {
 		setTitle("AdminTools");
@@ -45,6 +50,15 @@ public class ViewMenuPrincipal extends JFrame {
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
+		
+		mnArchivo = new JMenu("Archivo");
+		menuBar.add(mnArchivo);
+		
+		mntmUsuarios = new JMenuItem("Usuarios");
+		mnArchivo.add(mntmUsuarios);
+		
+		mntmSalir = new JMenuItem("Salir");
+		mnArchivo.add(mntmSalir);
 		
 		JMenu mnInventario = new JMenu("Inventario");
 		menuBar.add(mnInventario);
@@ -58,8 +72,14 @@ public class ViewMenuPrincipal extends JFrame {
 		mntmMarcas = new JMenuItem("Marcas");
 		mnInventario.add(mntmMarcas);
 		
-		mntmRequisicion = new JMenuItem("Requisicion");
-		mnInventario.add(mntmRequisicion);
+		mnRequisiciones = new JMenu("Requisiciones");
+		mnInventario.add(mnRequisiciones);
+		
+		mntmRequisicion = new JMenuItem("Agregar");
+		mnRequisiciones.add(mntmRequisicion);
+		
+		mntmVerRequi = new JMenuItem("Ver");
+		mnRequisiciones.add(mntmVerRequi);
 		
 		JMenu mnFacturacion = new JMenu("Facturacion");
 		menuBar.add(mnFacturacion);
@@ -160,7 +180,13 @@ public class ViewMenuPrincipal extends JFrame {
 		mntmFacturasIngresadas.setActionCommand("LISTAFACTURASCOMPRA");
 		
 		mntmRequisicion.addActionListener(c);
-		mntmRequisicion.setActionCommand("REQUISICIONES");
+		mntmRequisicion.setActionCommand("REQUISICION");
+		
+		mntmUsuarios.addActionListener(c);
+		mntmUsuarios.setActionCommand("USUARIOS");
+		
+		mntmVerRequi.addActionListener(c);
+		mntmVerRequi.setActionCommand("REQUISICIONES");
 		
 	}
 	public JLabel getLblUserName(){
