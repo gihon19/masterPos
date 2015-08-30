@@ -64,10 +64,10 @@ public abstract class AbstractJasperReports
 	
 	public static void loadFileReport(){
 		
-		factura=AbstractJasperReports.class.getResourceAsStream("/Reportes/factura_texaco.jasper");
+		factura=AbstractJasperReports.class.getResourceAsStream("/Reportes/factura_texaco2.jasper");
 		facturaCompra=AbstractJasperReports.class.getResourceAsStream("/Reportes/Factura_Compra_Saint_Paul.jasper");
 		facturaReimpresion=AbstractJasperReports.class.getResourceAsStream("/Reportes/factura_texaco_reimpresion.jasper");
-		cierreCaja=AbstractJasperReports.class.getResourceAsStream("/Reportes/Cierre_Caja_Texaco.jasper");
+		cierreCaja=AbstractJasperReports.class.getResourceAsStream("/Reportes/Cierre_Caja_Texaco2.jasper");
 		
 		
 		try {
