@@ -244,7 +244,7 @@ public class CtlArticulo extends MouseAdapter implements ActionListener,KeyListe
 		myArticulo=a;
 		
 		//se estable el precio del articulo en la view
-		this.view.getTxtPrecio().setText(""+a.getPrecioVenta());
+		//this.view.getTxtPrecio().setText(""+a.getPrecioVenta());
 		
 		//se estable el tipo de articulo
 		if(a.getTipoArticulo()==1){
@@ -253,6 +253,8 @@ public class CtlArticulo extends MouseAdapter implements ActionListener,KeyListe
 		if(a.getTipoArticulo()==2){
 			this.view.getCbxTipo().setSelectedIndex(1);
 		}
+		//se cargar los precios de los articulos si los hay
+		this.cargarTabla(this.precioDao.getPreciosArticulo(myArticulo.getId()));
 				
 		// se hace visible la ventana modal
 		this.view.setVisible(true);

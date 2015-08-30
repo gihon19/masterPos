@@ -13,6 +13,7 @@ public class CierreCajaDao {
 	private Conexion conexion=null;
 	private PreparedStatement seleccionarCierre=null;
 	private PreparedStatement registrarCierre=null;
+	public int idUltimoRequistro=0;
 	
 	public CierreCajaDao(Conexion conn){
 		//Class(Conexion);
@@ -22,6 +23,8 @@ public class CierreCajaDao {
 	public boolean registrarCierre(){
 		boolean resultado=false;
 		 Connection con = null;
+		 
+		 ResultSet rs=null;
 		 
 		 //SE CONSIGUE EL ITEM PARA EL CIERRE DE CAJA
 		 CierreCaja unCierre=this.getCierre();
@@ -40,7 +43,8 @@ public class CierreCajaDao {
 		 if(unCierre!=null)
 		 try {
 				con = Conexion.getPoolConexion().getConnection();
-				registrarCierre=con.prepareStatement(sql);
+				registrarCierre=
+						con.prepareStatement(sql);
 				
 				registrarCierre.setInt(1,unCierre.getNoFacturaInicio() );
 				registrarCierre.setInt(2,unCierre.getNoFacturaFinal() );
@@ -56,6 +60,13 @@ public class CierreCajaDao {
 				
 				
 				registrarCierre.executeUpdate();//se guarda el encabezado de la factura
+				
+				
+				rs=registrarCierre.getGeneratedKeys(); //obtengo las ultimas llaves generadas
+				while(rs.next()){
+					this.idUltimoRequistro=rs.getInt(1);
+					//this.setIdArticuloRegistrado(rs.getInt(1));
+				}
 				resultado=true;
 				
 		 }catch (SQLException e) {
@@ -66,7 +77,7 @@ public class CierreCajaDao {
 		{
 			try{
 				
-				//if(res != null) res.close();
+				if(rs != null) rs.close();
 				if(registrarCierre != null)registrarCierre.close();
 				if(con != null) con.close();
              
@@ -82,7 +93,12 @@ public class CierreCajaDao {
 		
 		return resultado;
 	}
-	public CierreCaja getCierre(){
+	
+	
+	
+	
+	
+public CierreCaja getCierreUltimoUser(){
 		
 		//se crear un referencia al pool de conexiones
 		//DataSource ds = DBCPDataSourceFactory.getDataSource("mysql");
@@ -90,7 +106,9 @@ public class CierreCajaDao {
 		
         Connection con = null;
         
-    	String sql="select * from v_cierre_caja where v_cierre_caja.usuario = ?";
+    	//String sql="select * from cierre where usuario = ?";
+    	
+    	String sql2="SELECT * FROM cierre_caja WHERE cierre_caja.usuario = ? ORDER BY cierre_caja.idCierre DESC LIMIT 1";
         //Statement stmt = null;
     	CierreCaja unaCierre=new CierreCaja();
 		
@@ -100,7 +118,7 @@ public class CierreCajaDao {
 		try {
 			con = Conexion.getPoolConexion().getConnection();
 			
-			seleccionarCierre = con.prepareStatement(sql);
+			seleccionarCierre = con.prepareStatement(sql2);
 			
 			seleccionarCierre.setString(1, conexion.getUsuarioLogin().getUser());
 			res = seleccionarCierre.executeQuery();
@@ -108,7 +126,265 @@ public class CierreCajaDao {
 				
 				existe=true;
 				
-				unaCierre.setNoFacturaInicio(res.getInt("factura_inicio"));
+				unaCierre.setNoFacturaInicio(res.getInt("factura_inicial"));
+				unaCierre.setNoFacturaFinal(res.getInt("factura_final"));
+				unaCierre.setEfectivo(res.getBigDecimal("efectivo"));
+				unaCierre.setCredito(res.getBigDecimal("creditos"));
+				unaCierre.setTarjeta(res.getBigDecimal("tarjeta"));
+				
+				unaCierre.setIsv15(res.getBigDecimal("isv15"));
+				unaCierre.setIsv18(res.getBigDecimal("isv18"));
+				
+				unaCierre.setTotal(res.getBigDecimal("totalventa"));
+				unaCierre.setUsuario(res.getString("usuario"));//.setTotal(res.getBigDecimal("total"));
+			
+			 }
+					
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		finally
+		{
+			try{
+				
+				if(res != null) res.close();
+                if(seleccionarCierre != null)seleccionarCierre.close();
+                if(con != null) con.close();
+                
+				
+				} // fin de try
+				catch ( SQLException excepcionSql )
+				{
+					excepcionSql.printStackTrace();
+					//conexion.desconectar();
+				} // fin de catch
+		} // fin de finally
+		
+		return unaCierre;
+			/*if (existe) {
+				return unaCierre;
+			}
+			else return null;*/
+		
+	}
+	public CierreCaja getCierre(){
+		
+		//se crear un referencia al pool de conexiones
+		//DataSource ds = DBCPDataSourceFactory.getDataSource("mysql");
+		
+		
+        Connection con = null;
+        //SE CONSIGUE EL ITEM PARA EL CIERRE DE CAJA
+		 CierreCaja ultimoCierreUser=this.getCierreUltimoUser();
+        
+    	String sql="select * from cierre where usuario = ?";
+    	
+    	String sql2=""
+    			+ " select "
+    			+ " date_format(now(),'%d/%m/%Y %h:%i:%s') AS `fecha`, "
+    			+ "	("
+    			+ "		select "
+    			+ "			`encabezado_factura`.`numero_factura` "
+    			+ "		from "
+    			+ "			`encabezado_factura` "
+    			+ "		WHERE "
+    			+ "			encabezado_factura.usuario ='"
+    			+ 		conexion.getUsuarioLogin().getUser()+"'"
+    			+ "		order by "
+    			+ "			`encabezado_factura`.`numero_factura` desc "
+    			+ "		limit 1"
+    			+ "	) AS `factura_ultima`,"
+    			+ "	("
+    			+ "		select "
+    			+ "			sum("
+    			+ "				`encabezado_factura`.`total` "
+    			+ "			) AS `total_efectivo` "
+    			+ "		from "
+    			+ "			`encabezado_factura` "
+    			+ "		where "
+    			+ "			("
+    			+ "				("
+    			+ "					`encabezado_factura`.`tipo_factura` = 1"
+    			+ "				) "
+    			+ "				and "
+    			+ "				("
+    			+ "					`encabezado_factura`.`estado_factura` = 'ACT'"
+    			+ "				) "
+    			+ "				and "
+    			+ "				("
+    			+ "					`encabezado_factura`.`numero_factura` > "+ultimoCierreUser.getNoFacturaInicio()
+    			+ "				) "
+    			+ "				and "
+    			+ "				("
+    			+ "					`encabezado_factura`.`numero_factura` <= `factura_ultima`"
+    			+ "				) "
+    			+ "				and "
+    			+ "				("
+    			+ "					`encabezado_factura`.`tipo_pago` = 1"
+    			+ "				)"
+    			+ "				and "
+    			+ "				( "
+    			+ "					encabezado_factura.usuario ='"
+    			+ 					conexion.getUsuarioLogin().getUser()+"'"
+    			+ "				)"
+    			+ "			)"
+    			+ "	) AS `total_efectivo`,"
+    			+ "	("
+    			+ "		select "
+    			+ "			sum("
+    			+ "				`encabezado_factura`.`total` "
+    			+ "			) AS `total_efectivo` "
+    			+ "		from "
+    			+ "			`encabezado_factura` "
+    			+ "		where "
+    			+ "			("
+    			+ "				("
+    			+ "					`encabezado_factura`.`tipo_factura` = 1"
+    			+ "				) "
+    			+ "				and ("
+    			+ "					`encabezado_factura`.`estado_factura` = 'ACT'"
+    			+ "				) "
+    			+ "				and ("
+    			+ "					`encabezado_factura`.`numero_factura` > "+ultimoCierreUser.getNoFacturaInicio()
+    			+ "				) "
+    			+ "				and ("
+    			+ "					`encabezado_factura`.`numero_factura` <= `factura_ultima`"
+    			+ "				) "
+    			+ "				and ("
+    			+ "					`encabezado_factura`.`tipo_pago` = 2"
+    			+ "				) "
+    			+ "				and("
+    			+ "					encabezado_factura.usuario ='"
+    			+ 				conexion.getUsuarioLogin().getUser()+"'"
+    			+ "				)"
+    			+ "			)"
+    			+ "	) AS `total_tarjeta`,"
+    			+ "	("
+    			+ "		select "
+    			+ "			sum("
+    			+ "				`encabezado_factura`.`total` "
+    			+ "			) AS `total_efectivo` "
+    			+ "		from "
+    			+ "			`encabezado_factura` "
+    			+ "		where "
+    			+ "			("
+    			+ "				("
+    			+ "					`encabezado_factura`.`tipo_factura` = 2"
+    			+ "				) "
+    			+ "				and ("
+    			+ "					`encabezado_factura`.`estado_factura` = 'ACT'"
+    			+ "				) "
+    			+ "				and ("
+    			+ "					`encabezado_factura`.`numero_factura` > "+ultimoCierreUser.getNoFacturaInicio()
+    			+ "				) "
+    			+ "				and ("
+    			+ "					`encabezado_factura`.`numero_factura` <= `factura_ultima`"
+    			+ "				) "
+    			+ "				and( "
+    			+ "					encabezado_factura.usuario = '"
+    			+ 						conexion.getUsuarioLogin().getUser()+"'"
+    			+ "				)"
+    			+ "			)"
+    			+ ") AS `total_credito`,"
+    			+ "("
+    			+ "		SELECT "
+    			+ "			sum( "
+				+ "				`encabezado_factura`.`impuesto` "
+				+"			) AS `total_isv15` "
+				+"		FROM "
+				+"			`encabezado_factura` "
+				+"		WHERE "
+				+"			( "
+				+"				( "
+				+"					`encabezado_factura`.`tipo_factura` = 1 "
+				+"				) "
+				+"				AND ( "
+				+"					`encabezado_factura`.`estado_factura` = 'ACT' "
+				+"				) "
+				+"				AND ( "
+				+"					`encabezado_factura`.`numero_factura` > "+ultimoCierreUser.getNoFacturaInicio()
+				+"				) "
+				+"				AND ( "
+				+"					`encabezado_factura`.`numero_factura` <= `factura_ultima` "
+				+				")"
+				+"				AND ( "
+				+"					encabezado_factura.usuario = '"
+				+ 					conexion.getUsuarioLogin().getUser()+"'"
+				+"				) "
+				+"			) "
+				+") AS `total_isv15`, "
+    			+ "("
+    			+"		SELECT "
+    			+"			sum( "
+				+"				`encabezado_factura`.`isv18` "
+				+"			) AS `total_isv18` "
+				+"		FROM "
+				+"			`encabezado_factura` "
+				+"		WHERE  "
+				+"		( "
+				+"				( "
+				+"					`encabezado_factura`.`tipo_factura` = 1 "
+				+"				) "
+				+"			AND ( "
+				+"				`encabezado_factura`.`estado_factura` = 'ACT' "
+				+"			) "
+				+"			AND ( "
+				+"				`encabezado_factura`.`numero_factura` > "+ultimoCierreUser.getNoFacturaInicio()
+				+"			) "
+				+"			AND ( "
+				+"				`encabezado_factura`.`numero_factura` <= `factura_ultima` "
+				+"			) "
+				+"			AND ( "
+				+"					encabezado_factura.usuario = '"
+				+ 				conexion.getUsuarioLogin().getUser()+"'"
+				+"			) "
+				+"		) "
+				+") AS `total_isv18`, "
+    			+ "	("
+    			+ "		select "
+    			+ "			sum("
+    			+ "				`encabezado_factura`.`total` "
+    			+ "			) AS `total_efectivo` "
+    			+ "			from "
+    			+ "				`encabezado_factura` "
+    			+ "			where "
+    			+ "			("
+    			+ "				("
+    			+ "					`encabezado_factura`.`estado_factura` = 'ACT'"
+    			+ "				) "
+    			+ "				and ("
+    			+ "					`encabezado_factura`.`numero_factura` > "+ultimoCierreUser.getNoFacturaInicio()
+    			+ "				) "
+    			+ "				and ("
+    			+ "					`encabezado_factura`.`numero_factura` <= `factura_ultima`"
+    			+ "				) "
+    			+ "				and( "
+    			+ "					encabezado_factura.usuario = '"
+    			+ 					conexion.getUsuarioLogin().getUser()+"'"
+    			+ "				)"
+    			+ "			)"
+    			+ "	) AS `total` "
+    			+ "	from "
+    			+ "		`encabezado_factura` "
+    			+ "	where ((`encabezado_factura`.`numero_factura` > (select `cierre_caja`.`factura_final` from `cierre_caja` order by `cierre_caja`.`idCierre` desc limit 1)) and (`encabezado_factura`.`numero_factura` <= (select `encabezado_factura`.`numero_factura` from `encabezado_factura` order by `encabezado_factura`.`numero_factura` desc limit 1))) limit 1; ";
+        //Statement stmt = null;
+    	CierreCaja unaCierre=new CierreCaja();
+		
+		ResultSet res=null;
+		
+		boolean existe=false;
+		try {
+			con = Conexion.getPoolConexion().getConnection();
+			
+			seleccionarCierre = con.prepareStatement(sql2);
+			
+			//seleccionarCierre.setString(1, conexion.getUsuarioLogin().getUser());
+			res = seleccionarCierre.executeQuery();
+			while(res.next()){
+				
+				existe=true;
+				
+				unaCierre.setNoFacturaInicio(ultimoCierreUser.getNoFacturaInicio());
 				unaCierre.setNoFacturaFinal(res.getInt("factura_ultima"));
 				unaCierre.setEfectivo(res.getBigDecimal("total_efectivo"));
 				unaCierre.setCredito(res.getBigDecimal("total_credito"));
@@ -118,7 +394,7 @@ public class CierreCajaDao {
 				unaCierre.setIsv18(res.getBigDecimal("total_isv18"));
 				
 				unaCierre.setTotal(res.getBigDecimal("total"));
-				unaCierre.setUsuario(res.getString("usuario"));//.setTotal(res.getBigDecimal("total"));
+				unaCierre.setUsuario(conexion.getUsuarioLogin().getUser());//.setTotal(res.getBigDecimal("total"));
 			
 			 }
 					

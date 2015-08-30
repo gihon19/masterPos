@@ -557,15 +557,39 @@ public class ArticuloDao {
 			
 			//se agregan los codigos nuevos registrados
 			for(int x=0;x<a.getCodBarra().size();x++){
-				
-				
 				if(a.getCodBarra().get(x).getCodArticulo()==0){
-					
 					a.getCodBarra().get(x).setCodArticulo(a.getId());
 					myCodBarraDao.registrarCodsBarra(a.getCodBarra().get(x));
 				}
 				
 			}
+			
+			//se eleminia los precios
+			//se recorren los precios de los articulos para guardarlos
+			for(int y=0; y<a.getPreciosVenta().size();y++){
+					//se completa el codigo de articulo para el precios
+					a.getPreciosVenta().get(y).setCodigoArticulo(a.getId());
+					this.preciosDao.eliminarPrecio(a.getPreciosVenta().get(y));
+				
+			}
+			
+			
+			//se recorren los precios de los articulos para guardarlos
+			for(int y=0; y<a.getPreciosVenta().size();y++){
+				//se comprueba que el precio del articulo sea valido   
+				if(a.getPreciosVenta().get(y).getPrecio().doubleValue()>0){
+					//se completa el codigo de articulo para el precios
+					a.getPreciosVenta().get(y).setCodigoArticulo(a.getId());
+					this.preciosDao.registrar(a.getPreciosVenta().get(y));
+					
+					//se establece el precio de venta por defecto
+					if(a.getPreciosVenta().get(y).getCodigoPrecio()==1){
+						a.setPrecioVenta(a.getPreciosVenta().get(y).getPrecio().doubleValue());
+					}
+				}
+			}
+			
+			
 			return true;
 		
 		} catch (SQLException e) {
@@ -706,6 +730,11 @@ public class ArticuloDao {
 					//se completa el codigo de articulo para el precios
 					myArticulo.getPreciosVenta().get(y).setCodigoArticulo(idArticuloRegistrado);
 					this.preciosDao.registrar(myArticulo.getPreciosVenta().get(y));
+					
+					//se establece el precio de venta por defecto
+					if(myArticulo.getPreciosVenta().get(y).getCodigoPrecio()==1){
+						myArticulo.setPrecioVenta(myArticulo.getPreciosVenta().get(y).getPrecio().doubleValue());
+					}
 				}
 			}
 			

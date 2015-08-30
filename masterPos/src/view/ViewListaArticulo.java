@@ -9,12 +9,14 @@ import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JRadioButtonMenuItem;
@@ -68,6 +70,49 @@ public class ViewListaArticulo extends JDialog {
 	
 	public ViewListaArticulo(Window view){
 		super(view,"Articulos",Dialog.ModalityType.DOCUMENT_MODAL);
+		
+		/*addWindowListener(new WindowListener() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				JOptionPane.showMessageDialog(null, "Se esta cerrando");
+			}
+
+			@Override
+			public void windowOpened(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowClosed(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowIconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowDeiconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowActivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowDeactivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});*/
 		miEsquema=new BorderLayout();
 		//this.setTitle("Articulos");
 		getContentPane().setLayout(miEsquema);
@@ -152,12 +197,17 @@ public class ViewListaArticulo extends JDialog {
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		
+		
+		
 	
 		
 	}
 	
 	
 	public void conectarControlador(CtlArticuloLista c){
+		
+		
+		this.addWindowListener(c);
 		
 		
 		rdbtnId.addActionListener(c);
@@ -220,6 +270,8 @@ public class ViewListaArticulo extends JDialog {
 	}
 	
 public void conectarControladorBuscar(CtlArticuloBuscar c){
+	
+		this.addWindowListener(c);
 	
 	
 		rdbtnTodos.addKeyListener(c);

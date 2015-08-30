@@ -58,7 +58,7 @@ public class ClienteDao {
 		try {
 			conn = conexion.getPoolConexion().getConnection();
 			
-			seleccionarTodasLosClientes = conn.prepareStatement("SELECT * FROM cliente;");
+			seleccionarTodasLosClientes = conn.prepareStatement("SELECT * FROM v_clientes;");
 			
 			res = seleccionarTodasLosClientes.executeQuery();
 			while(res.next()){
@@ -69,7 +69,9 @@ public class ClienteDao {
 				unCliente.setDireccion(res.getString("direccion"));
 				unCliente.setTelefono(res.getString("telefono"));
 				unCliente.setCelular(res.getString("movil"));
-				unCliente.setRtn(res.getString("rtn"));			
+				unCliente.setRtn(res.getString("rtn"));
+				unCliente.setLimiteCredito(res.getBigDecimal("limite_credito"));
+				unCliente.setSaldoCuenta(res.getBigDecimal("saldo"));
 				
 				clientes.add(unCliente);
 			 }
@@ -112,7 +114,7 @@ public class ClienteDao {
 		boolean existe=false;
 		try {
 			conn=conexion.getPoolConexion().getConnection();
-			buscarClienteNombre=conn.prepareStatement("SELECT * FROM cliente where rtn LIKE ? ;");
+			buscarClienteNombre=conn.prepareStatement("SELECT * FROM v_clientes where rtn LIKE ? ;");
 		
 			buscarClienteNombre.setString(1, "%" + busqueda + "%");
 			res = buscarClienteNombre.executeQuery();
@@ -125,7 +127,9 @@ public class ClienteDao {
 				unCliente.setDireccion(res.getString("direccion"));
 				unCliente.setTelefono(res.getString("telefono"));
 				unCliente.setCelular(res.getString("movil"));
-				unCliente.setRtn(res.getString("rtn"));			
+				unCliente.setRtn(res.getString("rtn"));	
+				unCliente.setLimiteCredito(res.getBigDecimal("limite_credito"));
+				unCliente.setSaldoCuenta(res.getBigDecimal("saldo"));
 				
 				clientes.add(unCliente);
 			 }
@@ -164,7 +168,7 @@ public class ClienteDao {
 		boolean existe=false;
 		try {
 			conn=conexion.getPoolConexion().getConnection();
-			buscarClienteNombre=conn.prepareStatement("SELECT * FROM cliente where nombre_cliente LIKE ? ;");
+			buscarClienteNombre=conn.prepareStatement("SELECT * FROM v_clientes where nombre_cliente LIKE ? ;");
 		
 			buscarClienteNombre.setString(1, "%" + busqueda + "%");
 			res = buscarClienteNombre.executeQuery();
@@ -177,7 +181,9 @@ public class ClienteDao {
 				unCliente.setDireccion(res.getString("direccion"));
 				unCliente.setTelefono(res.getString("telefono"));
 				unCliente.setCelular(res.getString("movil"));
-				unCliente.setRtn(res.getString("rtn"));			
+				unCliente.setRtn(res.getString("rtn"));	
+				unCliente.setLimiteCredito(res.getBigDecimal("limite_credito"));
+				unCliente.setSaldoCuenta(res.getBigDecimal("saldo"));
 				
 				clientes.add(unCliente);
 			 }
@@ -227,7 +233,7 @@ public class ClienteDao {
 		try {
 			con = conexion.getPoolConexion().getConnection();
 			
-			buscarClienteID=con.prepareStatement("SELECT * FROM cliente where codigo_cliente=?");
+			buscarClienteID=con.prepareStatement("SELECT * FROM v_clientes where codigo_cliente=?");
 			
 			buscarClienteID.setInt(1, id);
 			res=buscarClienteID.executeQuery();
@@ -237,6 +243,8 @@ public class ClienteDao {
 				myCliente.setTelefono(res.getString("telefono"));
 				myCliente.setCelular(res.getString("movil"));
 				myCliente.setRtn(res.getString("rtn"));
+				myCliente.setLimiteCredito(res.getBigDecimal("limite_credito"));
+				myCliente.setSaldoCuenta(res.getBigDecimal("saldo"));
 				existe=true;
 			}
 		} catch (SQLException e) {

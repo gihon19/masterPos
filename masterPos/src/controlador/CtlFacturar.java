@@ -105,7 +105,7 @@ public class CtlFacturar  implements ActionListener, MouseListener, TableModelLi
 		//se remueve la lista por defecto
 		this.view.getCbxEmpleados().removeAllItems();
 	
-		this.view.getCbxEmpleados().setSelectedIndex(1);
+		this.view.getCbxEmpleados().setSelectedIndex(0);
 	}
 	private static boolean isNumber(String string){
 		return string !=null && numberPattern.matcher(string).matches();
@@ -329,6 +329,7 @@ public class CtlFacturar  implements ActionListener, MouseListener, TableModelLi
 				if(colum==3){
 					
 					calcularTotales();
+					
 					/*boolean toggle = false;
 					boolean extend = false;
 					this.view.geTableDetalle().requestFocus();
@@ -351,7 +352,7 @@ public class CtlFacturar  implements ActionListener, MouseListener, TableModelLi
 					//JOptionPane.showMessageDialog(view, "Modifico el Descuento "+this.view.getModeloTabla().getDetalle(row).getDescuentoItem().setScale(2, BigDecimal.ROUND_HALF_EVEN).doubleValue());
 				}
 				
-				
+				//view.getTxtBuscar().requestFocusInWindow();
 			break;
 		}
 		
@@ -658,26 +659,36 @@ public void calcularTotal(DetalleFactura detalle){
 	}
 	private void cierreCaja() {
 		// TODO Auto-generated method stub
-		try {
-			//AbstractJasperReports.createReportFactura( conexion.getPoolConexion().getConnection(), "Cierre_Caja_Saint_Paul.jasper",1 );
-			AbstractJasperReports.createReport(conexion.getPoolConexion().getConnection(), 4, 0);
-			
-			//this.view.setModal(false);
-			//AbstractJasperReports.imprimierFactura();
-			
-			
-			CierreCajaDao cierre=new CierreCajaDao(conexion);
-			
-			if(!cierre.registrarCierre()){
-				JOptionPane.showMessageDialog(view, "No se guardo el cierre de corte. Vuelva a hacer el corte.");
-			}else{
+		CierreCajaDao cierre=new CierreCajaDao(conexion);
+		
+		if(cierre.registrarCierre())
+		{
+			try {
+				//AbstractJasperReports.createReportFactura( conexion.getPoolConexion().getConnection(), "Cierre_Caja_Saint_Paul.jasper",1 );
+				AbstractJasperReports.createReport(conexion.getPoolConexion().getConnection(), 4, cierre.idUltimoRequistro);
+				
 				AbstractJasperReports.Imprimir2();
-				JOptionPane.showMessageDialog(view, "Se realizo el corte correctamente.");
+				//AbstractJasperReports.showViewer(view);
+				
+				//this.view.setModal(false);
+				//AbstractJasperReports.imprimierFactura();
+				
+				
+				
+				
+				/*if(!cierre.registrarCierre()){
+					JOptionPane.showMessageDialog(view, "No se guardo el cierre de corte. Vuelva a hacer el corte.");
+				}else{
+					AbstractJasperReports.Imprimir2();
+					JOptionPane.showMessageDialog(view, "Se realizo el corte correctamente.");
+				}*/
+				
+			} catch (SQLException ee) {
+				// TODO Auto-generated catch block
+				ee.printStackTrace();
 			}
-			
-		} catch (SQLException ee) {
-			// TODO Auto-generated catch block
-			ee.printStackTrace();
+		}else{
+			JOptionPane.showMessageDialog(view, "No se guardo el cierre de corte. Vuelva a hacer el corte.");
 		}
 	}
 	@Override

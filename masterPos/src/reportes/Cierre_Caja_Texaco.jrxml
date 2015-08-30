@@ -24,36 +24,50 @@
 			<style backcolor="#E6DAC3"/>
 		</conditionalStyle>
 	</style>
+	<parameter name="numero_factura" class="java.lang.Integer"/>
 	<queryString>
 		<![CDATA[SELECT *
-FROM admin_tools.v_cierre_caja]]>
+FROM admin_tools .cierre_caja
+
+WHERE
+	admin_tools .cierre_caja.idCierre = $P{numero_factura}]]>
 	</queryString>
-	<field name="fecha" class="java.lang.String">
+	<field name="idCierre" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="factura_inicial" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="factura_final" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="efectivo" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="creditos" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isv15" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isv18" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="totalventa" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="totalimpuesto" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tarjeta" class="java.lang.Float">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="usuario" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="factura_inicio" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="factura_ultima" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="total_isv18" class="java.lang.String"/>
-	<field name="total_efectivo" class="java.lang.Double">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="total_tarjeta" class="java.lang.Double">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="total_credito" class="java.lang.Double">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="total" class="java.lang.Double">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="total_isv15" class="java.lang.Float"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -106,7 +120,7 @@ FROM admin_tools.v_cierre_caja]]>
 				<textFieldExpression><![CDATA[$F{usuario}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="45" y="82" width="139" height="13" uuid="9728e7a6-4f41-4354-a5e8-0e638e21fa3d"/>
+				<reportElement x="45" y="82" width="128" height="13" uuid="9728e7a6-4f41-4354-a5e8-0e638e21fa3d"/>
 				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -244,7 +258,7 @@ FROM admin_tools.v_cierre_caja]]>
 					<textElement textAlignment="Center">
 						<font size="10"/>
 					</textElement>
-					<textFieldExpression><![CDATA[" "+$F{factura_inicio}+" "]]></textFieldExpression>
+					<textFieldExpression><![CDATA[" "+$F{factura_inicial}+" "]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" x="80" y="0" width="71" height="15" uuid="dda20ac8-36df-4619-b0db-4ed038010d62"/>
@@ -257,7 +271,7 @@ FROM admin_tools.v_cierre_caja]]>
 					<textElement textAlignment="Center">
 						<font size="10"/>
 					</textElement>
-					<textFieldExpression><![CDATA[""+$F{factura_ultima}+"  "]]></textFieldExpression>
+					<textFieldExpression><![CDATA[""+$F{factura_final}+"  "]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" x="151" y="0" width="69" height="15" uuid="5c0d2497-de15-4ec8-a184-841874865b6b"/>
@@ -270,7 +284,7 @@ FROM admin_tools.v_cierre_caja]]>
 					<textElement textAlignment="Right">
 						<font size="10"/>
 					</textElement>
-					<textFieldExpression><![CDATA["L. "+$F{total_efectivo}+" "]]></textFieldExpression>
+					<textFieldExpression><![CDATA["L. "+$F{efectivo}+" "]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" x="220" y="0" width="65" height="15" uuid="45d0dae0-efac-48a4-a309-bce4312d0881"/>
@@ -283,7 +297,7 @@ FROM admin_tools.v_cierre_caja]]>
 					<textElement textAlignment="Right">
 						<font size="10"/>
 					</textElement>
-					<textFieldExpression><![CDATA["L. "+$F{total_tarjeta}+" "]]></textFieldExpression>
+					<textFieldExpression><![CDATA["L. "+$F{tarjeta}+" "]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" x="480" y="0" width="86" height="15" uuid="ca68ddd3-3514-4c9f-85c1-ae07ffe8874c"/>
@@ -296,7 +310,7 @@ FROM admin_tools.v_cierre_caja]]>
 					<textElement textAlignment="Right">
 						<font size="10"/>
 					</textElement>
-					<textFieldExpression><![CDATA["L. "+$F{total}+" "]]></textFieldExpression>
+					<textFieldExpression><![CDATA["L. "+$F{totalventa}+" "]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" x="285" y="0" width="65" height="15" uuid="5cfca79a-2df7-406e-84a3-09b88c8acad4"/>
@@ -309,7 +323,7 @@ FROM admin_tools.v_cierre_caja]]>
 					<textElement textAlignment="Right">
 						<font size="10"/>
 					</textElement>
-					<textFieldExpression><![CDATA["L. "+$F{total_credito}+" "]]></textFieldExpression>
+					<textFieldExpression><![CDATA["L. "+$F{creditos}+" "]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" x="350" y="0" width="62" height="15" uuid="8b5236bf-0245-4909-a9fe-c2e170573ebf"/>
@@ -322,7 +336,7 @@ FROM admin_tools.v_cierre_caja]]>
 					<textElement textAlignment="Right">
 						<font size="10"/>
 					</textElement>
-					<textFieldExpression><![CDATA["L. "+$F{total_isv15}+" "]]></textFieldExpression>
+					<textFieldExpression><![CDATA["L. "+$F{isv15}+" "]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" x="412" y="0" width="68" height="15" uuid="937cc3df-19a7-4db4-bba5-4ca9239ff8c4"/>
@@ -335,7 +349,7 @@ FROM admin_tools.v_cierre_caja]]>
 					<textElement textAlignment="Right">
 						<font size="10"/>
 					</textElement>
-					<textFieldExpression><![CDATA["L. "+$F{total_isv18}+" "]]></textFieldExpression>
+					<textFieldExpression><![CDATA["L. "+$F{isv18}+" "]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>

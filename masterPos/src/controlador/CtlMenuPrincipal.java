@@ -13,6 +13,7 @@ import modelo.AbstractJasperReports;
 import modelo.dao.CierreCajaDao;
 import modelo.Conexion;
 import view.ViewAgregarCompras;
+import view.ViewCxCPagos;
 import view.ViewFacturar;
 import view.ViewFacturas;
 import view.ViewListaArticulo;
@@ -157,6 +158,14 @@ public class CtlMenuPrincipal implements ActionListener {
 				viewFacturasCompra.dispose();
 				viewFacturasCompra=null;
 				ctlFacturasCompra=null;
+				break;
+				
+			case "PAGOCLIENTES":
+				ViewCxCPagos viewPagoClientes=new ViewCxCPagos(view);
+				CtlFacturaPagos ctlPagoCleintes=new CtlFacturaPagos(viewPagoClientes,conexion);
+				viewPagoClientes.dispose();
+				viewPagoClientes=null;
+				ctlPagoCleintes=null;
 				break;
 		}
 		

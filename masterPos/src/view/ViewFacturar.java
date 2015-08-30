@@ -67,6 +67,7 @@ public class ViewFacturar extends JDialog {
 	private ButtonGroup grupoOpciones;
 	private JRadioButton rdbtnCredito;
 	private JRadioButton rdbtnContado;
+	
 	private JTextField txtSubtotal;
 	private JLabel lblSubtotal;
 	private JTextField txtImpuesto;
@@ -83,6 +84,7 @@ public class ViewFacturar extends JDialog {
 	private BotonBuscarClientes btnCliente;
 	private BotonCobrar btnCobrar;
 	private JButton btnCierreCaja;
+	
 	private JTextField txtDescuento;
 	
 	private BotonActualizar btnActualizar;

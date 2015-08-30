@@ -44,6 +44,8 @@ public class ViewMenuPrincipal extends JFrame {
 	private JMenu mnRequisiciones;
 	private JMenuItem mntmVerRequi;
 	
+	private JMenuItem mntmPagosClientes;
+	
 	public ViewMenuPrincipal() {
 		setTitle("AdminTools");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ViewMenuPrincipal.class.getResource("/view/recursos/logo-admin-tool1.png")));
@@ -109,7 +111,7 @@ public class ViewMenuPrincipal extends JFrame {
 		JMenu mnCuentasPorCobrar = new JMenu("Cuentas por Cobrar");
 		menuBar.add(mnCuentasPorCobrar);
 		
-		JMenuItem mntmPagosClientes = new JMenuItem("Pagos clientes");
+		mntmPagosClientes = new JMenuItem("Pagos clientes");
 		mnCuentasPorCobrar.add(mntmPagosClientes);
 		
 		JMenu mnCuentasPorPagar = new JMenu("Cuentas Por Pagar");
@@ -187,6 +189,9 @@ public class ViewMenuPrincipal extends JFrame {
 		
 		mntmVerRequi.addActionListener(c);
 		mntmVerRequi.setActionCommand("REQUISICIONES");
+		
+		mntmPagosClientes.addActionListener(c);
+		mntmPagosClientes.setActionCommand("PAGOCLIENTES");
 		
 	}
 	public JLabel getLblUserName(){

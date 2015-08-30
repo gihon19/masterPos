@@ -765,6 +765,96 @@ public class FacturaDao {
 		}
 		return resultado;
 	}
+	/*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Metodo para Eliminar los proveedores>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+	public List<Factura> sinPagarCliente(Cliente myCliente) {
+        Connection con = null;
+        
+    	String sql="SELECT "
+				+ "encabezado_factura.numero_factura, "
+				+ "DATE_FORMAT(encabezado_factura.fecha, '%d/%m/%Y') as fecha,"
+				+ " encabezado_factura.subtotal, "
+				+ "encabezado_factura.impuesto, "
+				+ "encabezado_factura.total, "
+				+ "encabezado_factura.codigo_cliente,"
+				+ "encabezado_factura.codigo, "
+				+ "encabezado_factura.estado_factura, "
+				+ "encabezado_factura.isv18, "
+				+ "encabezado_factura.tipo_factura, "
+				+ "encabezado_factura.descuento,"
+				+ "encabezado_factura.pago, "
+				+ "encabezado_factura.usuario,"
+				+ "encabezado_factura.estado_factura, "
+				+ "encabezado_factura.agrega_kardex "
+				+ " FROM encabezado_factura "
+				+ "where encabezado_factura.codigo_cliente=? "
+				+ " and "
+				+ " encabezado_factura.estado_factura = 'ACT' "
+				+ " and "
+				+ " encabezado_factura.estado_pago = 0;";
+        //Statement stmt = null;
+       	List<Factura> facturas=new ArrayList<Factura>();
+		
+		ResultSet res=null;
+		
+		boolean existe=false;
+		try {
+			con = Conexion.getPoolConexion().getConnection();
+			
+			seleccionarFacturas = con.prepareStatement(sql);
+			
+			seleccionarFacturas.setInt(1, myCliente.getId());
+			
+			res = seleccionarFacturas.executeQuery();
+			while(res.next()){
+				Factura unaFactura=new Factura();
+				existe=true;
+				unaFactura.setIdFactura(res.getInt("numero_factura"));
+				Cliente unCliente=myClienteDao.buscarCliente(res.getInt("codigo_cliente"));
+				
+				unaFactura.setCliente(unCliente);
+				
+				unaFactura.setFecha(res.getString("fecha"));
+				unaFactura.setSubTotal(res.getBigDecimal("subtotal"));
+				unaFactura.setTotalImpuesto(res.getBigDecimal("impuesto"));
+				unaFactura.setTotal(res.getBigDecimal("total"));
+				//unaFactura.setEstado(res.getInt("estado_factura"));
+				unaFactura.setTotalDescuento(res.getBigDecimal("descuento"));
+				
+				unaFactura.setEstado(res.getString("estado_factura"));
+				unaFactura.setTipoFactura(res.getInt("tipo_factura"));
+				unaFactura.setAgregadoAkardex(res.getInt("agrega_kardex"));
+				
+				unaFactura.setDetalles(detallesDao.getDetallesFactura(res.getInt("numero_factura")));
+				
+				
+				facturas.add(unaFactura);
+			 }
+					
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		finally
+		{
+			try{
+				
+				if(res != null) res.close();
+                if(seleccionarFacturas != null)seleccionarFacturas.close();
+                if(con != null) con.close();
+                
+				
+				} // fin de try
+				catch ( SQLException excepcionSql )
+				{
+					excepcionSql.printStackTrace();
+					//conexion.desconectar();
+				} // fin de catch
+		} // fin de finally
+		
+		
+			if (existe) {
+				return facturas;
+			}
+			else return null;}
 
 	
 

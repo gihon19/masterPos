@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import modelo.Articulo;
+import modelo.CodBarra;
 import modelo.Conexion;
 import modelo.PrecioArticulo;
 
@@ -17,6 +18,7 @@ public class PrecioArticuloDao {
 	
 	private PreparedStatement buscarPorArticulo=null;
 	private PreparedStatement registrar=null;
+	private PreparedStatement eleminar=null;
 	private Conexion conexion=null;
 	
 	public PrecioArticuloDao(Conexion conn) {
@@ -145,6 +147,40 @@ public class PrecioArticuloDao {
 			}
 			else return null;
 		
+	}
+	
+	/*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Metodo para eliminar de articulo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+	public boolean eliminarPrecio(PrecioArticulo precios){
+		int resultado=0;
+		Connection conn=null;
+		try {
+				conn=conexion.getPoolConexion().getConnection();
+				eleminar=conn.prepareStatement("DELETE FROM precios_articulos WHERE codigo_articulo = ? and codigo_precio= ?");
+			
+				eleminar.setInt( 1, precios.getCodigoArticulo());
+				eleminar.setInt( 2, precios.getCodigoPrecio() );
+				
+				
+				resultado=eleminar.executeUpdate();
+		
+				return true;
+			
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				return false;
+			}
+		finally
+		{
+			try{
+					
+	                if(eleminar != null)eleminar.close();
+	                if(conn != null) conn.close();
+				} // fin de try
+				catch ( SQLException excepcionSql )
+				{
+					excepcionSql.printStackTrace();
+				} // fin de catch
+		} // fin de finally
 	}
 	
 	/*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Metodo para agreagar Articulo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/

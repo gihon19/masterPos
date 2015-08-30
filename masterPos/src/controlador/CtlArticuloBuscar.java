@@ -66,6 +66,7 @@ public class CtlArticuloBuscar implements ActionListener,MouseListener, WindowLi
 	public void windowClosing(WindowEvent e) {
 		// TODO Auto-generated method stub
 		//myArticuloDao.desconectarBD();
+		//JOptionPane.showMessageDialog(view, "Se esta Cerrando");
 		this.myArticulo=null;
 		this.view.setVisible(false);
 	}
@@ -160,8 +161,10 @@ public class CtlArticuloBuscar implements ActionListener,MouseListener, WindowLi
 						if(myArticulo!=null){												
 							this.view.getModelo().limpiarArticulos();
 							this.view.getModelo().agregarArticulo(myArticulo);
+							view.setVisible(false);
 						}else{
 							JOptionPane.showMessageDialog(view, "No se encuentro el articulo");
+							this.view.getTxtBuscar().setText("");
 						}
 					} 
 					
@@ -173,6 +176,11 @@ public class CtlArticuloBuscar implements ActionListener,MouseListener, WindowLi
 						}
 					if(this.view.getRdbtnMarca().isSelected()){  
 						cargarTabla(myArticuloDao.buscarArticuloMarca(this.view.getTxtBuscar().getText()));
+							if(myArticulo!=null){
+								view.setVisible(false);
+							}else{
+								this.view.getTxtBuscar().setText("");
+							}
 						}
 					
 					if(this.view.getRdbtnTodos().isSelected()){  
@@ -243,13 +251,37 @@ public class CtlArticuloBuscar implements ActionListener,MouseListener, WindowLi
 		
 		if(e.getComponent()==this.view.getTxtBuscar()&&view.getTxtBuscar().getText().trim().length()!=0){
 			
+			//si esta activado la busqueda por articulo
+			if(this.view.getRdbtnArticulo().isSelected()){
+				
+				cargarTabla(myArticuloDao.buscarArticulo(this.view.getTxtBuscar().getText()));
+				
+				this.view.getTablaArticulos().setRowSelectionInterval(0	, 0);
+				
+				myArticulo=view.getModelo().getArticulo(0);
+			}
 			
+			//si esta activado las busqueda por Marca
+			if(this.view.getRdbtnMarca().isSelected()){  
+				cargarTabla(myArticuloDao.buscarArticuloMarca(this.view.getTxtBuscar().getText()));
+				this.view.getTablaArticulos().setRowSelectionInterval(0	, 0);
+				
+				myArticulo=view.getModelo().getArticulo(0);
+			}
 			
-			cargarTabla(myArticuloDao.buscarArticulo(this.view.getTxtBuscar().getText()));
-			
-			this.view.getTablaArticulos().setRowSelectionInterval(0	, 0);
-			
-			myArticulo=view.getModelo().getArticulo(0);
+			//si esta activado la busqueda por id
+			if(this.view.getRdbtnId().isSelected()){  
+				myArticulo=myArticuloDao.buscarArticulo(Integer.parseInt(this.view.getTxtBuscar().getText()));
+				if(myArticulo!=null){												
+					this.view.getModelo().limpiarArticulos();
+					this.view.getModelo().agregarArticulo(myArticulo);
+					this.view.getTablaArticulos().setRowSelectionInterval(0	, 0);
+					
+					myArticulo=view.getModelo().getArticulo(0);
+				}else{
+					JOptionPane.showMessageDialog(view, "No se encuentro el articulo");
+				}
+			} 
 		}
 	}
 

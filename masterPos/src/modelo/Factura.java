@@ -24,7 +24,15 @@ public class Factura {
 	private BigDecimal cambio=new BigDecimal(0.0);
 	private String observacion="";
 	private Empleado vendedor=new Empleado();
+	private boolean deseaPagar=false;
 	
+	
+	public void setDeseaPagar(boolean d){
+		deseaPagar=d;
+	}
+	public boolean getDeseaPagar(){
+		return deseaPagar;
+	}
 	public void setVendedor(Empleado v){
 		vendedor=v;
 	}

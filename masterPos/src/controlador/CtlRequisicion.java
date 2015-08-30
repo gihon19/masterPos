@@ -233,6 +233,12 @@ public class CtlRequisicion implements ActionListener, MouseListener, TableModel
 					
 				}
 				if(colum==2){
+					
+					//Se recoge el id de la fila marcada
+			        int identificador= (int)this.view.getModelo().getValueAt(row, 0);
+			        
+			        myArticulo=this.view.getModelo().getDetalle(row).getArticulo();
+			        
 					BigDecimal cantidadSaldoKardex=myKardex.buscarCantidadSaldo(myArticulo.getId(), depart.getId());
 					
 					BigDecimal cantidadSaldoItem=view.getModelo().getDetalle(row).getCantidad();

@@ -163,10 +163,11 @@ public class CtlArticuloLista implements ActionListener,MouseListener, WindowLis
         	//si fue doble click mostrar modificar
         	if (e.getClickCount() == 2) {
         		
+        		//se consigue el articulo de la fila donde se hizo doble click
 	        	myArticulo=this.view.getModelo().getArticulo(filaPulsada);
         		//myArticulo=this.view.getModelo().getArticulo(filaPulsada);//se consigue el Marca de la fila seleccionada
 	           
-	        	//crea la ventana para ingresar un nuevo proveedor
+	        	//crea la ventana para modificar
 				viewArticulo= new ViewCrearArticulo(this.view);
 				
 				//se crea el controlador de la ventana y se le pasa la view

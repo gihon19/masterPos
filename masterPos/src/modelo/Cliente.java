@@ -1,5 +1,7 @@
 package modelo;
 
+import java.math.BigDecimal;
+
 public class Cliente {
 	
 	private int id=-1;
@@ -8,6 +10,28 @@ public class Cliente {
 	private String telefono;
 	private String celular;
 	private String rtn;
+	private BigDecimal limiteCredito=new BigDecimal(0.0);
+	private BigDecimal saldoCuenta=new BigDecimal(0.0);
+	
+	
+	public void setLimiteCredito(BigDecimal t){
+		limiteCredito=limiteCredito.add(t);
+	}
+	public BigDecimal getLimiteCredito(){
+		return limiteCredito;
+	}
+	public void setSaldoCuenta(BigDecimal t){
+		saldoCuenta=saldoCuenta.add(t);
+	}
+	public BigDecimal getSaldoCuenta(){
+		return saldoCuenta;
+	}
+	
+	public void resetTotales(){
+		
+		limiteCredito=BigDecimal.ZERO;
+		saldoCuenta=BigDecimal.ZERO;
+	}
 	
 	public String getRtn(){
 		return rtn;
