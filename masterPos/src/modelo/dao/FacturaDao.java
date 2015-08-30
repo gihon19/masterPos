@@ -31,6 +31,7 @@ public class FacturaDao {
 	
 	private DetalleFacturaDao detallesDao=null;
 	private ClienteDao myClienteDao=null;
+	private CuentaPorCobrarDao myCuentaCobrarDao=null;
 	
 	private Integer idFacturaGuardada=null;
 	
@@ -40,7 +41,7 @@ public class FacturaDao {
 		conexion =conn;
 		detallesDao=new DetalleFacturaDao(conexion);
 		myClienteDao=new ClienteDao(conexion);
-		
+		myCuentaCobrarDao=new CuentaPorCobrarDao(conexion);
 		/*try {
 			conexionBD=conn.getPoolConexion().getConnection();
 			getFecha=conexionBD.prepareStatement("SELECT DATE_FORMAT(now(), '%d/%m/%Y') as fecha;");
@@ -189,8 +190,9 @@ public class FacturaDao {
 				+ "pago,"
 				+ "usuario,"
 				+ "total_letras,"
-				+ "codigo_vendedor)"
-				+ " VALUES (now(),?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ "codigo_vendedor,"
+				+ "estado_pago)"
+				+ " VALUES (now(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		
 		try 
 		{
@@ -210,6 +212,8 @@ public class FacturaDao {
 			agregarFactura.setString(12, conexion.getUsuarioLogin().getUser());
 			agregarFactura.setString(13, NumberToLetterConverter.convertNumberToLetter(myFactura.getTotal().setScale(0, BigDecimal.ROUND_HALF_EVEN).doubleValue()));
 			agregarFactura.setInt(14, myFactura.getVendedor().getCodigo());
+			agregarFactura.setInt(15,myFactura.getEstadoPago());
+			
 			
 			
 			
@@ -218,6 +222,7 @@ public class FacturaDao {
 			while(rs.next()){
 				//idFactura=rs.getInt(1);
 				idFacturaGuardada=rs.getInt(1);
+				myFactura.setIdFactura(idFacturaGuardada);
 				
 			}
 			
@@ -226,6 +231,11 @@ public class FacturaDao {
 				
 				if(myFactura.getDetalles().get(x).getArticulo().getId()!=-1)
 					detallesDao.agregarDetalle(myFactura.getDetalles().get(x), idFacturaGuardada);
+			}
+			
+			
+			if(myFactura.getTipoFactura()==2){
+				boolean resultado2=this.myCuentaCobrarDao.reguistrarCredito(myFactura);
 			}
 			
 			resultado= true;
@@ -763,6 +773,22 @@ public class FacturaDao {
 			e.printStackTrace();
 			resultado=false;
 		}
+		finally
+		{
+			try{
+				
+				//if(res != null) res.close();
+                if(actualizarFactura != null)actualizarFactura.close();
+                if(conn != null) conn.close();
+                
+				
+				} // fin de try
+				catch ( SQLException excepcionSql )
+				{
+					excepcionSql.printStackTrace();
+					//conexion.desconectar();
+				} // fin de catch
+		} // fin de finally
 		return resultado;
 	}
 	/*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Metodo para Eliminar los proveedores>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
@@ -855,6 +881,51 @@ public class FacturaDao {
 				return facturas;
 			}
 			else return null;}
+
+	public boolean cambiarEstadoPago(Integer idFactura) {
+		boolean resultado=false;
+		Connection conn=null;
+		String sql="UPDATE encabezado_factura SET "
+				
+				
+				+ "estado_pago=?"
+				
+				+ " WHERE numero_factura = ?";
+		try {
+			conn=conexion.getPoolConexion().getConnection();
+			
+			actualizarFactura=conn.prepareStatement(sql);
+			
+			
+			actualizarFactura.setInt(1, 1);
+			
+			actualizarFactura.setInt(2, idFactura);
+			actualizarFactura.executeUpdate();
+						
+			
+			resultado= true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			resultado=false;
+		}finally
+		{
+			try{
+				
+				//if(res != null) res.close();
+                if(actualizarFactura != null)actualizarFactura.close();
+                if(conn != null) conn.close();
+                
+				
+				} // fin de try
+				catch ( SQLException excepcionSql )
+				{
+					excepcionSql.printStackTrace();
+					//conexion.desconectar();
+				} // fin de catch
+		} // fin de finally
+		return resultado;
+	}
 
 	
 

@@ -17,9 +17,11 @@ public class ReciboPagoDao {
 	private PreparedStatement buscar=null;
 	private PreparedStatement actualizar=null;
 	private PreparedStatement eliminar=null;
+	private CuentaPorCobrarDao myCuentaCobrarDao=null;
 
 	public ReciboPagoDao(Conexion conn) {
 		conexion=conn;
+		myCuentaCobrarDao=new CuentaPorCobrarDao(conexion);
 	}
 	
 	/*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Metodo para agreagar Articulo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
@@ -45,9 +47,17 @@ public class ReciboPagoDao {
 			resultado=insertar.executeUpdate();
 			
 			rs=insertar.getGeneratedKeys(); //obtengo las ultimas llaves generadas
-			/*while(rs.next()){
-				this.setIdClienteRegistrado(rs.getInt(1));
-			}*/
+			while(rs.next()){
+				//this.setIdClienteRegistrado(rs.getInt(1));
+				myRecibo.setNoRecibo(rs.getInt(1));
+			}
+			
+			//se establece en el concepto en numero de recibo con que se pago
+			String concepto=myRecibo.getConcepto();
+			concepto=concepto+" con recibo no. "+myRecibo.getNoRecibo();
+			myRecibo.setConcepto(concepto);
+			
+			this.myCuentaCobrarDao.reguistrarDebito(myRecibo);
 			
 			return true;
 			

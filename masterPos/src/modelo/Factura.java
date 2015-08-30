@@ -25,8 +25,14 @@ public class Factura {
 	private String observacion="";
 	private Empleado vendedor=new Empleado();
 	private boolean deseaPagar=false;
+	private int estadoPago=0;
 	
-	
+	public void setEstadoPago(int e){
+		estadoPago=e;
+	}
+	public int getEstadoPago(){
+		return estadoPago;
+	}
 	public void setDeseaPagar(boolean d){
 		deseaPagar=d;
 	}

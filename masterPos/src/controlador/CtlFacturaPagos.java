@@ -21,9 +21,11 @@ import modelo.Cliente;
 import modelo.Conexion;
 import modelo.DetalleFactura;
 import modelo.Factura;
+import modelo.NumberToLetterConverter;
 import modelo.ReciboPago;
 import modelo.dao.ClienteDao;
 import modelo.dao.FacturaDao;
+import modelo.dao.ReciboPagoDao;
 
 public class CtlFacturaPagos implements ActionListener, MouseListener, TableModelListener, WindowListener, KeyListener {
 	private ViewCxCPagos view=null;
@@ -33,6 +35,7 @@ public class CtlFacturaPagos implements ActionListener, MouseListener, TableMode
 	private FacturaDao myFacturaDao=null;
 	
 	private ReciboPago myRecibo=null;
+	private ReciboPagoDao myReciboDao=null;
 	
 
 	public CtlFacturaPagos(ViewCxCPagos v,Conexion conn) {
@@ -42,6 +45,7 @@ public class CtlFacturaPagos implements ActionListener, MouseListener, TableMode
 		view.conectarContralador(this);
 		clienteDao=new ClienteDao(conexion);
 		myFacturaDao=new FacturaDao(conexion);
+		myReciboDao=new ReciboPagoDao(conexion);
 		myRecibo=new ReciboPago();
 		view.setVisible(true);
 	}
@@ -239,11 +243,47 @@ public class CtlFacturaPagos implements ActionListener, MouseListener, TableMode
 	private void cobrar() {
 		//se verifica que hay facturas que cobrar
 		if(view.getModeloTabla().getDetalles().size()>0 && view.getModeloTabla().hayPagos()==true){
+			setRecibo();
+			//se manda aguardar el recibo con los pagos realizados
+			boolean resul=this.myReciboDao.registrar(myRecibo);
 			
+			if(resul){
+				//se cambia el estado de las factura que fueron cobradas
+				for(int x=0;x<view.getModeloTabla().getDetalles().size();x++){
+					
+					//se cambia el estado de las facturas pagas
+					if(view.getModeloTabla().getDetalles().get(x).getDeseaPagar()==true){
+						boolean resu=this.myFacturaDao.cambiarEstadoPago(view.getModeloTabla().getDetalles().get(x).getIdFactura());
+					}
+				}
+				JOptionPane.showMessageDialog(view, "El recibo se guardo correctamente.");
+				
+			}else{//
+				JOptionPane.showMessageDialog(view, "El recibo no se guardo correctamente.");
+			}//fin del if que verefica la acccion de guardar el recibo
 		}else{
-			
+			JOptionPane.showMessageDialog(view, "No tiene facturas que pagar el cliente.");
 		}
 		
+	}
+
+	private void setRecibo() {
+		// TODO Auto-generated method stub
+		myRecibo.setCliente(myCliente);
+		
+		//se estable el concepto de pago del recibo
+		String concepto="Pago de factura(s) no.";
+		
+		for(int x=0;x<view.getModeloTabla().getDetalles().size();x++){
+			
+			//se verifica la facturas que se van a pagar y se arma el concepto
+			if(view.getModeloTabla().getDetalles().get(x).getDeseaPagar()==true){
+				concepto=concepto+view.getModeloTabla().getDetalles().get(x).getIdFactura()+",";
+			}
+		}
+		myRecibo.setConcepto(concepto);
+		//se establece la cantidad en letras
+		myRecibo.setTotalLetras(NumberToLetterConverter.convertNumberToLetter(myRecibo.getTotal().setScale(0, BigDecimal.ROUND_HALF_EVEN).doubleValue()));
 	}
 
 	private void buscarCliente(){
