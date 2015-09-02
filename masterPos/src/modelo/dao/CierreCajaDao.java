@@ -212,7 +212,7 @@ public CierreCaja getCierreUltimoUser(){
     			+ "				) "
     			+ "				and "
     			+ "				("
-    			+ "					`encabezado_factura`.`numero_factura` > "+ultimoCierreUser.getNoFacturaInicio()
+    			+ "					`encabezado_factura`.`numero_factura` > "+ultimoCierreUser.getNoFacturaFinal()
     			+ "				) "
     			+ "				and "
     			+ "				("
@@ -245,7 +245,7 @@ public CierreCaja getCierreUltimoUser(){
     			+ "					`encabezado_factura`.`estado_factura` = 'ACT'"
     			+ "				) "
     			+ "				and ("
-    			+ "					`encabezado_factura`.`numero_factura` > "+ultimoCierreUser.getNoFacturaInicio()
+    			+ "					`encabezado_factura`.`numero_factura` > "+ultimoCierreUser.getNoFacturaFinal()
     			+ "				) "
     			+ "				and ("
     			+ "					`encabezado_factura`.`numero_factura` <= `factura_ultima`"
@@ -275,7 +275,7 @@ public CierreCaja getCierreUltimoUser(){
     			+ "					`encabezado_factura`.`estado_factura` = 'ACT'"
     			+ "				) "
     			+ "				and ("
-    			+ "					`encabezado_factura`.`numero_factura` > "+ultimoCierreUser.getNoFacturaInicio()
+    			+ "					`encabezado_factura`.`numero_factura` > "+ultimoCierreUser.getNoFacturaFinal()
     			+ "				) "
     			+ "				and ("
     			+ "					`encabezado_factura`.`numero_factura` <= `factura_ultima`"
@@ -302,7 +302,7 @@ public CierreCaja getCierreUltimoUser(){
 				+"					`encabezado_factura`.`estado_factura` = 'ACT' "
 				+"				) "
 				+"				AND ( "
-				+"					`encabezado_factura`.`numero_factura` > "+ultimoCierreUser.getNoFacturaInicio()
+				+"					`encabezado_factura`.`numero_factura` > "+ultimoCierreUser.getNoFacturaFinal()
 				+"				) "
 				+"				AND ( "
 				+"					`encabezado_factura`.`numero_factura` <= `factura_ultima` "
@@ -329,7 +329,7 @@ public CierreCaja getCierreUltimoUser(){
 				+"				`encabezado_factura`.`estado_factura` = 'ACT' "
 				+"			) "
 				+"			AND ( "
-				+"				`encabezado_factura`.`numero_factura` > "+ultimoCierreUser.getNoFacturaInicio()
+				+"				`encabezado_factura`.`numero_factura` > "+ultimoCierreUser.getNoFacturaFinal()
 				+"			) "
 				+"			AND ( "
 				+"				`encabezado_factura`.`numero_factura` <= `factura_ultima` "
@@ -353,7 +353,7 @@ public CierreCaja getCierreUltimoUser(){
     			+ "					`encabezado_factura`.`estado_factura` = 'ACT'"
     			+ "				) "
     			+ "				and ("
-    			+ "					`encabezado_factura`.`numero_factura` > "+ultimoCierreUser.getNoFacturaInicio()
+    			+ "					`encabezado_factura`.`numero_factura` > "+ultimoCierreUser.getNoFacturaFinal()
     			+ "				) "
     			+ "				and ("
     			+ "					`encabezado_factura`.`numero_factura` <= `factura_ultima`"
@@ -384,7 +384,7 @@ public CierreCaja getCierreUltimoUser(){
 				
 				existe=true;
 				
-				unaCierre.setNoFacturaInicio(ultimoCierreUser.getNoFacturaInicio());
+				unaCierre.setNoFacturaInicio(ultimoCierreUser.getNoFacturaFinal());
 				unaCierre.setNoFacturaFinal(res.getInt("factura_ultima"));
 				unaCierre.setEfectivo(res.getBigDecimal("total_efectivo"));
 				unaCierre.setCredito(res.getBigDecimal("total_credito"));

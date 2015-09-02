@@ -3,8 +3,6 @@ package view.rendes;
 import java.awt.Color;
 import java.awt.Component;
 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;

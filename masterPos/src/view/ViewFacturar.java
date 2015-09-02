@@ -238,7 +238,7 @@ public class ViewFacturar extends JDialog {
 		
 		grupoOpciones = new ButtonGroup();
 		rdbtnCredito = new JRadioButton("");
-		//rdbtnCredito.setEnabled(false);
+		rdbtnCredito.setEnabled(false);
 		rdbtnCredito.setBounds(526, 47, 21, 23);
 		grupoOpciones.add(rdbtnCredito);
 		panelDatosFactura.add(rdbtnCredito);

@@ -66,7 +66,7 @@ public abstract class AbstractJasperReports
 		
 		factura=AbstractJasperReports.class.getResourceAsStream("/reportes/factura_texaco2.jasper");
 		facturaCompra=AbstractJasperReports.class.getResourceAsStream("/reportes/Factura_Compra_Saint_Paul.jasper");
-		facturaReimpresion=AbstractJasperReports.class.getResourceAsStream("/reportes/factura_texaco_reimpresion.jasper");
+		facturaReimpresion=AbstractJasperReports.class.getResourceAsStream("/reportes/factura_texaco_reimpresion2.jasper");
 		cierreCaja=AbstractJasperReports.class.getResourceAsStream("/reportes/Cierre_Caja_Texaco2.jasper");
 		
 		

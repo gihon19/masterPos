@@ -137,10 +137,12 @@ public class CtlFacturar  implements ActionListener, MouseListener, TableModelLi
 				}else{
 					String busca=this.view.getTxtBuscar().getText();
 					//if(this.isNumber(busca)){
-						//conseguir los precios del producto
-						myArticulo.setPreciosVenta(this.preciosDao.getPreciosArticulo(myArticulo.getId()));
+						
 						this.myArticulo=this.myArticuloDao.buscarArticuloBarraCod(busca);
 						if(myArticulo!=null){
+							
+							//conseguir los precios del producto
+							myArticulo.setPreciosVenta(this.preciosDao.getPreciosArticulo(myArticulo.getId()));
 							this.view.getModeloTabla().setArticulo(myArticulo);
 							//this.view.getModelo().getDetalle(row).setCantidad(1);
 							
@@ -152,6 +154,8 @@ public class CtlFacturar  implements ActionListener, MouseListener, TableModelLi
 							
 						}else{
 							JOptionPane.showMessageDialog(view, "No se encontro el articulo");
+							view.getTxtBuscar().setText("");
+							view.getTxtBuscar().requestFocusInWindow();
 						}
 						
 					//}
@@ -331,7 +335,7 @@ public class CtlFacturar  implements ActionListener, MouseListener, TableModelLi
 				if(colum==3){
 					
 					calcularTotales();
-					
+					view.getTxtBuscar().requestFocusInWindow();
 					/*boolean toggle = false;
 					boolean extend = false;
 					this.view.geTableDetalle().requestFocus();
@@ -351,6 +355,7 @@ public class CtlFacturar  implements ActionListener, MouseListener, TableModelLi
 				//se agrego un descuento a la tabla
 				if(colum==6){
 					calcularTotales();
+					view.getTxtBuscar().requestFocusInWindow();
 					//JOptionPane.showMessageDialog(view, "Modifico el Descuento "+this.view.getModeloTabla().getDetalle(row).getDescuentoItem().setScale(2, BigDecimal.ROUND_HALF_EVEN).doubleValue());
 				}
 				
@@ -670,6 +675,7 @@ public void calcularTotal(DetalleFactura detalle){
 				AbstractJasperReports.createReport(conexion.getPoolConexion().getConnection(), 4, cierre.idUltimoRequistro);
 				
 				AbstractJasperReports.Imprimir2();
+				JOptionPane.showMessageDialog(view, "Se realizo el corte correctamente.");
 				//AbstractJasperReports.showViewer(view);
 				
 				//this.view.setModal(false);
@@ -717,7 +723,7 @@ public void calcularTotal(DetalleFactura detalle){
 		}
 		
 		//que no se la fecha de arriba y abajo
-		if(e.getKeyCode()!=KeyEvent.VK_DOWN && e.getKeyCode()!= KeyEvent.VK_UP)
+		if(e.getKeyCode()!=KeyEvent.VK_DOWN && e.getKeyCode()!= KeyEvent.VK_UP && e.getKeyCode()!= KeyEvent.VK_ENTER)
 		
 		//se comprueba que hay algo que buscar
 		if(e.getComponent()==this.view.getTxtBuscar()&&view.getTxtBuscar().getText().trim().length()!=0){
@@ -860,8 +866,9 @@ public void calcularTotal(DetalleFactura detalle){
 								this.view.dispose();*/
 								//AbstractJasperReports.createReportFactura( conexion.getPoolConexion().getConnection(), "Factura_Saint_Paul.jasper",myFactura.getIdFactura() );
 								AbstractJasperReports.createReport(conexion.getPoolConexion().getConnection(), 1, myFactura.getIdFactura());
-								AbstractJasperReports.showViewer(view);
-								//AbstractJasperReports.imprimierFactura();
+								//AbstractJasperReports.showViewer(view);
+								AbstractJasperReports.imprimierFactura();
+								AbstractJasperReports.imprimierFactura();
 								//myFactura=null;
 								setEmptyView();
 								
