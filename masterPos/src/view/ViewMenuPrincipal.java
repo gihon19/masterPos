@@ -45,6 +45,8 @@ public class ViewMenuPrincipal extends JFrame {
 	private JMenuItem mntmVerRequi;
 	
 	private JMenuItem mntmPagosClientes;
+	private JMenuItem mntmListaPagos;
+	private JMenuItem mntmProgramarPrecios;
 	
 	public ViewMenuPrincipal() {
 		setTitle("AdminTools");
@@ -73,6 +75,9 @@ public class ViewMenuPrincipal extends JFrame {
 		
 		mntmMarcas = new JMenuItem("Marcas");
 		mnInventario.add(mntmMarcas);
+		
+		mntmProgramarPrecios = new JMenuItem("Programar Precios");
+		mnInventario.add(mntmProgramarPrecios);
 		
 		mnRequisiciones = new JMenu("Requisiciones");
 		mnInventario.add(mnRequisiciones);
@@ -111,7 +116,10 @@ public class ViewMenuPrincipal extends JFrame {
 		JMenu mnCuentasPorCobrar = new JMenu("Cuentas por Cobrar");
 		menuBar.add(mnCuentasPorCobrar);
 		
-		mntmPagosClientes = new JMenuItem("Pagos clientes");
+		mntmListaPagos = new JMenuItem("Ver Pagos");
+		mnCuentasPorCobrar.add(mntmListaPagos);
+		
+		mntmPagosClientes = new JMenuItem("Pagos Clientes");
 		mnCuentasPorCobrar.add(mntmPagosClientes);
 		
 		JMenu mnCuentasPorPagar = new JMenu("Cuentas Por Pagar");
@@ -192,6 +200,12 @@ public class ViewMenuPrincipal extends JFrame {
 		
 		mntmPagosClientes.addActionListener(c);
 		mntmPagosClientes.setActionCommand("PAGOCLIENTES");
+		
+		mntmListaPagos.addActionListener(c);
+		mntmListaPagos.setActionCommand("LISTAPAGOS");
+		
+		mntmProgramarPrecios.addActionListener(c);
+		mntmProgramarPrecios.setActionCommand("PROGRAMARPRECIOS");
 		
 	}
 	public JLabel getLblUserName(){

@@ -169,14 +169,14 @@ public class ViewFacturar extends JDialog {
 		panelDatosFactura=new JPanel();
 		//panelDatosFactura.setBackground(Color.WHITE);
 		panelDatosFactura.setBorder(new TitledBorder(new LineBorder(new Color(130, 135, 144)), "Datos Generales", TitledBorder.LEFT, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panelDatosFactura.setBounds(208, 11, 790, 84);
+		panelDatosFactura.setBounds(196, 11, 802, 84);
 		panelDatosFactura.setLayout(null);
 		
 		getContentPane().add(panelDatosFactura);
 		
 		panelBuscar= new JPanel();
 		panelBuscar.setBorder(new TitledBorder(new LineBorder(new Color(130, 135, 144)), "Buscar Articulo", TitledBorder.LEFT, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panelBuscar.setBounds(208, 110, 790, 50);
+		panelBuscar.setBounds(196, 94, 802, 50);
 		panelBuscar.setLayout(null);
 		//getContentPane().geti
 		getContentPane().add(panelBuscar);
@@ -238,7 +238,7 @@ public class ViewFacturar extends JDialog {
 		
 		grupoOpciones = new ButtonGroup();
 		rdbtnCredito = new JRadioButton("");
-		rdbtnCredito.setEnabled(false);
+		//rdbtnCredito.setEnabled(false);// para descativar los creditos
 		rdbtnCredito.setBounds(526, 47, 21, 23);
 		grupoOpciones.add(rdbtnCredito);
 		panelDatosFactura.add(rdbtnCredito);
@@ -289,10 +289,12 @@ public class ViewFacturar extends JDialog {
 		tableDetalle.getColumnModel().getColumn(5).setPreferredWidth(80);	//
 		tableDetalle.getColumnModel().getColumn(6).setPreferredWidth(80);	//
 		tableDetalle.getColumnModel().getColumn(7).setPreferredWidth(100);	//
+		
+		tableDetalle.setRowHeight(30);
 		//registerEnterKey( );
 		
 		JScrollPane scrollPane = new JScrollPane(tableDetalle);
-		scrollPane.setBounds(208, 175, 790, 295);
+		scrollPane.setBounds(196, 144, 802, 326);
 		getContentPane().add(scrollPane);
 		
 		
@@ -436,7 +438,7 @@ public class ViewFacturar extends JDialog {
 	public TablaModeloFactura getModeloTabla(){
 		return modeloTabla;
 	}
-	public JTable geTableDetalle(){
+	public JTable getTableDetalle(){
 		return tableDetalle;
 	}
 	public JTextField getTxtBuscar(){

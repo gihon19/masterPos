@@ -9,6 +9,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -17,6 +18,7 @@ import javax.swing.event.TableModelListener;
 
 import view.ViewCxCPagos;
 import view.ViewListaClientes;
+import modelo.AbstractJasperReports;
 import modelo.Cliente;
 import modelo.Conexion;
 import modelo.DetalleFactura;
@@ -154,6 +156,7 @@ public class CtlFacturaPagos implements ActionListener, MouseListener, TableMode
 			
 				//this.total.add(detalle.getTotal());
 				myRecibo.setTotal(detalle.getTotal());
+				
 			
 				//JOptionPane.showMessageDialog(view, "fecha:"+total);
 					
@@ -248,6 +251,8 @@ public class CtlFacturaPagos implements ActionListener, MouseListener, TableMode
 			boolean resul=this.myReciboDao.registrar(myRecibo);
 			
 			if(resul){
+				
+				myRecibo.setNoRecibo(myReciboDao.idUltimoRecibo);
 				//se cambia el estado de las factura que fueron cobradas
 				for(int x=0;x<view.getModeloTabla().getDetalles().size();x++){
 					
@@ -257,6 +262,22 @@ public class CtlFacturaPagos implements ActionListener, MouseListener, TableMode
 					}
 				}
 				JOptionPane.showMessageDialog(view, "El recibo se guardo correctamente.");
+				this.view.setVisible(false);
+				
+				
+				try {
+					/*this.view.setVisible(false);
+					this.view.dispose();*/
+					//AbstractJasperReports.createReportFactura( conexion.getPoolConexion().getConnection(), "Factura_Saint_Paul.jasper",myFactura.getIdFactura() );
+					AbstractJasperReports.createReport(conexion.getPoolConexion().getConnection(), 5, myRecibo.getNoRecibo());
+					//AbstractJasperReports.showViewer(view);
+					AbstractJasperReports.showViewer(view);
+					
+					//myFactura.
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 			}else{//
 				JOptionPane.showMessageDialog(view, "El recibo no se guardo correctamente.");
@@ -279,6 +300,7 @@ public class CtlFacturaPagos implements ActionListener, MouseListener, TableMode
 			//se verifica la facturas que se van a pagar y se arma el concepto
 			if(view.getModeloTabla().getDetalles().get(x).getDeseaPagar()==true){
 				concepto=concepto+view.getModeloTabla().getDetalles().get(x).getIdFactura()+",";
+				myRecibo.getFacturas().add(view.getModeloTabla().getDetalles().get(x));
 			}
 		}
 		myRecibo.setConcepto(concepto);

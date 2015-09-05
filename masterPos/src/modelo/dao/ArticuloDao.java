@@ -765,5 +765,46 @@ public class ArticuloDao {
 			} // fin de catch
 		} // fin de finally
 	}
+	public boolean registraPrecioProgramar(Articulo myArticulo) {
+		// TODO Auto-generated method stub
+		int resultado=0;
+		
+		ResultSet rs=null;
+		Connection con = null;
+		
+		try 
+		{
+			con = conexion.getPoolConexion().getConnection();
+			
+			insertarNuevaArticulo=con.prepareStatement( "INSERT INTO precios_programados(codigo_articulo,nuevo_precio) VALUES (?,?)");
+			
+			insertarNuevaArticulo.setInt(1, myArticulo.getId());
+			insertarNuevaArticulo.setDouble(2, myArticulo.getPrecioVenta());
+			
+			
+			resultado=insertarNuevaArticulo.executeUpdate();
+			
+			return true;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			//conexion.desconectar();
+            return false;
+		}
+		finally
+		{
+			try{
+				if(rs!=null)rs.close();
+				 if(insertarNuevaArticulo != null)insertarNuevaArticulo.close();
+	              if(con != null) con.close();
+			} // fin de try
+			catch ( SQLException excepcionSql )
+			{
+				excepcionSql.printStackTrace();
+				//conexion.desconectar();
+			} // fin de catch
+		} // fin de finally
+		
+	}
 
 }

@@ -172,19 +172,7 @@ ResultSet res=null;
 					insertar.setBigDecimal(3, aRegistrar.getCredito());
 					insertar.setBigDecimal(4, aRegistrar.getSaldo());
 					resultado=insertar.executeUpdate();
-					/*insertarNuevaCliente.setString( 1, myCliente.getNombre() );
-					insertarNuevaCliente.setString( 2, myCliente.getDereccion() );
-					insertarNuevaCliente.setString( 3, myCliente.getTelefono());
-					insertarNuevaCliente.setString(4, myCliente.getCelular());
-					insertarNuevaCliente.setString(5, myCliente.getRtn());
 					
-					
-					
-					rs=insertarNuevaCliente.getGeneratedKeys(); //obtengo las ultimas llaves generadas
-					while(rs.next()){
-						this.setIdClienteRegistrado(rs.getInt(1));
-					}
-					*/
 					return true;
 					
 				} catch (SQLException e) {

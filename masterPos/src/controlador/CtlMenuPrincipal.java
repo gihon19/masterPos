@@ -21,6 +21,8 @@ import view.ViewListaClientes;
 import view.ViewListaFactura;
 import view.ViewListaFacturasCompra;
 import view.ViewListaMarca;
+import view.ViewListaPagos;
+import view.ViewListaPrecioProgramar;
 import view.ViewListaProveedor;
 import view.ViewListaRequisiciones;
 import view.ViewMenuPrincipal;
@@ -166,6 +168,21 @@ public class CtlMenuPrincipal implements ActionListener {
 				viewPagoClientes.dispose();
 				viewPagoClientes=null;
 				ctlPagoCleintes=null;
+				break;
+			case "LISTAPAGOS":
+				
+				ViewListaPagos viewListaPagos=new ViewListaPagos(view);
+				CtlPagoLista ctlPagoLista =new CtlPagoLista(viewListaPagos, conexion);
+				viewListaPagos.dispose();
+				viewListaPagos=null;
+				ctlPagoLista=null;
+				break;
+			case "PROGRAMARPRECIOS":
+				ViewListaPrecioProgramar viewProgramarPrecio=new ViewListaPrecioProgramar(view);
+				CtlProgramarPrecios ctlProgramarPrecio=new CtlProgramarPrecios(viewProgramarPrecio, conexion);
+				viewProgramarPrecio.dispose();
+				viewProgramarPrecio=null;
+				ctlProgramarPrecio=null;
 				break;
 		}
 		

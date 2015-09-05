@@ -1,6 +1,8 @@
 package modelo;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReciboPago {
 	
@@ -10,11 +12,18 @@ public class ReciboPago {
 	private String totalLetras="";
 	private String fecha; 
 	private int noRecibo=0;
+	private List<Factura> facturas=new ArrayList<Factura>();
 	
 
 	public ReciboPago() {
 		// TODO Auto-generated constructor stub
 		myCliente=new Cliente();
+	}
+	public List<Factura> getFacturas(){
+		return facturas;
+	}
+	public void setFacturas(List<Factura> d){
+		facturas=d;
 	}
 	public void setNoRecibo(int n){
 		noRecibo=n;

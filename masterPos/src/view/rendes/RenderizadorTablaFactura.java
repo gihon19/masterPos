@@ -2,6 +2,7 @@ package view.rendes;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -13,8 +14,11 @@ public class RenderizadorTablaFactura implements TableCellRenderer{
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value,
 			boolean isSelected, boolean hasFocus, int row, int column) {
-		// TODO Auto-generated method stub
+		
+		
+		Font myFont=new Font(Font.SANS_SERIF, Font.PLAIN, 14);
 		 JTextField editor = new JTextField();
+		 editor.setFont(myFont);
 		 editor.setText("");
 		    if (value != null)
 		      editor.setText(value.toString());

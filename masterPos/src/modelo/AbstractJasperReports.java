@@ -55,11 +55,13 @@ public abstract class AbstractJasperReports
 	private static InputStream facturaCompra=null;
 	private static InputStream facturaReimpresion=null;
 	private static InputStream cierreCaja=null;
+	private static InputStream reciboPago=null;
 	
 	private static JasperReport	reportFactura;
 	private static JasperReport	reportFacturaCompra;
 	private static JasperReport	reportFacturaReimpresion;
 	private static JasperReport	reportFacturaCierreCaja;
+	private static JasperReport	reportReciboPago;
 	
 	
 	public static void loadFileReport(){
@@ -68,6 +70,7 @@ public abstract class AbstractJasperReports
 		facturaCompra=AbstractJasperReports.class.getResourceAsStream("/reportes/Factura_Compra_Saint_Paul.jasper");
 		facturaReimpresion=AbstractJasperReports.class.getResourceAsStream("/reportes/factura_texaco_reimpresion2.jasper");
 		cierreCaja=AbstractJasperReports.class.getResourceAsStream("/reportes/Cierre_Caja_Texaco2.jasper");
+		reciboPago=AbstractJasperReports.class.getResourceAsStream("/reportes/recibo_pago.jasper");
 		
 		
 		try {
@@ -75,6 +78,7 @@ public abstract class AbstractJasperReports
 			reportFacturaCompra = (JasperReport) JRLoader.loadObject( facturaCompra );
 			reportFacturaReimpresion= (JasperReport) JRLoader.loadObject( facturaReimpresion );
 			reportFacturaCierreCaja= (JasperReport) JRLoader.loadObject( cierreCaja );
+			reportReciboPago= (JasperReport) JRLoader.loadObject( reciboPago );
 		} catch (JRException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -100,6 +104,9 @@ public abstract class AbstractJasperReports
 			}
 			if(tipoReporte==4){
 				reportFilled = JasperFillManager.fillReport( reportFacturaCierreCaja, parametros, conn );
+			}
+			if(tipoReporte==5){
+				reportFilled = JasperFillManager.fillReport( reportReciboPago, parametros, conn );
 			}
 			
 			

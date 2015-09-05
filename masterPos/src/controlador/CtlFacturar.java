@@ -309,8 +309,17 @@ public class CtlFacturar  implements ActionListener, MouseListener, TableModelLi
 						//se calcula los totales
 						calcularTotales();
 						
+						
+						boolean toggle = false;
+					    boolean extend = false;
+					    this.view.getTableDetalle().changeSelection(row, 0, toggle, extend);
+					    this.view.getTableDetalle().changeSelection(row, colum, toggle, extend);
+					    this.view.getTableDetalle().addColumnSelectionInterval(3, 3);
+					    
+					    
+					    
 						//se agrega otra fila en la tabla
-						this.view.getModeloTabla().agregarDetalle();
+						//this.view.getModeloTabla().agregarDetalle();
 						
 					}else{//si no se encuentra
 						
@@ -595,7 +604,7 @@ public void calcularTotal(DetalleFactura detalle){
 		}*/
 		
 		//Recoger qué fila se ha pulsadao en la tabla
-		filaPulsada = this.view.geTableDetalle().getSelectedRow();
+		filaPulsada = this.view.getTableDetalle().getSelectedRow();
 		
 		if(e.getKeyCode()==KeyEvent.VK_F1){
 			buscarArticulo();
@@ -704,7 +713,7 @@ public void calcularTotal(DetalleFactura detalle){
 		// TODO Auto-generated method stub
 		
 		//Recoger qué fila se ha pulsadao en la tabla
-		filaPulsada = this.view.geTableDetalle().getSelectedRow();
+		filaPulsada = this.view.getTableDetalle().getSelectedRow();
 		char caracter = e.getKeyChar();
 		
 		
@@ -1031,13 +1040,13 @@ public void calcularTotal(DetalleFactura detalle){
 	
 	private void selectRowInset(){
 		
-		int row = this.view.geTableDetalle().getRowCount () - 2;
+		int row = this.view.getTableDetalle().getRowCount () - 2;
 	    int col = 1;
 	    boolean toggle = false;
 	    boolean extend = false;
-	    this.view.geTableDetalle().changeSelection(row, 0, toggle, extend);
-	    this.view.geTableDetalle().changeSelection(row, col, toggle, extend);
-	    this.view.geTableDetalle().addColumnSelectionInterval(0, 7);
+	    this.view.getTableDetalle().changeSelection(row, 0, toggle, extend);
+	    this.view.getTableDetalle().changeSelection(row, col, toggle, extend);
+	    this.view.getTableDetalle().addColumnSelectionInterval(0, 7);
 		
 		/*<<<<<<<<<<<<<<<selecionar la ultima fila creada>>>>>>>>>>>>>>>*/
 		/*int row =  this.view.geTableDetalle().getRowCount () - 2;

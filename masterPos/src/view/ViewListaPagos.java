@@ -2,10 +2,7 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dialog;
 import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.GraphicsConfiguration;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.Window;
@@ -13,7 +10,6 @@ import java.awt.Window;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -22,25 +18,20 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
- 
-
-
-
-
-
 
 import controlador.CtlFacturas;
-
-import javax.swing.JLabel;
-
+import controlador.CtlPagoLista;
 import view.botones.BotonAgregar;
 import view.botones.BotonBuscar;
+import view.botones.BotonCobrarSmall;
 import view.botones.BotonEliminar;
 import view.botones.BotonImprimirSmall;
 import view.rendes.RenderizadorTablaFacturas;
 import view.tablemodel.TablaModeloFacturados;
+import view.tablemodel.TablaModeloFacturas;
+import view.tablemodel.TmPagos;
 
-public class ViewFacturas extends JDialog {
+public class ViewListaPagos extends JDialog {
 	
 	protected BorderLayout miEsquema;
 	protected GridLayout miEsquemaTabla;
@@ -61,25 +52,22 @@ public class ViewFacturas extends JDialog {
 	private JRadioButton rdbtnTodos;
 	protected BotonBuscar btnBuscar;
 	protected JTextField txtBuscar1;
-	
-	
-	
-	
-	private JTable tablaFacturas;
-	private TablaModeloFacturados modelo;
 	private JTextField txtBuscar2;
+	
+	
+	
+	private JTable tablaPagos;
+	private TmPagos modelo;
 
-	public ViewFacturas(JFrame view) {
-		
-		
+	public ViewListaPagos(Window view) {
 		miEsquema=new BorderLayout();
-		this.setTitle("Facturas");
+		this.setTitle("Pagos de clientes");
 		this.setLocationRelativeTo(view);
 		this.setModal(true);
 		getContentPane().setLayout(miEsquema);
-	
-	
-	
+		
+		
+		
 		//creacion de los paneles
 		panelAccion=new JPanel();
 		panelBusqueda=new JPanel();
@@ -132,37 +120,70 @@ public class ViewFacturas extends JDialog {
 				
 		btnBuscar=new BotonBuscar();
 		panelBusqueda.add(btnBuscar);
-	    
-	    //tabla y sus componentes
-		modelo=new TablaModeloFacturados();
-		tablaFacturas=new JTable();
-		tablaFacturas.setModel(modelo);
+        //tabla y sus componentes
+		modelo=new TmPagos();
+		tablaPagos=new JTable();
+		tablaPagos.setModel(modelo);
 		RenderizadorTablaFacturas renderizador = new RenderizadorTablaFacturas();
-		tablaFacturas.setDefaultRenderer(String.class, renderizador);
+		tablaPagos.setDefaultRenderer(String.class, renderizador);
 		
-		tablaFacturas.getColumnModel().getColumn(0).setPreferredWidth(60);     //Tamaño de las columnas de las tablas
-		tablaFacturas.getColumnModel().getColumn(1).setPreferredWidth(70);	//de las columnas
-		tablaFacturas.getColumnModel().getColumn(2).setPreferredWidth(280);	//en la tabla
-		tablaFacturas.getColumnModel().getColumn(3).setPreferredWidth(70);	//
+		tablaPagos.getColumnModel().getColumn(0).setPreferredWidth(20);     //Tamaño de las columnas de las tablas
+		tablaPagos.getColumnModel().getColumn(1).setPreferredWidth(20);	//de las columnas
+		tablaPagos.getColumnModel().getColumn(2).setPreferredWidth(250);	//en la tabla
+		tablaPagos.getColumnModel().getColumn(3).setPreferredWidth(70);	//
 		
 		
-		JScrollPane scrollPane = new JScrollPane(tablaFacturas);
+		JScrollPane scrollPane = new JScrollPane(tablaPagos);
 		scrollPane.setBounds(36, 97, 742, 136);
-	
-	
+		
+		
 		//configuracion de los paneles
 		panelSuperior.add(panelAccion);
 		panelSuperior.add(panelBusqueda);
 		getContentPane().add(panelSuperior, BorderLayout.NORTH);
 		getContentPane().add(scrollPane, BorderLayout.CENTER);
-		setSize(744,600);
-	
+		setSize(729,600);
+		
+		//se hace visible
+		//setVisible(true);
+		
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 	}
 	
-public void conectarControlador(CtlFacturas c){
+	public JTable getTablaPagos(){
+		return tablaPagos;
+	}
+	public TmPagos getModelo(){
+		return modelo;
+	}
+	public JButton getBtnEliminar(){
+		return btnEliminar;
+	}
+	public JRadioButton getRdbtnId(){
+		return rdbtnId;
+	}
+	public JTextField getTxtBuscar1(){
+		return txtBuscar1;
+	}
+	public JTextField getTxtBuscar2(){
+		return txtBuscar2;
+	}
+	public BotonImprimirSmall getBtnImprimir(){
+		return btnImprimir;
+	}
+	public JRadioButton getRdbtnFecha(){
+		return rdbtnFecha;
+	}
+	public JRadioButton getRdbtnTodos(){
+		return rdbtnTodos;
 		
+	}
+	public BotonAgregar getBtnAgregar(){
+		return btnAgregar;
+	}
+public void conectarControlador(CtlPagoLista c){
+		this.addWindowListener(c);
 		rdbtnTodos.addActionListener(c);
 		rdbtnTodos.setActionCommand("TODAS");
 		
@@ -191,41 +212,8 @@ public void conectarControlador(CtlFacturas c){
 		 txtBuscar1.addActionListener(c);
 		 txtBuscar1.setActionCommand("BUSCAR");
 		 
-		 tablaFacturas.addMouseListener(c);
-		 tablaFacturas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		 tablaPagos.addMouseListener(c);
+		 tablaPagos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	}
-	
-	public JTable getTablaFacturas(){
-		return tablaFacturas;
-	}
-	public TablaModeloFacturados getModelo(){
-		return modelo;
-	}
-	public JButton getBtnEliminar(){
-		return btnEliminar;
-	}
-	public JRadioButton getRdbtnId(){
-		return rdbtnId;
-	}
-	public JTextField getTxtBuscar1(){
-		return txtBuscar1;
-	}
-	public JTextField getTxtBuscar2(){
-		return txtBuscar2;
-	}
-	public BotonImprimirSmall getBtnImprimir(){
-		return btnImprimir;
-	}
-	public JRadioButton getRdbtnFecha(){
-		return rdbtnFecha;
-	}
-	public JRadioButton getRdbtnTodos(){
-		return rdbtnTodos;
-		
-	}
-	public BotonAgregar getBtnAgregar(){
-		return btnAgregar;
-	}
-
 
 }
