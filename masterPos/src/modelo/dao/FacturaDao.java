@@ -382,7 +382,7 @@ public class FacturaDao {
 				+ "encabezado_factura.usuario,"
 				+ "encabezado_factura.estado_factura, "
 				+ "encabezado_factura.agrega_kardex "
-				+ " FROM encabezado_factura";
+				+ " FROM encabezado_factura ORDER BY encabezado_factura.numero_factura DESC";
         //Statement stmt = null;
        	List<Factura> facturas=new ArrayList<Factura>();
 		
