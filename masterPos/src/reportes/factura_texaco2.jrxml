@@ -7,7 +7,7 @@
 	<property name="com.jaspersoft.studio.unit.pageWidth" value="mm"/>
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="192"/>
+	<property name="ireport.y" value="624"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -20,39 +20,39 @@
 	</style>
 	<parameter name="numero_factura" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[SELECT texaco_pos .v_encabezado_factura.numero_factura,
-	texaco_pos .v_encabezado_factura.fecha,
-	texaco_pos .v_encabezado_factura.codigo_cliente,
-	texaco_pos .v_encabezado_factura.nombre_cliente,
-	texaco_pos .v_encabezado_factura.direccion,
-	texaco_pos .v_encabezado_factura.telefono,
-	texaco_pos .v_encabezado_factura.movil,
-	texaco_pos .v_encabezado_factura.rtn,
-	texaco_pos .v_encabezado_factura.subtotal,
-	texaco_pos .v_encabezado_factura.impuesto,
-	texaco_pos .v_encabezado_factura.total,
-	texaco_pos .v_encabezado_factura.codigo,
-	texaco_pos .v_encabezado_factura.isv18,
-	texaco_pos .v_encabezado_factura.estado_factura,
-	texaco_pos .v_encabezado_factura.usuario,
-	texaco_pos .v_encabezado_factura.pago,
-	texaco_pos .v_encabezado_factura.tipo_factura,
-	texaco_pos .v_encabezado_factura.descuento,
-	texaco_pos .v_detalle_factura.total_detalle,
-	texaco_pos .v_detalle_factura.subtotal_detalle,
-	texaco_pos .v_detalle_factura.descuento_detalle,
-	texaco_pos .v_detalle_factura.impuesto_detalle,
-	texaco_pos .v_detalle_factura.cantidad_detalle,
-	texaco_pos .v_detalle_factura.precio_detalle,
-	texaco_pos .v_detalle_factura.articulo,
-	texaco_pos .v_detalle_factura.numero_factura_detalle,
-	texaco_pos .v_encabezado_factura.cambio,
-	texaco_pos .v_encabezado_factura.total_letras
-FROM texaco_pos .v_encabezado_factura
-	INNER JOIN texaco_pos .v_detalle_factura ON
-	 texaco_pos .v_detalle_factura.numero_factura_detalle = texaco_pos .v_encabezado_factura.numero_factura
+		<![CDATA[SELECT v_encabezado_factura.numero_factura,
+	v_encabezado_factura.fecha,
+	v_encabezado_factura.codigo_cliente,
+	v_encabezado_factura.nombre_cliente,
+	v_encabezado_factura.direccion,
+	v_encabezado_factura.telefono,
+	v_encabezado_factura.movil,
+	v_encabezado_factura.rtn,
+	v_encabezado_factura.subtotal,
+	v_encabezado_factura.impuesto,
+	v_encabezado_factura.total,
+	v_encabezado_factura.codigo,
+	v_encabezado_factura.isv18,
+	v_encabezado_factura.estado_factura,
+	v_encabezado_factura.usuario,
+	v_encabezado_factura.pago,
+	v_encabezado_factura.tipo_factura,
+	v_encabezado_factura.descuento,
+	v_detalle_factura.total_detalle,
+	v_detalle_factura.subtotal_detalle,
+	v_detalle_factura.descuento_detalle,
+	v_detalle_factura.impuesto_detalle,
+	v_detalle_factura.cantidad_detalle,
+	v_detalle_factura.precio_detalle,
+	v_detalle_factura.articulo,
+	v_detalle_factura.numero_factura_detalle,
+	v_encabezado_factura.cambio,
+	v_encabezado_factura.total_letras
+FROM v_encabezado_factura
+	INNER JOIN v_detalle_factura ON
+	v_detalle_factura.numero_factura_detalle = v_encabezado_factura.numero_factura
 WHERE
-	 texaco_pos .v_encabezado_factura.numero_factura = $P{numero_factura}]]>
+	 v_encabezado_factura.numero_factura = $P{numero_factura}]]>
 	</queryString>
 	<field name="numero_factura" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>

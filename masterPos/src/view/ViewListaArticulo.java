@@ -71,48 +71,7 @@ public class ViewListaArticulo extends JDialog {
 	public ViewListaArticulo(Window view){
 		super(view,"Articulos",Dialog.ModalityType.DOCUMENT_MODAL);
 		
-		/*addWindowListener(new WindowListener() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				JOptionPane.showMessageDialog(null, "Se esta cerrando");
-			}
-
-			@Override
-			public void windowOpened(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void windowClosed(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void windowIconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void windowDeiconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void windowActivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void windowDeactivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});*/
+		
 		miEsquema=new BorderLayout();
 		//this.setTitle("Articulos");
 		getContentPane().setLayout(miEsquema);

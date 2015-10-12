@@ -30,6 +30,7 @@ public class principal {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.exit(0);
 		}
 		
 		
@@ -49,7 +50,7 @@ public class principal {
 			if(conexion.getUsuarioLogin().getTipoPermiso()==2){
 				//JOptionPane.showMessageDialog(viewLogin, "jola");
 				ViewFacturar vistaFacturar=new ViewFacturar(null);
-				vistaFacturar.pack();
+				//vistaFacturar.pack();
 				CtlFacturar ctlFacturar=new CtlFacturar(vistaFacturar,conexion );
 				vistaFacturar.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE); //.setDefaultCloseOperation(JDialog.EXIT_ON_CLOSE);
 				vistaFacturar.setVisible(true);
