@@ -1,5 +1,6 @@
 package modelo;
 
+import java.awt.Container;
 import java.awt.Dialog;
 import java.awt.Window;
 import java.awt.event.WindowAdapter;
@@ -30,6 +31,7 @@ import javax.print.attribute.standard.PrinterName;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.export.JRPrintServiceExporter;
@@ -56,12 +58,14 @@ public abstract class AbstractJasperReports
 	private static InputStream facturaReimpresion=null;
 	private static InputStream cierreCaja=null;
 	private static InputStream reciboPago=null;
+	private static InputStream Dei=null;
 	
 	private static JasperReport	reportFactura;
 	private static JasperReport	reportFacturaCompra;
 	private static JasperReport	reportFacturaReimpresion;
 	private static JasperReport	reportFacturaCierreCaja;
 	private static JasperReport	reportReciboPago;
+	private static JasperReport	reportDei;
 	
 	
 	public static void loadFileReport(){
@@ -71,6 +75,7 @@ public abstract class AbstractJasperReports
 		facturaReimpresion=AbstractJasperReports.class.getResourceAsStream("/reportes/factura_texaco_reimpresion2.jasper");
 		cierreCaja=AbstractJasperReports.class.getResourceAsStream("/reportes/Cierre_Caja_Texaco2.jasper");
 		reciboPago=AbstractJasperReports.class.getResourceAsStream("/reportes/recibo_pago.jasper");
+		Dei=AbstractJasperReports.class.getResourceAsStream("/reportes/ReporteDEI.jasper");
 		
 		
 		try {
@@ -79,17 +84,38 @@ public abstract class AbstractJasperReports
 			reportFacturaReimpresion= (JasperReport) JRLoader.loadObject( facturaReimpresion );
 			reportFacturaCierreCaja= (JasperReport) JRLoader.loadObject( cierreCaja );
 			reportReciboPago= (JasperReport) JRLoader.loadObject( reciboPago );
+			reportDei= (JasperReport) JRLoader.loadObject( Dei );
 		} catch (JRException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+	public static void createReportDei(Connection conn,String fechaInicio,String fechaFinal,String usuario){
+		 Map parametros = new HashMap();
+		 parametros.put("FechaInicio",fechaInicio);
+		 parametros.put("FechaFinal",fechaFinal);
+		 parametros.put("usuario",usuario);
+		 
+		 
+		 try {
+			reportFilled = JasperFillManager.fillReport( reportDei, parametros, conn );
+		} catch (JRException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 try {
+				conn.close();
+			} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+			}
+	}
 	
 	public static void createReport( Connection conn, int tipoReporte,Integer idFactura )
 	{
 		 Map parametros = new HashMap();
 		 parametros.put("numero_factura",idFactura);
+		 
 		 
 		try {
 			
@@ -204,6 +230,10 @@ public abstract class AbstractJasperReports
 		//viewer.setVisible( true );
 		
 		
+	}
+	public static Container getPanelReport(){
+		JasperViewer viewer3 = new JasperViewer( reportFilled );
+		return viewer3.getContentPane();
 	}
 	
 	 public static void Imprimir2(){  

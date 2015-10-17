@@ -716,7 +716,10 @@ public void calcularTotal(DetalleFactura detalle){
 		filaPulsada = this.view.getTableDetalle().getSelectedRow();
 		char caracter = e.getKeyChar();
 		
-		
+		if(e.getComponent()==this.view.getTxtNombrecliente()){
+			view.getTxtIdcliente().setText("-1");
+			
+		}
 		//para quitar los simnos mas o numero que ingrese en la busqueda
 		if(e.getComponent()==this.view.getTxtBuscar()){
 			Character caracter1 = new Character(e.getKeyChar());

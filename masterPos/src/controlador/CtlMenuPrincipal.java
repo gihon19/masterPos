@@ -184,6 +184,9 @@ public class CtlMenuPrincipal implements ActionListener {
 				viewProgramarPrecio=null;
 				ctlProgramarPrecio=null;
 				break;
+				
+			case "R_DEI":
+				break;
 		}
 		
 	}

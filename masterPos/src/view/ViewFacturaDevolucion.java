@@ -1,39 +1,32 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dialog;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.Window;
 
-import javax.swing.AbstractAction;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComponent;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.KeyStroke;
-import javax.swing.ListSelectionModel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-
-import java.awt.SystemColor;
-
-import javax.swing.SwingConstants;
-
-import controlador.CtlFacturar;
-
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-
-import javax.swing.ImageIcon;
 
 import view.botones.BotonActualizar;
 import view.botones.BotonBuscar1;
@@ -43,76 +36,57 @@ import view.botones.BotonCobrar;
 import view.botones.BotonGuardar;
 import view.rendes.RenderizadorTablaFactura;
 import view.tablemodel.CbxTmEmpleado;
-import view.tablemodel.ComboBoxImpuesto;
-import view.tablemodel.TablaModeloFactura;
+import view.tablemodel.TmDevoluciones;
 
-import javax.swing.JList;
-import javax.swing.AbstractListModel;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.UIManager;
-
-public class ViewFacturar extends JDialog {
+public class ViewFacturaDevolucion extends JDialog {
 	
 	protected BorderLayout miEsquema;
-	protected JTable tableDetalle;
-	protected TablaModeloFactura modeloTabla;
+	private JTable tableDetalle;
+	private TmDevoluciones modeloTabla;
 	
-	protected JPanel panelAcciones;
-	protected JPanel panelBuscar;
-	protected JPanel panelDatosFactura;
-	protected JLabel lblFecha;
-	protected JTextField txtFechafactura;
-	protected JLabel lblCodigoCliente;
-	protected JTextField txtIdcliente;
-	protected JTextField txtNombrecliente;
+	private JPanel panelAcciones;
+	private JPanel panelDatosFactura;
+	private JLabel lblFecha;
+	private JTextField txtFechafactura;
+	private JLabel lblCodigoCliente;
+	private JTextField txtIdcliente;
+	private JTextField txtNombrecliente;
 	
-	protected ButtonGroup grupoOpciones;
-	protected JRadioButton rdbtnCredito;
-	protected JRadioButton rdbtnContado;
+	private ButtonGroup grupoOpciones;
+	private JRadioButton rdbtnCredito;
+	private JRadioButton rdbtnContado;
 	
-	protected JTextField txtSubtotal;
-	protected JLabel lblSubtotal;
-	protected JTextField txtImpuesto;
-	protected JLabel lblImpuesto;
-	protected JTextField txtTotal;
-	protected JLabel lblTotal;
-	protected JLabel lblNombreCliente;
-	protected JLabel lblContado;
-	protected JLabel lblCredito;
+	private JTextField txtSubtotal;
+	private JLabel lblSubtotal;
+	private JTextField txtImpuesto;
+	private JLabel lblImpuesto;
+	private JTextField txtTotal;
+	private JLabel lblTotal;
+	private JLabel lblNombreCliente;
+	private JLabel lblContado;
+	private JLabel lblCredito;
 	
-	protected BotonGuardar btnGuardar;
-	protected BotonCancelar btnCerrar;
-	protected BotonBuscar1 btnBuscar;
-	protected BotonBuscarClientes btnCliente;
-	protected BotonCobrar btnCobrar;
-	protected JButton btnCierreCaja;
+	private BotonGuardar btnGuardar;
+	private BotonCancelar btnCerrar;
+	private BotonBuscar1 btnBuscar;
+	private BotonBuscarClientes btnCliente;
+	private BotonCobrar btnCobrar;
+	private JButton btnCierreCaja;
 	
-	protected JTextField txtDescuento;
+	private JTextField txtDescuento;
 	
-	protected BotonActualizar btnActualizar;
+	private BotonActualizar btnActualizar;
+	private JTextField txtImpuesto18;
+	private JButton btnPendientes;
 	
+	private JTextField txtRtn;
 	
-	protected JTextField txtBuscar;
-	protected JTextField txtArticulo;
-	protected JTextField txtPrecio;
-	protected JTextField txtImpuesto18;
-	protected JButton btnPendientes;
-	
-	protected JTextField txtRtn;
-	
-	protected JComboBox cbxEmpleados;
+	private JComboBox cbxEmpleados;
 	//se crea el modelo de la lista de los impuestos
-	protected CbxTmEmpleado modeloEmpleado;//=new ComboBoxImpuesto();
-	protected JPanel panel;
-	protected JLabel lblBuscar;
-	
-	public ViewFacturar(Window view) {
+	private CbxTmEmpleado modeloEmpleado;//=new ComboBoxImpuesto();
+	private JPanel panel;
+
+	public ViewFacturaDevolucion(Window view) {
 		
 		super(view,"Facturar",Dialog.ModalityType.DOCUMENT_MODAL);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ViewFacturar.class.getResource("/view/recursos/logo-admin-tool1.png")));
@@ -121,7 +95,7 @@ public class ViewFacturar extends JDialog {
 		
 		grupoOpciones = new ButtonGroup();
 		modeloEmpleado=new CbxTmEmpleado();
-		modeloTabla=new TablaModeloFactura();
+		modeloTabla=new TmDevoluciones();
 		RenderizadorTablaFactura renderizador = new RenderizadorTablaFactura();
 		miEsquema=new BorderLayout();
 		
@@ -220,53 +194,6 @@ public class ViewFacturar extends JDialog {
 		cbxEmpleados = new JComboBox();
 		//cbxEmpleados.setModel(modeloEmpleado);//comentar para moder ver la vista de diseño
 		panelDatosFactura.add(cbxEmpleados);
-		
-		
-		
-		
-		panelBuscar= new JPanel();
-		panelBuscar.setBackground(SystemColor.textHighlightText);
-		GridBagConstraints gbc_panelBuscar = new GridBagConstraints();
-		gbc_panelBuscar.fill = GridBagConstraints.HORIZONTAL;
-		gbc_panelBuscar.insets = new Insets(0, 0, 5, 5);
-		gbc_panelBuscar.gridx = 0;
-		gbc_panelBuscar.gridy = 1;
-		panelNorte.add(panelBuscar, gbc_panelBuscar);
-		//panelBuscar.setBounds(196, 94, 802, 50);
-		//getContentPane().geti
-		//panelBuscar.setVisible(false);
-		
-		panelBuscar.setLayout(new GridLayout(2, 3, 7, 1));
-		
-		lblBuscar = new JLabel(" Buscar");
-		lblBuscar.setHorizontalAlignment(SwingConstants.LEFT);
-		lblBuscar.setVerticalAlignment(SwingConstants.BOTTOM);
-		panelBuscar.add(lblBuscar);
-		
-		JLabel lblArticulo = new JLabel("Articulo:");
-		panelBuscar.add(lblArticulo);
-		
-		JLabel lblPrecio = new JLabel("Precio:");
-		panelBuscar.add(lblPrecio);
-		
-		txtBuscar = new JTextField();
-		panelBuscar.add(txtBuscar);
-		txtBuscar.setColumns(10);
-		
-		txtArticulo = new JTextField();
-		txtArticulo.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		txtArticulo.setForeground(new Color(0, 0, 255));
-		txtArticulo.setEditable(false);
-		panelBuscar.add(txtArticulo);
-		txtArticulo.setColumns(10);
-		
-		txtPrecio = new JTextField();
-		txtPrecio.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		txtPrecio.setForeground(new Color(0, 0, 255));
-		txtPrecio.setHorizontalAlignment(SwingConstants.RIGHT);
-		txtPrecio.setEditable(false);
-		panelBuscar.add(txtPrecio);
-		txtPrecio.setColumns(10);
 		
 		
 		tableDetalle = new JTable();
@@ -448,153 +375,5 @@ public class ViewFacturar extends JDialog {
 		//this.pack();
 		
 	}
-	public JComboBox getCbxEmpleados(){
-		return cbxEmpleados;
-	}
-	public CbxTmEmpleado getModeloEmpleados(){
-		return this.modeloEmpleado;
-	}
-	
-	public JRadioButton getRdbtnContado(){
-		return rdbtnContado;
-	}
-	public  JRadioButton getRdbtnCredito(){
-		return  rdbtnCredito;
-	}
-	public BotonActualizar getBtnActualizar(){
-		return btnActualizar;
-	}
-	public JTextField getTxtRtn(){
-		return txtRtn;
-	}
-	public BotonGuardar getBtnGuardar(){
-		return btnGuardar;
-	}
-	public JButton getBtnBuscar(){
-		return btnBuscar;
-	}
-	public JButton getBtnBuscarCliente(){
-		return btnCliente;
-	}
-	public JButton getBtnCobrar(){
-		return btnCobrar;
-	}
-	public JButton getBtnCerrar(){
-		return btnCerrar;
-	}
-	public JButton getBtnPendientes(){
-		return this.btnPendientes;
-	}
-	public JPanel getPanelAcciones(){
-		return panelAcciones;
-	}
-	public JTextField getTxtDescuento(){
-		return txtDescuento;		
-	}
-	public JTextField getTxtSubtotal(){
-		return txtSubtotal;
-	}
-	public JTextField getTxtImpuesto(){
-		return txtImpuesto;
-	}
-	public JTextField getTxtImpuesto18(){
-		return txtImpuesto18;
-	}
-	public JTextField getTxtTotal(){
-		return txtTotal;
-	}
-	public JTextField getTxtNombrecliente(){
-		return txtNombrecliente;
-	}
-	public JTextField getTxtIdcliente(){
-		return txtIdcliente;
-	}
-	public TablaModeloFactura getModeloTabla(){
-		return modeloTabla;
-	}
-	public JTable getTableDetalle(){
-		return tableDetalle;
-	}
-	public JTextField getTxtBuscar(){
-		return txtBuscar;
-	}
-	public JTextField getTxtArticulo(){
-		return txtArticulo;
-	}
-	public JTextField getTxtPrecio(){
-		return txtPrecio;
-	}
-	public JTextField getTxtFechafactura(){
-		return txtFechafactura;
-	}
-	public void conectarContralador(CtlFacturar c){
-		
-		txtIdcliente.addActionListener(c);
-		txtIdcliente.setActionCommand("BUSCARCLIENTE");
-		
-		tableDetalle.addKeyListener(c);
-		tableDetalle.addMouseListener(c);
-		modeloTabla.addTableModelListener(c);
-		//tableDetalle.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tableDetalle.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		tableDetalle.setColumnSelectionAllowed(true);
-		tableDetalle.setRowSelectionAllowed(true);
-		tableDetalle.setCellSelectionEnabled(true);
-		
-		txtIdcliente.addKeyListener(c);
-		txtNombrecliente.addKeyListener(c);
-		txtFechafactura.addKeyListener(c);
-		
-		btnCierreCaja.addKeyListener(c);
-		btnCierreCaja.addActionListener(c);
-		btnCierreCaja.setActionCommand("CIERRECAJA");
-		
-		
-		btnPendientes.addKeyListener(c);
-		btnPendientes.addActionListener(c);
-		btnPendientes.setActionCommand("PENDIENTES");
-		
-		this.btnBuscar.addKeyListener(c);
-		this.btnBuscar.addActionListener(c);
-		this.btnBuscar.setActionCommand("BUSCARARTICULO");
-		
-		txtBuscar.addActionListener(c);
-		txtBuscar.setActionCommand("BUSCARARTICULO2");
-		
-		this.btnCerrar.addKeyListener(c);
-		this.btnCerrar.addActionListener(c);
-		this.btnCerrar.setActionCommand("CERRAR");
-		
-		this.btnCliente.addKeyListener(c);
-		this.btnCliente.addActionListener(c);
-		this.btnCliente.setActionCommand("BUSCARCLIENTES");
-		
-		this.btnCobrar.addKeyListener(c);
-		this.btnCobrar.addActionListener(c);
-		this.btnCobrar.setActionCommand("COBRAR");
-		
-		this.btnGuardar.addKeyListener(c);
-		this.btnGuardar.addActionListener(c);
-		this.btnGuardar.setActionCommand("GUARDAR");
-		
-		btnActualizar.addKeyListener(c);
-		this.btnActualizar.addActionListener(c);
-		this.btnActualizar.setActionCommand("ACTUALIZAR");
-		
-		this.rdbtnContado.addKeyListener(c);
-		this.rdbtnCredito.addKeyListener(c);
-		this.txtDescuento.addKeyListener(c);
-		this.txtImpuesto.addKeyListener(c);
-		this.txtSubtotal.addKeyListener(c);
-		txtRtn.addKeyListener(c);
-		this.txtTotal.addKeyListener(c);
-		txtBuscar.addKeyListener(c);
-		//txtBuscar.
-		txtArticulo.addKeyListener(c);
-		txtPrecio.addKeyListener(c);
-		//KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
-		//manager.addKeyEventDispatcher( c);
-		//this.addWindowListener(c);
-		//this.addw
-	}
+
 }
