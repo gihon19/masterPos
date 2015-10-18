@@ -28,6 +28,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.JTableHeader;
 
 import controlador.CtlDevoluciones;
 import controlador.CtlFacturar;
@@ -41,6 +42,7 @@ import view.rendes.RenderizadorTablaFactura;
 import view.tablemodel.CbxTmEmpleado;
 import view.tablemodel.TablaModeloFactura;
 import view.tablemodel.TmDevoluciones;
+
 import javax.swing.UIManager;
 
 public class ViewFacturaDevolucion extends JDialog {
@@ -195,6 +197,12 @@ public class ViewFacturaDevolucion extends JDialog {
 		
 		tableDetalle = new JTable();
 		tableDetalle.setModel(modeloTabla);
+		
+		JTableHeader anHeader = tableDetalle.getTableHeader();
+	    anHeader.setForeground(new Color(0).black);
+	    anHeader.setBackground(new Color(0).WHITE);
+	    
+		
 		tableDetalle.setBackground(color4);
 		tableDetalle.setDefaultRenderer(String.class, renderizador);
 		//tableDetalle.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -220,6 +228,7 @@ public class ViewFacturaDevolucion extends JDialog {
 		panelNorte.add(scrollPane, gbc_scrollPane);*/
 		
 		scrollPane.setBackground(color4);
+		scrollPane.getViewport().setBackground(color4);
 		getContentPane().add(scrollPane, BorderLayout.CENTER);
 		
 		//panelNorte.add(scrollPane);
