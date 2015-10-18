@@ -24,10 +24,13 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import controlador.CtlDevoluciones;
+import controlador.CtlFacturar;
 import view.botones.BotonActualizar;
 import view.botones.BotonBuscar1;
 import view.botones.BotonBuscarClientes;
@@ -36,7 +39,9 @@ import view.botones.BotonCobrar;
 import view.botones.BotonGuardar;
 import view.rendes.RenderizadorTablaFactura;
 import view.tablemodel.CbxTmEmpleado;
+import view.tablemodel.TablaModeloFactura;
 import view.tablemodel.TmDevoluciones;
+import javax.swing.UIManager;
 
 public class ViewFacturaDevolucion extends JDialog {
 	
@@ -98,51 +103,43 @@ public class ViewFacturaDevolucion extends JDialog {
 		modeloTabla=new TmDevoluciones();
 		RenderizadorTablaFactura renderizador = new RenderizadorTablaFactura();
 		miEsquema=new BorderLayout();
-		
+		Color color1 =Color.decode("#0009999");
+		Color color2 =Color.decode("#33cccc");
+		Color color3 =Color.decode("#d4f4ff");
+		Color color4 =Color.decode("#f4fbfe");
+	
+		this.getContentPane().setBackground(color4);
 		
 		//this.setTitle("Articulos");
 		getContentPane().setLayout(miEsquema);
 		panelAcciones=new JPanel();
-		panelAcciones.setBackground(new Color(176, 196, 222));
+		panelAcciones.setBackground(color1);
 		//panelAcciones.setBounds(20, 11, 178, 459);
 		//panelAcciones.setLayout(null);
 		//panelAcciones.setVisible(false);
 		JPanel panelNorte=new JPanel();
-		getContentPane().add(panelNorte, BorderLayout.CENTER);
-		GridBagLayout gbl_panelNorte = new GridBagLayout();
-		gbl_panelNorte.rowWeights = new double[]{0.0, 0.0, 1.0};
-		gbl_panelNorte.columnWeights = new double[]{1.0};
-		/*gbl_panelNorte.columnWidths = new int[]{863, 0};
-		gbl_panelNorte.rowHeights = new int[]{151, 151, 151, 0};
-		gbl_panelNorte.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_panelNorte.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};*/
-		panelNorte.setLayout(gbl_panelNorte);
-		/*gbc_panelDatosFactura.fill = GridBagConstraints.BOTH;
-		gbc_panelDatosFactura.insets = new Insets(0, 0, 5, 0);
-		gbc_panelDatosFactura.gridx = 0;
-		gbc_panelDatosFactura.gridy = 0;*/
-		/*gbc_panelBuscar.fill = GridBagConstraints.BOTH;
-		gbc_panelBuscar.insets = new Insets(0, 0, 5, 0);
-		gbc_panelBuscar.gridx = 0;
-		gbc_panelBuscar.gridy = 1;*/
+		panelNorte.setBackground(color1);
+		getContentPane().add(panelNorte, BorderLayout.SOUTH);
+		
 		
 		
 		panelDatosFactura=new JPanel();
-		panelDatosFactura.setBackground(new Color(176, 196, 222));
+		panelDatosFactura.setBackground(color3);
+		getContentPane().add(panelDatosFactura, BorderLayout.NORTH);
 		
 		//panelDatosFactura.setBackground(Color.WHITE);
 		panelDatosFactura.setBorder(new TitledBorder(new LineBorder(new Color(130, 135, 144)), "Datos Generales", TitledBorder.LEFT, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		//panelDatosFactura.setBounds(196, 11, 802, 84);
 		//panelDatosFactura.setVisible(false);
 		panelDatosFactura.setLayout(new GridLayout(0, 7, 10, 0));
-		GridBagConstraints gbc_panelDatosFactura = new GridBagConstraints();
+		/*GridBagConstraints gbc_panelDatosFactura = new GridBagConstraints();
 		gbc_panelDatosFactura.fill = GridBagConstraints.HORIZONTAL;
 		gbc_panelDatosFactura.insets = new Insets(0, 0, 5, 5);
 		gbc_panelDatosFactura.gridx = 0; // El área de texto empieza en la columna cero.
 		gbc_panelDatosFactura.gridy = 0; // El área de texto empieza en la fila cero
 		gbc_panelDatosFactura.gridwidth = 1; // El área de texto ocupa dos columnas.
 		gbc_panelDatosFactura.gridheight = 1; // El área de texto ocupa 2 filas.
-		panelNorte.add(panelDatosFactura, gbc_panelDatosFactura);
+		panelNorte.add(panelDatosFactura, gbc_panelDatosFactura);*/
 		lblFecha = new JLabel("Fecha");
 		panelDatosFactura.add(lblFecha);
 		
@@ -198,6 +195,7 @@ public class ViewFacturaDevolucion extends JDialog {
 		
 		tableDetalle = new JTable();
 		tableDetalle.setModel(modeloTabla);
+		tableDetalle.setBackground(color4);
 		tableDetalle.setDefaultRenderer(String.class, renderizador);
 		//tableDetalle.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -214,12 +212,15 @@ public class ViewFacturaDevolucion extends JDialog {
 		//registerEnterKey( );
 		
 		JScrollPane scrollPane = new JScrollPane(tableDetalle);
-		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+		/*GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane.insets = new Insets(0, 0, 0, 5);
 		gbc_scrollPane.gridx = 0;
 		gbc_scrollPane.gridy = 2;
-		panelNorte.add(scrollPane, gbc_scrollPane);
+		panelNorte.add(scrollPane, gbc_scrollPane);*/
+		
+		scrollPane.setBackground(color4);
+		getContentPane().add(scrollPane, BorderLayout.CENTER);
 		
 		//panelNorte.add(scrollPane);
 		//scrollPane.setBounds(196, 144, 802, 326);
@@ -230,52 +231,72 @@ public class ViewFacturaDevolucion extends JDialog {
 		panelAcciones.setLayout(new GridLayout(8, 1, 0, 0));
 		
 		btnBuscar = new BotonBuscar1();
-		btnBuscar.setHorizontalAlignment(SwingConstants.LEFT);
+		btnBuscar.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnBuscar.setForeground(Color.WHITE);
+		btnBuscar.setBackground(color1);
 		//btnBuscar.setBounds(10, 24,158, 38);
 		panelAcciones.add(btnBuscar);
 		
 		btnCobrar = new BotonCobrar();
+		btnCobrar.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnCobrar.setForeground(Color.WHITE);
+		btnCobrar.setBackground(color2);
 		btnCobrar.setText("F2 Cobrar");
-		btnCobrar.setHorizontalAlignment(SwingConstants.LEFT);
 		//btnCobrar.setBounds(10, 86, 158, 38);
 		
 		panelAcciones.add(btnCobrar);
 		//btnBuscar.getInputMap().put(KeyStroke.getKeyStroke("F1"), sumar());
 		
 		btnCliente = new BotonBuscarClientes();
+		btnCliente.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnCliente.setForeground(Color.WHITE);
+		btnCliente.setBackground(color1);
 		btnCliente.setText("F3 Clientes");
-		btnCliente.setHorizontalAlignment(SwingConstants.LEFT);
-		//btnCliente.setBounds(10, 148, 158, 38);
 		panelAcciones.add(btnCliente);
 		
 		btnGuardar = new BotonGuardar();
-		btnGuardar.setHorizontalAlignment(SwingConstants.LEFT);
+		btnGuardar.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnGuardar.setForeground(Color.WHITE);
+		btnGuardar.setBackground(color2);
 		btnGuardar.setText("F4 Guardar");
 		//btnGuardar.setBounds(10, 210, 158, 38);
 		panelAcciones.add(btnGuardar);
 		
 		btnPendientes = new JButton("F5 Pendientes");
-		btnPendientes.setIcon(new ImageIcon(ViewFacturar.class.getResource("/view/recursos/lista.png")));
-		btnPendientes.setHorizontalAlignment(SwingConstants.LEFT);
+		btnPendientes.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnPendientes.setForeground(Color.WHITE);
+		btnPendientes.setBackground(color1);
+		btnPendientes.setIcon(new ImageIcon(ViewFacturar.class.getResource("/view/recursos/pendientes_2.png")));
+		btnPendientes.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnPendientes.setHorizontalTextPosition(SwingConstants.CENTER);
 		//btnPendientes.setBounds(10, 272, 158, 38);
 		panelAcciones.add(btnPendientes);
 		
 		btnCierreCaja = new JButton("F6 Cierre");
-		btnCierreCaja.setHorizontalAlignment(SwingConstants.LEFT);
-		btnCierreCaja.setIcon(new ImageIcon(ViewFacturar.class.getResource("/view/recursos/caja.png")));
+		btnCierreCaja.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnCierreCaja.setForeground(Color.WHITE);
+		btnCierreCaja.setBackground(color2);
+		btnCierreCaja.setIcon(new ImageIcon(ViewFacturar.class.getResource("/view/recursos/cierre_caja_2.png")));
+		btnCierreCaja.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnCierreCaja.setHorizontalTextPosition(SwingConstants.CENTER);
 		//btnCierreCaja.setBounds(10, 334, 158, 38);
 		panelAcciones.add(btnCierreCaja);
 		
 		btnActualizar=new BotonActualizar();
+		btnActualizar.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnActualizar.setForeground(Color.WHITE);
+		btnActualizar.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnActualizar.setBackground(color1);
 		btnActualizar.setText("F7 Actualizar");
-		btnActualizar.setHorizontalAlignment(SwingConstants.LEFT);
 		//btnActualizar.setBounds(10, 210, 158, 38);
 		//getContentPane().add(btnActualizar);
 		panelAcciones.add(btnActualizar);
 		btnActualizar.setVisible(false);
 		
 		btnCerrar = new BotonCancelar();
-		btnCerrar.setHorizontalAlignment(SwingConstants.LEFT);
+		btnCerrar.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnCerrar.setForeground(Color.WHITE);
+		btnCerrar.setBackground(color2);
 		btnCerrar.setText("Esc Cerrar");
 		//btnCerrar.setBounds(10, 396, 158, 38);
 		panelAcciones.add(btnCerrar);
@@ -290,28 +311,13 @@ public class ViewFacturaDevolucion extends JDialog {
 		Font myFont=new Font("OCR A Extended", Font.PLAIN, 45);
 		
 		panel = new JPanel();
-		panel.setBackground(new Color(176, 196, 222));
-		getContentPane().add(panel, BorderLayout.SOUTH);
-		panel.setLayout(new GridLayout(2, 4, 0, 0));
+		panel.setBackground(color4);
+		getContentPane().add(panel, BorderLayout.EAST);
+		panel.setLayout(new GridLayout(10, 1, 0, 0));
 		
 		lblSubtotal = new JLabel("SubTotal");
+		lblSubtotal.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(lblSubtotal);
-		//lblSubtotal.setBounds(20, 490, 59, 14);
-		
-		JLabel lblDescuento = new JLabel("Descuento");
-		panel.add(lblDescuento);
-		//lblDescuento.setBounds(605, 490, 92, 14);
-		
-		lblImpuesto = new JLabel("Impuesto 15");
-		panel.add(lblImpuesto);
-		//lblImpuesto.setBounds(237, 490, 92, 14);
-		
-		JLabel lblImpuesto_1 = new JLabel("Impuesto 18");
-		panel.add(lblImpuesto_1);
-		//lblImpuesto_1.setBounds(424, 490, 82, 14);
-		
-		lblTotal = new JLabel("Total");
-		panel.add(lblTotal);
 		//lblTotal.setBounds(780, 490, 46, 14);
 		
 		
@@ -326,6 +332,11 @@ public class ViewFacturaDevolucion extends JDialog {
 		txtSubtotal.setEditable(false);
 		//txtSubtotal.setBounds(20, 506, 207, 44);
 		txtSubtotal.setColumns(10);
+		//lblSubtotal.setBounds(20, 490, 59, 14);
+		
+		JLabel lblDescuento = new JLabel("Descuento");
+		lblDescuento.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(lblDescuento);
 		
 		txtDescuento = new JTextField();
 		panel.add(txtDescuento);
@@ -335,6 +346,11 @@ public class ViewFacturaDevolucion extends JDialog {
 		txtDescuento.setFont(myFont);
 		txtDescuento.setBounds(605, 506, 163, 44);
 		txtDescuento.setColumns(10);
+		//lblDescuento.setBounds(605, 490, 92, 14);
+		
+		lblImpuesto = new JLabel("Impuesto 15");
+		lblImpuesto.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(lblImpuesto);
 		
 		txtImpuesto = new JTextField();
 		panel.add(txtImpuesto);
@@ -344,6 +360,11 @@ public class ViewFacturaDevolucion extends JDialog {
 		txtImpuesto.setEditable(false);
 		txtImpuesto.setBounds(237, 506, 177, 44);
 		txtImpuesto.setColumns(10);
+		//lblImpuesto.setBounds(237, 490, 92, 14);
+		
+		JLabel lblImpuesto_1 = new JLabel("Impuesto 18");
+		lblImpuesto_1.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(lblImpuesto_1);
 		
 		txtImpuesto18 = new JTextField();
 		panel.add(txtImpuesto18);
@@ -353,6 +374,11 @@ public class ViewFacturaDevolucion extends JDialog {
 		txtImpuesto18.setEditable(false);
 		txtImpuesto18.setBounds(424, 506, 171, 44);
 		txtImpuesto18.setColumns(10);
+		//lblImpuesto_1.setBounds(424, 490, 82, 14);
+		
+		lblTotal = new JLabel("Total");
+		lblTotal.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(lblTotal);
 		
 		txtTotal = new JTextField();
 		panel.add(txtTotal);
@@ -373,6 +399,138 @@ public class ViewFacturaDevolucion extends JDialog {
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		//this.pack();
+		
+	}
+	public JComboBox getCbxEmpleados(){
+		return cbxEmpleados;
+	}
+	public CbxTmEmpleado getModeloEmpleados(){
+		return this.modeloEmpleado;
+	}
+	
+	public JRadioButton getRdbtnContado(){
+		return rdbtnContado;
+	}
+	public  JRadioButton getRdbtnCredito(){
+		return  rdbtnCredito;
+	}
+	public BotonActualizar getBtnActualizar(){
+		return btnActualizar;
+	}
+	public JTextField getTxtRtn(){
+		return txtRtn;
+	}
+	public BotonGuardar getBtnGuardar(){
+		return btnGuardar;
+	}
+	public JButton getBtnBuscar(){
+		return btnBuscar;
+	}
+	public JButton getBtnBuscarCliente(){
+		return btnCliente;
+	}
+	public JButton getBtnCobrar(){
+		return btnCobrar;
+	}
+	public JButton getBtnCerrar(){
+		return btnCerrar;
+	}
+	public JButton getBtnPendientes(){
+		return this.btnPendientes;
+	}
+	public JPanel getPanelAcciones(){
+		return panelAcciones;
+	}
+	public JTextField getTxtDescuento(){
+		return txtDescuento;		
+	}
+	public JTextField getTxtSubtotal(){
+		return txtSubtotal;
+	}
+	public JTextField getTxtImpuesto(){
+		return txtImpuesto;
+	}
+	public JTextField getTxtImpuesto18(){
+		return txtImpuesto18;
+	}
+	public JTextField getTxtTotal(){
+		return txtTotal;
+	}
+	public JTextField getTxtNombrecliente(){
+		return txtNombrecliente;
+	}
+	public JTextField getTxtIdcliente(){
+		return txtIdcliente;
+	}
+	public TmDevoluciones getModeloTabla(){
+		return modeloTabla;
+	}
+	public JTable getTableDetalle(){
+		return tableDetalle;
+	}
+	public JTextField getTxtFechafactura(){
+		return txtFechafactura;
+	}
+	public void conectarContralador(CtlDevoluciones c){
+		
+		txtIdcliente.addActionListener(c);
+		txtIdcliente.setActionCommand("BUSCARCLIENTE");
+		
+		tableDetalle.addKeyListener(c);
+		tableDetalle.addMouseListener(c);
+		modeloTabla.addTableModelListener(c);
+		//tableDetalle.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tableDetalle.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		tableDetalle.setColumnSelectionAllowed(true);
+		tableDetalle.setRowSelectionAllowed(true);
+		tableDetalle.setCellSelectionEnabled(true);
+		
+		txtIdcliente.addKeyListener(c);
+		txtNombrecliente.addKeyListener(c);
+		txtFechafactura.addKeyListener(c);
+		
+		btnCierreCaja.addKeyListener(c);
+		btnCierreCaja.addActionListener(c);
+		btnCierreCaja.setActionCommand("CIERRECAJA");
+		
+		
+		btnPendientes.addKeyListener(c);
+		btnPendientes.addActionListener(c);
+		btnPendientes.setActionCommand("PENDIENTES");
+		
+		this.btnBuscar.addKeyListener(c);
+		this.btnBuscar.addActionListener(c);
+		this.btnBuscar.setActionCommand("BUSCARARTICULO");
+		
+		
+		this.btnCerrar.addKeyListener(c);
+		this.btnCerrar.addActionListener(c);
+		this.btnCerrar.setActionCommand("CERRAR");
+		
+		this.btnCliente.addKeyListener(c);
+		this.btnCliente.addActionListener(c);
+		this.btnCliente.setActionCommand("BUSCARCLIENTES");
+		
+		this.btnCobrar.addKeyListener(c);
+		this.btnCobrar.addActionListener(c);
+		this.btnCobrar.setActionCommand("COBRAR");
+		
+		this.btnGuardar.addKeyListener(c);
+		this.btnGuardar.addActionListener(c);
+		this.btnGuardar.setActionCommand("GUARDAR");
+		
+		btnActualizar.addKeyListener(c);
+		this.btnActualizar.addActionListener(c);
+		this.btnActualizar.setActionCommand("ACTUALIZAR");
+		
+		this.rdbtnContado.addKeyListener(c);
+		this.rdbtnCredito.addKeyListener(c);
+		this.txtDescuento.addKeyListener(c);
+		this.txtImpuesto.addKeyListener(c);
+		this.txtSubtotal.addKeyListener(c);
+		txtRtn.addKeyListener(c);
+		this.txtTotal.addKeyListener(c);
+		
 		
 	}
 

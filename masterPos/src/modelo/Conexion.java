@@ -22,19 +22,19 @@ import org.apache.commons.dbcp.BasicDataSource;
 public class Conexion {
 	
 	
-	static String bd = "miswendy_admin_tools";
+	/*static String bd = "miswendy_admin_tools";
 	   static String login = "miswendy_pos";
 	   static String password = "bTp.rxN-*~Z4";
-	   static String server = "www.miscelaneaswyc.com";
+	   static String server = "www.miscelaneaswyc.com";*/
 	
 	
 	//10.10.10.8:3306
 		private  BasicDataSource basicDataSource;
 	   private DataSource dataSource;
-	   /*static String bd = "admin_tools";
+	   static String bd = "admin_tools";
 	   static String login = "root";
-	   static String password = "jdmm123";*/
-	   static String url = "jdbc:mysql://www.miscelaneaswyc.com:3306/"+bd;
+	   static String password = "jdmm123";
+	   static String url = "jdbc:mysql://localhost:3306/"+bd;
 	   static String driver="com.mysql.jdbc.Driver";
    private Usuario usuarioLogin=null;
 

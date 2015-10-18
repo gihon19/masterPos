@@ -19,6 +19,7 @@ import modelo.Factura;
 import modelo.dao.FacturaDao;
 import modelo.dao.UsuarioDao;
 import view.ViewCrearArticulo;
+import view.ViewFacturaDevolucion;
 import view.ViewFacturar;
 import view.ViewFacturas;
 
@@ -34,6 +35,9 @@ public class CtlFacturas implements ActionListener, MouseListener, ChangeListene
 	//fila selecciona enla lista
 	private int filaPulsada;
 	
+	/**
+	 * @wbp.parser.entryPoint
+	 */
 	public CtlFacturas(ViewFacturas v,Conexion conn) {
 		view =v;
 		view.conectarControlador(this);
@@ -72,6 +76,7 @@ public class CtlFacturas implements ActionListener, MouseListener, ChangeListene
             
             this.view.getBtnEliminar().setEnabled(true);
             this.view.getBtnImprimir().setEnabled(true);
+            view.getBtnAgregar().setEnabled(true);
             this.myFactura=this.view.getModelo().getFactura(filaPulsada);
             //se consigue el proveedore de la fila seleccionada
             //myArticulo=this.view.getModelo().getArticulo(filaPulsada);
@@ -240,6 +245,15 @@ public class CtlFacturas implements ActionListener, MouseListener, ChangeListene
 				this.view.getBtnEliminar().setEnabled(false);
 			}
 			break;
+		case "INSERTAR":
+			ViewFacturaDevolucion viewDevolucion=new ViewFacturaDevolucion(view);
+			CtlDevoluciones ctlDevolucion=new CtlDevoluciones(viewDevolucion,conexion);
+			ctlDevolucion.actualizarFactura(myFactura);
+			viewDevolucion.dispose();
+			viewDevolucion=null;
+			ctlDevolucion=null;
+			
+			break;
 			
 		case "IMPRIMIR":
 			try {
@@ -256,6 +270,7 @@ public class CtlFacturas implements ActionListener, MouseListener, ChangeListene
 			}
 			break;
 		}
+		
 
 	}
 

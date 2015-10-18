@@ -36,10 +36,10 @@ public class ViewReporteDei  extends JFrame{
 		
 		
 		//elEscritorio.add(panel2);
-		panel = new ViewFiltroReportDei(); // crea nuevo panel
+		//panel = new ViewFiltroReportDei(); // crea nuevo panel
 		
 		CtlReporteDei ctl =new CtlReporteDei();
-		panel.btnBuscar.addActionListener(ctl);
+		//panel.btnBuscar.addActionListener(ctl);
 		marco.getContentPane().add( panel, BorderLayout.CENTER ); // agrega el panel
 		//marco.getContentPane().setLayout(null);
 		marco.pack(); // establece marco interno al tamaño del contenido
@@ -60,14 +60,14 @@ public class ViewReporteDei  extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			/*SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			String dateInicio = sdf.format(panel.dateFechaInicio.getDate());
 			//elEscritorio.getc
 			//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			String dateFinal = sdf.format(panel.dateFechaFinal.getDate());
 			
 			
-			JOptionPane.showMessageDialog(null, dateInicio+" Hizo clik en el boton "+dateFinal);
+			JOptionPane.showMessageDialog(null, dateInicio+" Hizo clik en el boton "+dateFinal);*/
 			
 			AbstractJasperReports.loadFileReport();
 			
@@ -75,7 +75,7 @@ public class ViewReporteDei  extends JFrame{
 				//panel2.setVisible(false);
 				//panel2.d
 				//elEscritorio.setVisible(false);
-				AbstractJasperReports.createReportDei(conexion.getPoolConexion().getConnection(),dateInicio, dateFinal,  "DAvid");
+				AbstractJasperReports.createReportDei(conexion.getPoolConexion().getConnection(),1, 1,  "DAvid");
 				//elEscritorio.add(AbstractJasperReports.getPanelReport());
 				//panel2=AbstractJasperReports.getPanelReport();
 				JInternalFrame marco = new JInternalFrame("Filtros", true, true, true, true );

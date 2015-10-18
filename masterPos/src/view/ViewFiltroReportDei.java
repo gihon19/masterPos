@@ -1,42 +1,64 @@
 package view;
 
+import java.awt.Dialog;
 import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.Window;
+import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 
 import com.toedter.calendar.JDateChooser;
 
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 
-public class ViewFiltroReportDei extends  JPanel {
-	
-	JDateChooser dateFechaInicio;
-	JDateChooser dateFechaFinal;
-	JButton btnBuscar;
+import com.toedter.calendar.JMonthChooser;
+import com.toedter.components.JLocaleChooser;
+import com.toedter.calendar.JDayChooser;
+import com.toedter.components.JSpinField;
+import com.toedter.calendar.JYearChooser;
 
-	public ViewFiltroReportDei() {
+import controlador.CtlFiltroRepDei;
+
+public class ViewFiltroReportDei extends  JDialog {
+	private JButton btnBuscar;
+	private JMonthChooser monthChooser;
+	private JYearChooser yearChooser;
+
+	public ViewFiltroReportDei(Window view) {
 		
-		JLabel lblFechaInicio = new JLabel("Fecha Inicio");
-		add(lblFechaInicio);
+		super(view,"Filtro reporte DEI",Dialog.ModalityType.DOCUMENT_MODAL);
+		getContentPane().setLayout(null);
 		
-		dateFechaInicio = new JDateChooser();
-		dateFechaInicio.setDateFormatString("dd-MM-yyyy");
-		add(dateFechaInicio);
+		btnBuscar = new JButton("Ver Reporte");
+		btnBuscar.setBounds(10, 52, 168, 49);
+		getContentPane().add(btnBuscar);
 		
-		JLabel lblFechaFinal = new JLabel("Fecha Final");
-		add(lblFechaFinal);
+		monthChooser = new JMonthChooser();
+		monthChooser.setBounds(10, 11, 105, 30);
+		getContentPane().add(monthChooser);
 		
-		dateFechaFinal = new JDateChooser();
-		dateFechaFinal.setDateFormatString("dd-MM-yyyy");
-		add(dateFechaFinal);
+		yearChooser = new JYearChooser();
+		yearChooser.setBounds(131, 11, 47, 30);
+		getContentPane().add(yearChooser);
 		
-		btnBuscar = new JButton("Buscar");
-		add(btnBuscar);
-		
-		this.setPreferredSize(new Dimension(194, 91));
-		this.setSize(168, 91);
+		this.setPreferredSize(new Dimension(212, 264));
+		this.setSize(204, 150);
 		// TODO Auto-generated constructor stub
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 	}
-
+	public JYearChooser getAnio(){
+		return yearChooser;
+	}
+	public JMonthChooser getMes(){
+		return monthChooser;
+	}
+	
+	public void conectarCtl(CtlFiltroRepDei c){
+		btnBuscar.addActionListener( c);
+		btnBuscar.setActionCommand("GENERAR");
+	}
 }

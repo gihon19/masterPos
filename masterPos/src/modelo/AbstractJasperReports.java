@@ -51,6 +51,7 @@ public abstract class AbstractJasperReports
 {
 	private static JasperReport	report;
 	private static JasperPrint	reportFilled;
+	private static JasperPrint	reportFilled2;
 	private static JasperViewer	viewer;
 	
 	private static InputStream factura=null;
@@ -90,10 +91,10 @@ public abstract class AbstractJasperReports
 			e.printStackTrace();
 		}
 	}
-	public static void createReportDei(Connection conn,String fechaInicio,String fechaFinal,String usuario){
+	public static void createReportDei(Connection conn,int mes,int anio,String usuario){
 		 Map parametros = new HashMap();
-		 parametros.put("FechaInicio",fechaInicio);
-		 parametros.put("FechaFinal",fechaFinal);
+		 parametros.put("Mes",mes);
+		 parametros.put("Anio",anio);
 		 parametros.put("usuario",usuario);
 		 
 		 

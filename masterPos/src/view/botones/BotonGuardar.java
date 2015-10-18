@@ -3,6 +3,7 @@ package view.botones;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
 
 
 
@@ -13,7 +14,7 @@ public class BotonGuardar extends BotonesApp {
 	public BotonGuardar(){
 		super("Guardar");
 		
-		imgGuardar=new ImageIcon(BotonCancelar.class.getResource("/view/recursos/ic_launcher.png"));
+		imgGuardar=new ImageIcon(BotonCancelar.class.getResource("/view/recursos/guardar_2.png"));
 		
 		 Image image = imgGuardar.getImage();
 		    // reduce by 50%
@@ -21,6 +22,9 @@ public class BotonGuardar extends BotonesApp {
 		 imgGuardar.setImage(image);
 	
 		this.setIcon(imgGuardar);
+		
+		this.setVerticalTextPosition(SwingConstants.BOTTOM);
+		this.setHorizontalTextPosition(SwingConstants.CENTER);
 			
 		
 	}

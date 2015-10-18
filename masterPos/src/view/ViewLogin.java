@@ -72,22 +72,22 @@ public class ViewLogin extends JDialog{
 		lblUser = new JLabel("Usuario: ");
 		lblUser.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblUser.setForeground(Color.BLACK);
-		lblUser.setBounds(10, 75, 64, 14);
+		lblUser.setBounds(20, 84, 64, 14);
 		panel_1.add(lblUser);
 		
 		// crear etiqueta y cuadro de texxto del usuario
 		txtUser = new JTextField(10);
-		txtUser.setBounds(106, 73, 172, 20);
+		txtUser.setBounds(106, 73, 172, 37);
 		panel_1.add(txtUser);
 		txtUser.setToolTipText("Escriba su nombre de usuario");        
 		lblPass = new JLabel("Contraseña: ");
 		lblPass.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblPass.setForeground(Color.BLACK);
-		lblPass.setBounds(10, 121, 100, 14);
+		lblPass.setBounds(10, 130, 100, 14);
 		panel_1.add(lblPass);
 		//crear etiqueta y cuadro de texxto del pw
 		txtPass = new JPasswordField(10);
-		txtPass.setBounds(106, 119, 172, 20);
+		txtPass.setBounds(106, 119, 172, 37);
 		panel_1.add(txtPass);
 		txtPass.setToolTipText("Escriba su contraseña");
 		

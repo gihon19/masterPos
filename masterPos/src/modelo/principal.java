@@ -6,6 +6,8 @@ import javax.sql.DataSource;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 
 import controlador.CtlAgregarCompras;
 import controlador.CtlFacturar;
@@ -34,12 +36,25 @@ public class principal {
 		}
 		
 		
+		
+		
+		try {
+		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+		        if ("Nimbus".equals(info.getName())) {
+		            UIManager.setLookAndFeel(info.getClassName());
+		            break;
+		        }
+		    }
+		} catch (Exception e) {
+		    // If Nimbus is not available, you can set the GUI to another look and feel.
+		}
 		ViewLogin viewLogin =new ViewLogin(); 
 		CtlLogin ctlLogin=new CtlLogin(viewLogin,conexion);
 		
 		boolean login=ctlLogin.login();
-		JDialog.setDefaultLookAndFeelDecorated(true);
-		JFrame.setDefaultLookAndFeelDecorated(true);
+		
+		/*JDialog.setDefaultLookAndFeelDecorated(true);
+		JFrame.setDefaultLookAndFeelDecorated(true);*/
 		if(login){
 			
 			if(conexion.getUsuarioLogin().getTipoPermiso()==1){
