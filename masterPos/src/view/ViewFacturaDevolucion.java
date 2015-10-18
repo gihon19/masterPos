@@ -231,16 +231,16 @@ public class ViewFacturaDevolucion extends JDialog {
 		panelAcciones.setLayout(new GridLayout(8, 1, 0, 0));
 		
 		btnBuscar = new BotonBuscar1();
-		btnBuscar.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnBuscar.setFont(new Font("Georgia", Font.PLAIN, 13));
 		btnBuscar.setForeground(Color.WHITE);
 		btnBuscar.setBackground(color1);
 		//btnBuscar.setBounds(10, 24,158, 38);
 		panelAcciones.add(btnBuscar);
 		
 		btnCobrar = new BotonCobrar();
-		btnCobrar.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnCobrar.setFont(new Font("Georgia", Font.PLAIN, 13));
 		btnCobrar.setForeground(Color.WHITE);
-		btnCobrar.setBackground(color2);
+		btnCobrar.setBackground(color1);
 		btnCobrar.setText("F2 Cobrar");
 		//btnCobrar.setBounds(10, 86, 158, 38);
 		
@@ -248,22 +248,22 @@ public class ViewFacturaDevolucion extends JDialog {
 		//btnBuscar.getInputMap().put(KeyStroke.getKeyStroke("F1"), sumar());
 		
 		btnCliente = new BotonBuscarClientes();
-		btnCliente.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnCliente.setFont(new Font("Georgia", Font.PLAIN, 13));
 		btnCliente.setForeground(Color.WHITE);
 		btnCliente.setBackground(color1);
 		btnCliente.setText("F3 Clientes");
 		panelAcciones.add(btnCliente);
 		
 		btnGuardar = new BotonGuardar();
-		btnGuardar.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnGuardar.setFont(new Font("Georgia", Font.PLAIN, 13));
 		btnGuardar.setForeground(Color.WHITE);
-		btnGuardar.setBackground(color2);
+		btnGuardar.setBackground(color1);
 		btnGuardar.setText("F4 Guardar");
 		//btnGuardar.setBounds(10, 210, 158, 38);
 		panelAcciones.add(btnGuardar);
 		
 		btnPendientes = new JButton("F5 Pendientes");
-		btnPendientes.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnPendientes.setFont(new Font("Georgia", Font.PLAIN, 13));
 		btnPendientes.setForeground(Color.WHITE);
 		btnPendientes.setBackground(color1);
 		btnPendientes.setIcon(new ImageIcon(ViewFacturar.class.getResource("/view/recursos/pendientes_2.png")));
@@ -273,9 +273,9 @@ public class ViewFacturaDevolucion extends JDialog {
 		panelAcciones.add(btnPendientes);
 		
 		btnCierreCaja = new JButton("F6 Cierre");
-		btnCierreCaja.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnCierreCaja.setFont(new Font("Georgia", Font.PLAIN, 13));
 		btnCierreCaja.setForeground(Color.WHITE);
-		btnCierreCaja.setBackground(color2);
+		btnCierreCaja.setBackground(color1);
 		btnCierreCaja.setIcon(new ImageIcon(ViewFacturar.class.getResource("/view/recursos/cierre_caja_2.png")));
 		btnCierreCaja.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnCierreCaja.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -283,7 +283,7 @@ public class ViewFacturaDevolucion extends JDialog {
 		panelAcciones.add(btnCierreCaja);
 		
 		btnActualizar=new BotonActualizar();
-		btnActualizar.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnActualizar.setFont(new Font("Georgia", Font.PLAIN, 13));
 		btnActualizar.setForeground(Color.WHITE);
 		btnActualizar.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnActualizar.setBackground(color1);
@@ -294,9 +294,9 @@ public class ViewFacturaDevolucion extends JDialog {
 		btnActualizar.setVisible(false);
 		
 		btnCerrar = new BotonCancelar();
-		btnCerrar.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnCerrar.setFont(new Font("Georgia", Font.PLAIN, 13));
 		btnCerrar.setForeground(Color.WHITE);
-		btnCerrar.setBackground(color2);
+		btnCerrar.setBackground(color1);
 		btnCerrar.setText("Esc Cerrar");
 		//btnCerrar.setBounds(10, 396, 158, 38);
 		panelAcciones.add(btnCerrar);
@@ -314,8 +314,70 @@ public class ViewFacturaDevolucion extends JDialog {
 		panel.setBackground(color4);
 		getContentPane().add(panel, BorderLayout.EAST);
 		panel.setLayout(new GridLayout(10, 1, 0, 0));
+		//lblImpuesto_1.setBounds(424, 490, 82, 14);
+		
+		lblTotal = new JLabel("Total");
+		lblTotal.setFont(new Font("Georgia", Font.BOLD, 13));
+		lblTotal.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(lblTotal);
+		
+		txtTotal = new JTextField();
+		panel.add(txtTotal);
+		txtTotal.setForeground(Color.RED);
+		txtTotal.setHorizontalAlignment(SwingConstants.RIGHT);
+		txtTotal.setFont(myFont);
+		txtTotal.setText("00");
+		txtTotal.setEditable(false);
+		txtTotal.setBounds(778, 506, 220, 44);
+		txtTotal.setColumns(10);
+		//lblImpuesto.setBounds(237, 490, 92, 14);
+		
+		JLabel lblImpuesto_1 = new JLabel("Impuesto 18");
+		lblImpuesto_1.setFont(new Font("Georgia", Font.BOLD, 13));
+		lblImpuesto_1.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(lblImpuesto_1);
+		
+		txtImpuesto18 = new JTextField();
+		panel.add(txtImpuesto18);
+		txtImpuesto18.setText("00");
+		txtImpuesto18.setHorizontalAlignment(SwingConstants.RIGHT);
+		txtImpuesto18.setFont(myFont);
+		txtImpuesto18.setEditable(false);
+		txtImpuesto18.setBounds(424, 506, 171, 44);
+		txtImpuesto18.setColumns(10);
+		//lblDescuento.setBounds(605, 490, 92, 14);
+		
+		lblImpuesto = new JLabel("Impuesto 15");
+		lblImpuesto.setFont(new Font("Georgia", Font.BOLD, 13));
+		lblImpuesto.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(lblImpuesto);
+		
+		txtImpuesto = new JTextField();
+		panel.add(txtImpuesto);
+		txtImpuesto.setHorizontalAlignment(SwingConstants.RIGHT);
+		txtImpuesto.setFont(myFont);
+		txtImpuesto.setText("00");
+		txtImpuesto.setEditable(false);
+		txtImpuesto.setBounds(237, 506, 177, 44);
+		txtImpuesto.setColumns(10);
+		//lblSubtotal.setBounds(20, 490, 59, 14);
+		
+		JLabel lblDescuento = new JLabel("Descuento");
+		lblDescuento.setFont(new Font("Georgia", Font.BOLD, 13));
+		lblDescuento.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(lblDescuento);
+		
+		txtDescuento = new JTextField();
+		panel.add(txtDescuento);
+		txtDescuento.setHorizontalAlignment(SwingConstants.RIGHT);
+		txtDescuento.setEditable(false);
+		txtDescuento.setText("00");
+		txtDescuento.setFont(myFont);
+		txtDescuento.setBounds(605, 506, 163, 44);
+		txtDescuento.setColumns(10);
 		
 		lblSubtotal = new JLabel("SubTotal");
+		lblSubtotal.setFont(new Font("Georgia", Font.BOLD, 13));
 		lblSubtotal.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(lblSubtotal);
 		//lblTotal.setBounds(780, 490, 46, 14);
@@ -332,63 +394,6 @@ public class ViewFacturaDevolucion extends JDialog {
 		txtSubtotal.setEditable(false);
 		//txtSubtotal.setBounds(20, 506, 207, 44);
 		txtSubtotal.setColumns(10);
-		//lblSubtotal.setBounds(20, 490, 59, 14);
-		
-		JLabel lblDescuento = new JLabel("Descuento");
-		lblDescuento.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(lblDescuento);
-		
-		txtDescuento = new JTextField();
-		panel.add(txtDescuento);
-		txtDescuento.setHorizontalAlignment(SwingConstants.RIGHT);
-		txtDescuento.setEditable(false);
-		txtDescuento.setText("00");
-		txtDescuento.setFont(myFont);
-		txtDescuento.setBounds(605, 506, 163, 44);
-		txtDescuento.setColumns(10);
-		//lblDescuento.setBounds(605, 490, 92, 14);
-		
-		lblImpuesto = new JLabel("Impuesto 15");
-		lblImpuesto.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(lblImpuesto);
-		
-		txtImpuesto = new JTextField();
-		panel.add(txtImpuesto);
-		txtImpuesto.setHorizontalAlignment(SwingConstants.RIGHT);
-		txtImpuesto.setFont(myFont);
-		txtImpuesto.setText("00");
-		txtImpuesto.setEditable(false);
-		txtImpuesto.setBounds(237, 506, 177, 44);
-		txtImpuesto.setColumns(10);
-		//lblImpuesto.setBounds(237, 490, 92, 14);
-		
-		JLabel lblImpuesto_1 = new JLabel("Impuesto 18");
-		lblImpuesto_1.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(lblImpuesto_1);
-		
-		txtImpuesto18 = new JTextField();
-		panel.add(txtImpuesto18);
-		txtImpuesto18.setText("00");
-		txtImpuesto18.setHorizontalAlignment(SwingConstants.RIGHT);
-		txtImpuesto18.setFont(myFont);
-		txtImpuesto18.setEditable(false);
-		txtImpuesto18.setBounds(424, 506, 171, 44);
-		txtImpuesto18.setColumns(10);
-		//lblImpuesto_1.setBounds(424, 490, 82, 14);
-		
-		lblTotal = new JLabel("Total");
-		lblTotal.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(lblTotal);
-		
-		txtTotal = new JTextField();
-		panel.add(txtTotal);
-		txtTotal.setForeground(Color.RED);
-		txtTotal.setHorizontalAlignment(SwingConstants.RIGHT);
-		txtTotal.setFont(myFont);
-		txtTotal.setText("00");
-		txtTotal.setEditable(false);
-		txtTotal.setBounds(778, 506, 220, 44);
-		txtTotal.setColumns(10);
 		
 		
 		//setSize(1024, 600);
