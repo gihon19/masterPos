@@ -16,6 +16,7 @@ import modelo.AbstractJasperReports;
 import modelo.dao.CodBarraDao;
 import modelo.Conexion;
 import modelo.Factura;
+import modelo.dao.DetalleFacturaDao;
 import modelo.dao.FacturaDao;
 import modelo.dao.UsuarioDao;
 import view.ViewCrearArticulo;
@@ -30,6 +31,7 @@ public class CtlFacturas implements ActionListener, MouseListener, ChangeListene
 	private Conexion conexion=null;
 	private Factura myFactura;
 	private UsuarioDao myUsuarioDao=null;
+	private DetalleFacturaDao detallesDao=null;
 	
 	
 	//fila selecciona enla lista
@@ -46,6 +48,7 @@ public class CtlFacturas implements ActionListener, MouseListener, ChangeListene
 		cargarTabla(myFacturaDao.todasfacturas());
 		myFactura=new Factura();
 		myUsuarioDao=new UsuarioDao(conexion);
+		detallesDao=new DetalleFacturaDao(conexion);
 		view.setVisible(true);
 	}
 	
@@ -246,6 +249,7 @@ public class CtlFacturas implements ActionListener, MouseListener, ChangeListene
 			}
 			break;
 		case "INSERTAR":
+			myFactura.setDetalles(detallesDao.getDetallesFactura(myFactura.getIdFactura()));
 			ViewFacturaDevolucion viewDevolucion=new ViewFacturaDevolucion(view);
 			CtlDevoluciones ctlDevolucion=new CtlDevoluciones(viewDevolucion,conexion);
 			ctlDevolucion.actualizarFactura(myFactura);
