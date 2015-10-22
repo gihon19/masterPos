@@ -70,6 +70,9 @@ public class CtlFacturar  implements ActionListener, MouseListener, TableModelLi
 		preciosDao=new PrecioArticuloDao(conexion);
 		this.setEmptyView();
 		cargarComboBox();
+		
+		this.view.getTxtBuscar().requestFocusInWindow();
+		
 		/*view.getModeloTabla().agregarDetalle();
 		myFactura=new Factura();
 		myArticuloDao=new ArticuloDao(conexion);

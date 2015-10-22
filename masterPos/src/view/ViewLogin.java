@@ -115,7 +115,7 @@ public class ViewLogin extends JDialog{
 		
 		
 		
-		setTitle("Autentificacion de usuarios");
+		setTitle("Autentificacion");
 		setSize(400,250);           // Tamanio del Frame 
 		setResizable(false);       // que no se le pueda cambiar el tamanio 
 		//Centrar la ventana de autentificacion en la pantalla

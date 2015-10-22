@@ -51,8 +51,14 @@ public class ViewFacturaDevolucion extends JDialog {
 	private JTable tableDetalle;
 	private TmDevoluciones modeloTabla;
 	
+	protected JTextField txtBuscar;
+	protected JTextField txtArticulo;
+	protected JTextField txtPrecio;
+	
 	private JPanel panelAcciones;
 	private JPanel panelDatosFactura;
+	protected JPanel panelBuscar;
+	private JPanel panelNorte;
 	private JLabel lblFecha;
 	private JTextField txtFechafactura;
 	private JLabel lblCodigoCliente;
@@ -88,10 +94,12 @@ public class ViewFacturaDevolucion extends JDialog {
 	
 	private JTextField txtRtn;
 	
+	
 	private JComboBox cbxEmpleados;
 	//se crea el modelo de la lista de los impuestos
 	private CbxTmEmpleado modeloEmpleado;//=new ComboBoxImpuesto();
 	private JPanel panel;
+	private JPanel panel_1;
 
 	public ViewFacturaDevolucion(Window view) {
 		
@@ -109,59 +117,103 @@ public class ViewFacturaDevolucion extends JDialog {
 		Color color2 =Color.decode("#33cccc");
 		Color color3 =Color.decode("#d4f4ff");
 		Color color4 =Color.decode("#f4fbfe");
+		
+		panelNorte=new JPanel();
 	
 		this.getContentPane().setBackground(color4);
 		
 		//this.setTitle("Articulos");
 		getContentPane().setLayout(miEsquema);
 		panelAcciones=new JPanel();
-		panelAcciones.setBackground(color1);
+		panelAcciones.setBackground(color4);
 		//panelAcciones.setBounds(20, 11, 178, 459);
 		//panelAcciones.setLayout(null);
 		//panelAcciones.setVisible(false);
 		JPanel panelNorte=new JPanel();
 		panelNorte.setBackground(color1);
-		getContentPane().add(panelNorte, BorderLayout.SOUTH);
+		getContentPane().add(panelNorte, BorderLayout.NORTH);
+		panelNorte.setLayout(new BorderLayout(0, 0));
+				
+		
+		
+		
+		
+		
+		
+		
+		
+		tableDetalle = new JTable();
+		tableDetalle.setModel(modeloTabla);
+		/*tableDetalle.getTableHeader().setBackground(color1);
+		tableDetalle.getTableHeader().setForeground(Color.WHITE);*/
+	    
+		
+		//tableDetalle.setBackground(color4);
+		tableDetalle.setDefaultRenderer(String.class, renderizador);
+		//tableDetalle.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+		tableDetalle.getColumnModel().getColumn(0).setPreferredWidth(100);     //Tamaño de las columnas de las tablas
+		tableDetalle.getColumnModel().getColumn(1).setPreferredWidth(200);	//
+		tableDetalle.getColumnModel().getColumn(2).setPreferredWidth(80);	//
+		tableDetalle.getColumnModel().getColumn(3).setPreferredWidth(80);	//
+		tableDetalle.getColumnModel().getColumn(4).setPreferredWidth(80);	//
+		tableDetalle.getColumnModel().getColumn(5).setPreferredWidth(80);	//
+		tableDetalle.getColumnModel().getColumn(6).setPreferredWidth(80);	//
+		tableDetalle.getColumnModel().getColumn(7).setPreferredWidth(100);	//
+		
+		tableDetalle.setRowHeight(30);
+		//registerEnterKey( );
+		
+		JScrollPane scrollPane = new JScrollPane(tableDetalle);
+		
+		scrollPane.setBackground(color4);
+		scrollPane.getViewport().setBackground(color4);
+		
+		panel_1 = new JPanel();
+		panel_1.setLayout(new BorderLayout(0, 0));
+		panelNorte.add(panel_1, BorderLayout.CENTER);
+		
 		
 		
 		
 		panelDatosFactura=new JPanel();
+		panel_1.add(panelDatosFactura, BorderLayout.NORTH);
 		panelDatosFactura.setBackground(color3);
-		getContentPane().add(panelDatosFactura, BorderLayout.NORTH);
 		
 		//panelDatosFactura.setBackground(Color.WHITE);
 		panelDatosFactura.setBorder(new TitledBorder(new LineBorder(new Color(130, 135, 144)), "Datos Generales", TitledBorder.LEFT, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		//panelDatosFactura.setBounds(196, 11, 802, 84);
 		//panelDatosFactura.setVisible(false);
 		panelDatosFactura.setLayout(new GridLayout(0, 7, 10, 0));
-		/*GridBagConstraints gbc_panelDatosFactura = new GridBagConstraints();
-		gbc_panelDatosFactura.fill = GridBagConstraints.HORIZONTAL;
-		gbc_panelDatosFactura.insets = new Insets(0, 0, 5, 5);
-		gbc_panelDatosFactura.gridx = 0; // El área de texto empieza en la columna cero.
-		gbc_panelDatosFactura.gridy = 0; // El área de texto empieza en la fila cero
-		gbc_panelDatosFactura.gridwidth = 1; // El área de texto ocupa dos columnas.
-		gbc_panelDatosFactura.gridheight = 1; // El área de texto ocupa 2 filas.
-		panelNorte.add(panelDatosFactura, gbc_panelDatosFactura);*/
 		lblFecha = new JLabel("Fecha");
+		lblFecha.setFont(new Font("Georgia", Font.BOLD, 13));
 		panelDatosFactura.add(lblFecha);
 		
 		lblCodigoCliente = new JLabel("Id Cliente");
+		lblCodigoCliente.setFont(new Font("Georgia", Font.BOLD, 13));
 		panelDatosFactura.add(lblCodigoCliente);
 		
 		lblNombreCliente = new JLabel("Nombre Cliente");
+		lblNombreCliente.setFont(new Font("Georgia", Font.BOLD, 13));
 		panelDatosFactura.add(lblNombreCliente);
 		
 		
 		JLabel lblRtn = new JLabel("R:T:N");
+		lblRtn.setFont(new Font("Georgia", Font.BOLD, 13));
 		panelDatosFactura.add(lblRtn);
 		
 		lblContado = new JLabel("Contado");
+		lblContado.setHorizontalAlignment(SwingConstants.CENTER);
+		lblContado.setFont(new Font("Georgia", Font.BOLD, 13));
 		panelDatosFactura.add(lblContado);
 		
 		lblCredito = new JLabel("Credito");
+		lblCredito.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCredito.setFont(new Font("Georgia", Font.BOLD, 13));
 		panelDatosFactura.add(lblCredito);
 		
 		JLabel lblVendedor = new JLabel("Vendedor");
+		lblVendedor.setFont(new Font("Georgia", Font.BOLD, 13));
 		panelDatosFactura.add(lblVendedor);
 		
 		txtFechafactura = new JTextField();
@@ -183,10 +235,12 @@ public class ViewFacturaDevolucion extends JDialog {
 		txtRtn.setColumns(10);
 		
 		rdbtnContado = new JRadioButton("");
+		rdbtnContado.setHorizontalAlignment(SwingConstants.CENTER);
 		rdbtnContado.setSelected(true);
 		grupoOpciones.add(rdbtnContado);
 		panelDatosFactura.add(rdbtnContado);
 		rdbtnCredito = new JRadioButton("");
+		rdbtnCredito.setHorizontalAlignment(SwingConstants.CENTER);
 		grupoOpciones.add(rdbtnCredito);
 		panelDatosFactura.add(rdbtnCredito);
 		
@@ -195,40 +249,54 @@ public class ViewFacturaDevolucion extends JDialog {
 		panelDatosFactura.add(cbxEmpleados);
 		
 		
-		tableDetalle = new JTable();
-		tableDetalle.setModel(modeloTabla);
 		
-		JTableHeader anHeader = tableDetalle.getTableHeader();
-	    anHeader.setForeground(new Color(0).black);
-	    anHeader.setBackground(new Color(0).WHITE);
-	    
 		
-		tableDetalle.setBackground(color4);
-		tableDetalle.setDefaultRenderer(String.class, renderizador);
-		//tableDetalle.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-		tableDetalle.getColumnModel().getColumn(0).setPreferredWidth(100);     //Tamaño de las columnas de las tablas
-		tableDetalle.getColumnModel().getColumn(1).setPreferredWidth(200);	//
-		tableDetalle.getColumnModel().getColumn(2).setPreferredWidth(80);	//
-		tableDetalle.getColumnModel().getColumn(3).setPreferredWidth(80);	//
-		tableDetalle.getColumnModel().getColumn(4).setPreferredWidth(80);	//
-		tableDetalle.getColumnModel().getColumn(5).setPreferredWidth(80);	//
-		tableDetalle.getColumnModel().getColumn(6).setPreferredWidth(80);	//
-		tableDetalle.getColumnModel().getColumn(7).setPreferredWidth(100);	//
 		
-		tableDetalle.setRowHeight(30);
-		//registerEnterKey( );
 		
-		JScrollPane scrollPane = new JScrollPane(tableDetalle);
-		/*GridBagConstraints gbc_scrollPane = new GridBagConstraints();
-		gbc_scrollPane.fill = GridBagConstraints.BOTH;
-		gbc_scrollPane.insets = new Insets(0, 0, 0, 5);
-		gbc_scrollPane.gridx = 0;
-		gbc_scrollPane.gridy = 2;
-		panelNorte.add(scrollPane, gbc_scrollPane);*/
 		
-		scrollPane.setBackground(color4);
-		scrollPane.getViewport().setBackground(color4);
+		
+		panelBuscar= new JPanel();
+		panelBuscar.setBackground(color3);
+		panelBuscar.setVisible(false);
+		panel_1.add(panelBuscar, BorderLayout.SOUTH);
+		//panelBuscar.setBounds(196, 94, 802, 50);
+		//getContentPane().geti
+		//panelBuscar.setVisible(false);*/
+		
+		panelBuscar.setLayout(new GridLayout(2, 3, 7, 1));
+		
+	
+		
+		JLabel lblBuscar = new JLabel(" Buscar");
+		lblBuscar.setFont(new Font("Georgia", Font.BOLD, 13));
+		lblBuscar.setHorizontalAlignment(SwingConstants.LEFT);
+		lblBuscar.setVerticalAlignment(SwingConstants.BOTTOM);
+		panelBuscar.add(lblBuscar);
+		
+		JLabel lblArticulo = new JLabel("Articulo:");
+		panelBuscar.add(lblArticulo);
+		
+		JLabel lblPrecio = new JLabel("Precio:");
+		panelBuscar.add(lblPrecio);
+		
+		txtBuscar = new JTextField();
+		panelBuscar.add(txtBuscar);
+		txtBuscar.setColumns(10);
+		
+		txtArticulo = new JTextField();
+		txtArticulo.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		txtArticulo.setForeground(new Color(0, 0, 255));
+		txtArticulo.setEditable(false);
+		panelBuscar.add(txtArticulo);
+		txtArticulo.setColumns(10);
+		
+		txtPrecio = new JTextField();
+		txtPrecio.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		txtPrecio.setForeground(new Color(0, 0, 255));
+		txtPrecio.setHorizontalAlignment(SwingConstants.RIGHT);
+		txtPrecio.setEditable(false);
+		panelBuscar.add(txtPrecio);
+		txtPrecio.setColumns(10);
 		getContentPane().add(scrollPane, BorderLayout.CENTER);
 		
 		//panelNorte.add(scrollPane);
@@ -240,6 +308,7 @@ public class ViewFacturaDevolucion extends JDialog {
 		panelAcciones.setLayout(new GridLayout(8, 1, 0, 0));
 		
 		btnBuscar = new BotonBuscar1();
+		btnBuscar.setEnabled(false);
 		btnBuscar.setFont(new Font("Georgia", Font.PLAIN, 13));
 		btnBuscar.setForeground(Color.WHITE);
 		btnBuscar.setBackground(color1);
@@ -247,6 +316,7 @@ public class ViewFacturaDevolucion extends JDialog {
 		panelAcciones.add(btnBuscar);
 		
 		btnCobrar = new BotonCobrar();
+		btnCobrar.setEnabled(false);
 		btnCobrar.setFont(new Font("Georgia", Font.PLAIN, 13));
 		btnCobrar.setForeground(Color.WHITE);
 		btnCobrar.setBackground(color1);
@@ -257,6 +327,7 @@ public class ViewFacturaDevolucion extends JDialog {
 		//btnBuscar.getInputMap().put(KeyStroke.getKeyStroke("F1"), sumar());
 		
 		btnCliente = new BotonBuscarClientes();
+		btnCliente.setEnabled(false);
 		btnCliente.setFont(new Font("Georgia", Font.PLAIN, 13));
 		btnCliente.setForeground(Color.WHITE);
 		btnCliente.setBackground(color1);
@@ -272,6 +343,7 @@ public class ViewFacturaDevolucion extends JDialog {
 		panelAcciones.add(btnGuardar);
 		
 		btnPendientes = new JButton("F5 Pendientes");
+		btnPendientes.setEnabled(false);
 		btnPendientes.setFont(new Font("Georgia", Font.PLAIN, 13));
 		btnPendientes.setForeground(Color.WHITE);
 		btnPendientes.setBackground(color1);
@@ -282,6 +354,7 @@ public class ViewFacturaDevolucion extends JDialog {
 		panelAcciones.add(btnPendientes);
 		
 		btnCierreCaja = new JButton("F6 Cierre");
+		btnCierreCaja.setEnabled(false);
 		btnCierreCaja.setFont(new Font("Georgia", Font.PLAIN, 13));
 		btnCierreCaja.setForeground(Color.WHITE);
 		btnCierreCaja.setBackground(color1);
@@ -292,6 +365,7 @@ public class ViewFacturaDevolucion extends JDialog {
 		panelAcciones.add(btnCierreCaja);
 		
 		btnActualizar=new BotonActualizar();
+		btnActualizar.setEnabled(false);
 		btnActualizar.setFont(new Font("Georgia", Font.PLAIN, 13));
 		btnActualizar.setForeground(Color.WHITE);
 		btnActualizar.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -300,7 +374,7 @@ public class ViewFacturaDevolucion extends JDialog {
 		//btnActualizar.setBounds(10, 210, 158, 38);
 		//getContentPane().add(btnActualizar);
 		panelAcciones.add(btnActualizar);
-		btnActualizar.setVisible(false);
+		//btnActualizar.setVisible(false);
 		
 		btnCerrar = new BotonCancelar();
 		btnCerrar.setFont(new Font("Georgia", Font.PLAIN, 13));
@@ -337,8 +411,8 @@ public class ViewFacturaDevolucion extends JDialog {
 		txtTotal.setFont(myFont);
 		txtTotal.setText("00");
 		txtTotal.setEditable(false);
-		txtTotal.setBounds(778, 506, 220, 44);
-		txtTotal.setColumns(10);
+		//txtTotal.setBounds(778, 506, 220, 44);
+		//txtTotal.setColumns(10);
 		//lblImpuesto.setBounds(237, 490, 92, 14);
 		
 		JLabel lblImpuesto_1 = new JLabel("Impuesto 18");
@@ -352,8 +426,8 @@ public class ViewFacturaDevolucion extends JDialog {
 		txtImpuesto18.setHorizontalAlignment(SwingConstants.RIGHT);
 		txtImpuesto18.setFont(myFont);
 		txtImpuesto18.setEditable(false);
-		txtImpuesto18.setBounds(424, 506, 171, 44);
-		txtImpuesto18.setColumns(10);
+		//txtImpuesto18.setBounds(424, 506, 171, 44);
+		//txtImpuesto18.setColumns(10);
 		//lblDescuento.setBounds(605, 490, 92, 14);
 		
 		lblImpuesto = new JLabel("Impuesto 15");
@@ -367,8 +441,8 @@ public class ViewFacturaDevolucion extends JDialog {
 		txtImpuesto.setFont(myFont);
 		txtImpuesto.setText("00");
 		txtImpuesto.setEditable(false);
-		txtImpuesto.setBounds(237, 506, 177, 44);
-		txtImpuesto.setColumns(10);
+		//txtImpuesto.setBounds(237, 506, 177, 44);
+		//txtImpuesto.setColumns(10);
 		//lblSubtotal.setBounds(20, 490, 59, 14);
 		
 		JLabel lblDescuento = new JLabel("Descuento");
@@ -382,8 +456,8 @@ public class ViewFacturaDevolucion extends JDialog {
 		txtDescuento.setEditable(false);
 		txtDescuento.setText("00");
 		txtDescuento.setFont(myFont);
-		txtDescuento.setBounds(605, 506, 163, 44);
-		txtDescuento.setColumns(10);
+		//txtDescuento.setBounds(605, 506, 163, 44);
+		//txtDescuento.setColumns(10);
 		
 		lblSubtotal = new JLabel("SubTotal");
 		lblSubtotal.setFont(new Font("Georgia", Font.BOLD, 13));
@@ -402,7 +476,7 @@ public class ViewFacturaDevolucion extends JDialog {
 		
 		txtSubtotal.setEditable(false);
 		//txtSubtotal.setBounds(20, 506, 207, 44);
-		txtSubtotal.setColumns(10);
+		//txtSubtotal.setColumns(10);
 		
 		
 		//setSize(1024, 600);

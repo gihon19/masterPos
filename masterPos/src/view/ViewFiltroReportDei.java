@@ -33,19 +33,19 @@ public class ViewFiltroReportDei extends  JDialog {
 		getContentPane().setLayout(null);
 		
 		btnBuscar = new JButton("Ver Reporte");
-		btnBuscar.setBounds(10, 52, 168, 49);
+		btnBuscar.setBounds(10, 52, 196, 49);
 		getContentPane().add(btnBuscar);
 		
 		monthChooser = new JMonthChooser();
-		monthChooser.setBounds(10, 11, 105, 30);
+		monthChooser.setBounds(10, 11, 124, 32);
 		getContentPane().add(monthChooser);
 		
 		yearChooser = new JYearChooser();
-		yearChooser.setBounds(131, 11, 47, 30);
+		yearChooser.setBounds(144, 11, 62, 32);
 		getContentPane().add(yearChooser);
 		
 		this.setPreferredSize(new Dimension(212, 264));
-		this.setSize(204, 150);
+		this.setSize(232, 150);
 		// TODO Auto-generated constructor stub
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);

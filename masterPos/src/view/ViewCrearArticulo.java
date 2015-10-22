@@ -63,6 +63,7 @@ public class ViewCrearArticulo extends JDialog {
 	
 	
 	private JMenuItem mntmEliminar;
+	private JMenuItem mntmImprimir;
 	
 
 	
@@ -106,19 +107,27 @@ super(view,"Agregar Articulos",Dialog.ModalityType.DOCUMENT_MODAL);
 		modeloImpuesto=new ComboBoxImpuesto();
 		
 		
+		//opcion del menu flotante
+		mntmImprimir = new JMenuItem("IMPRIMIR");
+		menuContextual.add(mntmImprimir);
+		
+		
+		
 		//botones
 		btnGuardar = new BotonGuardar();
-		btnGuardar.setLocation(28, 577);
+		btnGuardar.setSize(136, 77);
+		btnGuardar.setLocation(20, 577);
 		//tnCancelar.setLocation(42, 175);
 		getContentPane().add(btnGuardar);
 		
 		btnActualizar=new BotonActualizar();
-		btnActualizar.setLocation(10, 577);
+		btnActualizar.setSize(136, 77);
+		btnActualizar.setLocation(20, 577);
 		getContentPane().add(btnActualizar);
 		btnActualizar.setVisible(false);
 		
 		btnCancelar = new BotonCancelar();
-		btnCancelar.setSize(128, 45);
+		btnCancelar.setSize(128, 77);
 		//btnCancelar.setBounds(212, 175, 135, 39);
 		btnCancelar.setLocation(184, 577);
 		getContentPane().add(btnCancelar);
@@ -139,20 +148,20 @@ super(view,"Agregar Articulos",Dialog.ModalityType.DOCUMENT_MODAL);
 	              BorderFactory.createMatteBorder(0, 0, 2, 2, Color.WHITE),
 	              BorderFactory.createMatteBorder(0, 0, 2, 2, Color.GRAY)
 	              ));
-		panel.setBounds(0, 0, 341, 69);
+		panel.setBounds(0, 0, 341, 76);
 		getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		
 		//Nombre Articulo
 		lblNombre=new JLabel();
-		lblNombre.setBounds(23, 7, 76, 23);
+		lblNombre.setBounds(23, 4, 76, 23);
 		panel.add(lblNombre);
 		lblNombre.setText("Nombre");
 		lblNombre.setFont(myFont);
 		
 		txtNombre=new JTextField(30);
-		txtNombre.setBounds(23, 37, 289, 23);
+		txtNombre.setBounds(23, 31, 289, 32);
 		panel.add(txtNombre);
 		txtNombre.setFont(myFont);
 		
@@ -166,12 +175,12 @@ super(view,"Agregar Articulos",Dialog.ModalityType.DOCUMENT_MODAL);
 		panel_1.setLayout(null);
 		
 		JLabel lblTipo = new JLabel("Tipo");
-		lblTipo.setBounds(23, 11, 46, 14);
+		lblTipo.setBounds(23, 7, 46, 14);
 		panel_1.add(lblTipo);
 		lblTipo.setFont(myFont);
 		
 		cbxTipo = new JComboBox();
-		cbxTipo.setBounds(23, 36, 289, 20);
+		cbxTipo.setBounds(23, 28, 289, 32);
 		panel_1.add(cbxTipo);
 		cbxTipo.setModel(new DefaultComboBoxModel(new String[] {"Bienes", "Servicio"}));
 		
@@ -180,25 +189,25 @@ super(view,"Agregar Articulos",Dialog.ModalityType.DOCUMENT_MODAL);
 	              BorderFactory.createMatteBorder(0, 0, 2, 2, Color.WHITE),
 	              BorderFactory.createMatteBorder(0, 0, 2, 2, Color.GRAY)
 	              ));
-		panel_2.setBounds(0, 153, 341, 69);
+		panel_2.setBounds(0, 153, 341, 76);
 		getContentPane().add(panel_2);
 		panel_2.setLayout(null);
 		
 		
 		//Marca
 		lblMarca = new JLabel("Marca");
-		lblMarca.setBounds(23, 7, 89, 23);
+		lblMarca.setBounds(22, 4, 89, 23);
 		panel_2.add(lblMarca);
 		lblMarca.setFont(myFont);
 		
 		txtMarca = new JTextField();
-		txtMarca.setBounds(23, 37, 270, 23);
+		txtMarca.setBounds(22, 31, 270, 32);
 		panel_2.add(txtMarca);
 		txtMarca.setEditable(false);
 		txtMarca.setColumns(10);
 		
 		btnBuscar = new JButton("...");
-		btnBuscar.setBounds(292, 37, 18, 23);
+		btnBuscar.setBounds(302, 31, 18, 32);
 		panel_2.add(btnBuscar);
 		
 		panel_3 = new JPanel();
@@ -206,14 +215,14 @@ super(view,"Agregar Articulos",Dialog.ModalityType.DOCUMENT_MODAL);
 	              BorderFactory.createMatteBorder(0, 0, 2, 2, Color.WHITE),
 	              BorderFactory.createMatteBorder(0, 0, 2, 2, Color.GRAY)
 	              ));
-		panel_3.setBounds(0, 222, 341, 69);
+		panel_3.setBounds(0, 222, 341, 76);
 		getContentPane().add(panel_3);
 		panel_3.setLayout(null);
 		
 		
 		//Impuesto
 		lblImpuesto = new JLabel("Impuesto");
-		lblImpuesto.setBounds(23, 7, 89, 23);
+		lblImpuesto.setBounds(23, 4, 89, 23);
 		panel_3.add(lblImpuesto);
 		lblImpuesto.setFont(myFont);
 		
@@ -223,7 +232,7 @@ super(view,"Agregar Articulos",Dialog.ModalityType.DOCUMENT_MODAL);
 		cbxImpuesto = new JComboBox();
 		modeloImpuesto=new ComboBoxImpuesto();
 		cbxImpuesto.setModel(modeloImpuesto);//para poder mostrar el formulario en modo diseño comente esta linea
-		cbxImpuesto.setBounds(23, 37, 289, 23);
+		cbxImpuesto.setBounds(23, 31, 289, 32);
 		panel_3.add(cbxImpuesto);
 		cbxImpuesto.setFont(myFont);
 		
@@ -232,23 +241,23 @@ super(view,"Agregar Articulos",Dialog.ModalityType.DOCUMENT_MODAL);
 	              BorderFactory.createMatteBorder(0, 0, 2, 2, Color.WHITE),
 	              BorderFactory.createMatteBorder(0, 0, 2, 2, Color.GRAY)
 	              ));
-		panel_4.setBounds(0, 288, 341, 147);
+		panel_4.setBounds(0, 288, 341, 153);
 		getContentPane().add(panel_4);
 		panel_4.setLayout(null);
 		
 				
 		JLabel lblCodigoBarra = new JLabel("Codigo Barra");
-		lblCodigoBarra.setBounds(23, 9, 89, 14);
+		lblCodigoBarra.setBounds(23, 7, 89, 14);
 		panel_4.add(lblCodigoBarra);
 		lblCodigoBarra.setFont(myFont);
 		
 		txtCodigo = new JTextField();
-		txtCodigo.setBounds(23, 32, 289, 20);
+		txtCodigo.setBounds(23, 28, 289, 32);
 		panel_4.add(txtCodigo);
 		txtCodigo.setColumns(10);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(23, 61, 289, 76);
+		scrollPane.setBounds(23, 67, 289, 76);
 		panel_4.add(scrollPane);
 		listCodigos = new JList();
 		listCodigos.setSize(257, 99);
@@ -281,7 +290,7 @@ super(view,"Agregar Articulos",Dialog.ModalityType.DOCUMENT_MODAL);
 		panel_5.add(scrollPane_1);
 		
 		JLabel lblOtrosPrecios = new JLabel("Precios Venta");
-		lblOtrosPrecios.setBounds(23, 7, 95, 14);
+		lblOtrosPrecios.setBounds(23, 9, 95, 14);
 		panel_5.add(lblOtrosPrecios);
 		lblOtrosPrecios.setFont(myFont);
 		
@@ -291,7 +300,7 @@ super(view,"Agregar Articulos",Dialog.ModalityType.DOCUMENT_MODAL);
 		lblPrecio.setFont(myFont);
 		lblPrecio.setVisible(false);
 		
-		setSize(347,663);
+		setSize(347,694);
 		
 		//centrar la ventana en la pantalla
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -510,6 +519,10 @@ super(view,"Agregar Articulos",Dialog.ModalityType.DOCUMENT_MODAL);
 		
 		mntmEliminar.addActionListener(m);
 		mntmEliminar.setActionCommand("ELIMINARCODIGO");
+		
+		
+		mntmImprimir.addActionListener(m);
+		mntmImprimir.setActionCommand("IMPRIMIR");
 	}
 	public TmPrecios getModeloPrecio(){
 		return modeloPrecio;

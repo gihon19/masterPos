@@ -75,6 +75,17 @@ public class TmDevoluciones extends AbstractTableModel {
 		}
 		
 	}
+	public boolean hayDevoluciones() {
+		boolean resul=false;
+		
+		for(int x=0;x<this.detallesFactura.size();x++){
+			if(detallesFactura.get(x).getAccion()==true){
+				resul=true;
+			}
+		}
+		
+		return resul;
+	}
 
 	@Override
 	public int getRowCount() {
@@ -165,7 +176,7 @@ public class TmDevoluciones extends AbstractTableModel {
 		boolean v=(boolean) value;
 		switch(columnIndex){
 		
-		case 4:
+		case 8:
 			
 			detallesFactura.get(rowIndex).setAccion(v);// Double.parseDouble(v));
 			fireTableCellUpdated(rowIndex, columnIndex);
@@ -204,7 +215,7 @@ public class TmDevoluciones extends AbstractTableModel {
 		boolean resul=false;
 		
 		
-		if(columnIndex==7)
+		if(columnIndex==8)
 			resul=true;
 		
 		

@@ -50,9 +50,11 @@ public class ViewCambioPago extends JDialog {
 	public ViewCambioPago(Window v) {
 		
 		super(v,"Forma de pago",Dialog.ModalityType.DOCUMENT_MODAL);
+		setUndecorated(true);
 		Font myFont=new Font("OCR A Extended", Font.PLAIN, 45);
 		 grupoOpciones = new ButtonGroup(); // crea ButtonGroup//para el grupo de la forma de pago
-		
+		 Color color1 =Color.decode("#0009999");
+		 this.getContentPane().setBackground(color1);
 		this.setSize(588, 300);
 		this.setPreferredSize(new Dimension(588, 300));
 		this.setResizable(false);
@@ -60,28 +62,33 @@ public class ViewCambioPago extends JDialog {
 		getContentPane().setLayout(null);
 		
 		panel = new JPanel();
-		panel.setBounds(252, 32, 326, 111);
+		panel.setBounds(223, 6, 353, 161);
+		panel.setBackground(color1);
 		getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblPagaCon = new JLabel("Paga con:");
-		lblPagaCon.setBounds(18, 14, 65, 14);
+		lblPagaCon.setFont(new Font("Georgia", Font.BOLD, 13));
+		lblPagaCon.setForeground(Color.WHITE);
+		lblPagaCon.setBounds(6, 6, 77, 14);
 		panel.add(lblPagaCon);
 		
 		txtEfectivo = new JTextField();
-		txtEfectivo.setBounds(93, 1, 223, 41);
+		txtEfectivo.setBounds(6, 26, 341, 54);
 		txtEfectivo.setFont(myFont);
 		panel.add(txtEfectivo);
 		txtEfectivo.setColumns(10);
 		
 		JLabel lblCambio = new JLabel("Cambio:");
-		lblCambio.setBounds(18, 66, 52, 14);
+		lblCambio.setFont(new Font("Georgia", Font.BOLD, 13));
+		lblCambio.setForeground(Color.WHITE);
+		lblCambio.setBounds(6, 92, 77, 14);
 		panel.add(lblCambio);
 		
 		txtCambio = new JTextField();
 		txtCambio.setEditable(false);
 		txtCambio.setFont(myFont);
-		txtCambio.setBounds(93, 55, 223, 37);
+		txtCambio.setBounds(6, 106, 341, 49);
 		panel.add(txtCambio);
 		txtCambio.setColumns(10);
 		
@@ -102,30 +109,38 @@ public class ViewCambioPago extends JDialog {
 		imgTarjeta.setImage(image);
 		
 		panel_1 = new JPanel();
-		panel_1.setBounds(252, 32, 326, 82);
+		panel_1.setBackground(color1);
+		panel_1.setBounds(223, 6, 355, 161);
 		getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 		
 		JLabel lblReferencia = new JLabel("Referencia:");
-		lblReferencia.setBounds(18, 14, 65, 14);
+		lblReferencia.setForeground(Color.WHITE);
+		lblReferencia.setFont(new Font("Georgia", Font.BOLD, 13));
+		lblReferencia.setBounds(6, 6, 102, 14);
 		panel_1.add(lblReferencia);
 		
 		txtReferenciatarjeta = new JTextField();
-		txtReferenciatarjeta.setBounds(93, 1, 223, 41);
+		txtReferenciatarjeta.setBounds(6, 26, 341, 54);
 		panel_1.add(txtReferenciatarjeta);
 		txtReferenciatarjeta.setColumns(10);
 		txtReferenciatarjeta.setFont(myFont);
 		panel_1.setVisible(false);
 		
 		btnCobrar = new BotonCobrar();
+		btnCobrar.setFont(new Font("Georgia", Font.BOLD, 13));
+		btnCobrar.setForeground(Color.WHITE);
+		btnCobrar.setBackground(color1);
 		btnCobrar.setText("F2 Cobrar");
-		btnCobrar.setBounds(424, 209, 144, 38);
+		btnCobrar.setBounds(418, 179, 144, 82);
 		getContentPane().add(btnCobrar);
 		
 		btnCerrar = new BotonCancelar();
-		btnCerrar.setHorizontalAlignment(SwingConstants.LEFT);
+		btnCerrar.setFont(new Font("Georgia", Font.BOLD, 13));
+		btnCerrar.setForeground(Color.WHITE);
+		btnCerrar.setBackground(color1);
 		btnCerrar.setText("Esc Cerrar");
-		btnCerrar.setBounds(252, 209, 144, 38);
+		btnCerrar.setBounds(233, 179, 156, 82);
 		getContentPane().add(btnCerrar);
 		
 		panel_2 = new JPanel();
