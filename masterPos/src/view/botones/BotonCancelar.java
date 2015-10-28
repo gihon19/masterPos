@@ -19,7 +19,7 @@ public class BotonCancelar extends BotonesApp {
 		 imgCancelar.setImage(image);
 	
 		this.setIcon(imgCancelar);*/
-		this.setIcon(new ImageIcon(BotonActualizar.class.getResource("/view/recursos/cerrar_2.png")));
+		this.setIcon(new ImageIcon(BotonCancelar.class.getResource("/view/recursos/cerrar.png")));
 		this.setVerticalTextPosition(SwingConstants.BOTTOM);
 		this.setHorizontalTextPosition(SwingConstants.CENTER);
 	}

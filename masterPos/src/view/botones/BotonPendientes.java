@@ -3,12 +3,13 @@ package view.botones;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 
-public class BotonActualizar extends BotonesApp {
+public class BotonPendientes extends BotonesApp {
 
-	public BotonActualizar() {
-		super("Actualizar");
+	public BotonPendientes() {
 		// TODO Auto-generated constructor stub
-		this.setIcon(new ImageIcon(BotonActualizar.class.getResource("/view/recursos/actualizar.png")));
+		super("Pendientes");
+		
+		this.setIcon(new ImageIcon(BotonPendientes.class.getResource("/view/recursos/pendientes.png")));
 		this.setVerticalTextPosition(SwingConstants.BOTTOM);
 		this.setHorizontalTextPosition(SwingConstants.CENTER);
 	}

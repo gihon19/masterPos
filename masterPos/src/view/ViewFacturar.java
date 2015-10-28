@@ -39,8 +39,10 @@ import view.botones.BotonActualizar;
 import view.botones.BotonBuscar1;
 import view.botones.BotonBuscarClientes;
 import view.botones.BotonCancelar;
+import view.botones.BotonCierreCaja;
 import view.botones.BotonCobrar;
 import view.botones.BotonGuardar;
+import view.botones.BotonPendientes;
 import view.rendes.RenderizadorTablaFactura;
 import view.tablemodel.CbxTmEmpleado;
 import view.tablemodel.ComboBoxImpuesto;
@@ -107,7 +109,7 @@ public class ViewFacturar extends JDialog {
 	protected JTextField txtArticulo;
 	protected JTextField txtPrecio;
 	protected JTextField txtImpuesto18;
-	protected JButton btnPendientes;
+	protected BotonPendientes btnPendientes;
 	
 	protected JTextField txtRtn;
 	
@@ -328,74 +330,45 @@ public class ViewFacturar extends JDialog {
 		panelAcciones.setLayout(new GridLayout(8, 1, 0, 0));
 		
 		btnBuscar = new BotonBuscar1();
-		btnBuscar.setFont(new Font("Georgia", Font.PLAIN, 13));
-		btnBuscar.setForeground(Color.WHITE);
 		btnBuscar.setBackground(color1);
-		//btnBuscar.setBounds(10, 24,158, 38);
 		panelAcciones.add(btnBuscar);
 		
 		btnCobrar = new BotonCobrar();
-		btnCobrar.setFont(new Font("Georgia", Font.PLAIN, 13));
-		btnCobrar.setForeground(Color.WHITE);
 		btnCobrar.setBackground(color1);
 		btnCobrar.setText("F2 Cobrar");
-		//btnCobrar.setBounds(10, 86, 158, 38);
-		
 		panelAcciones.add(btnCobrar);
-		//btnBuscar.getInputMap().put(KeyStroke.getKeyStroke("F1"), sumar());
 		
 		btnCliente = new BotonBuscarClientes();
-		btnCliente.setFont(new Font("Georgia", Font.PLAIN, 13));
-		btnCliente.setForeground(Color.WHITE);
 		btnCliente.setBackground(color1);
 		btnCliente.setText("F3 Clientes");
 		panelAcciones.add(btnCliente);
 		
 		btnGuardar = new BotonGuardar();
-		btnGuardar.setFont(new Font("Georgia", Font.PLAIN, 13));
-		btnGuardar.setForeground(Color.WHITE);
 		btnGuardar.setBackground(color1);
 		btnGuardar.setText("F4 Guardar");
-		//btnGuardar.setBounds(10, 210, 158, 38);
 		panelAcciones.add(btnGuardar);
 		
-		btnPendientes = new JButton("F5 Pendientes");
-		btnPendientes.setFont(new Font("Georgia", Font.PLAIN, 13));
-		btnPendientes.setForeground(Color.WHITE);
+		btnPendientes = new BotonPendientes();// new JButton("F5 Pendientes");
 		btnPendientes.setBackground(color1);
-		btnPendientes.setIcon(new ImageIcon(ViewFacturar.class.getResource("/view/recursos/pendientes_2.png")));
-		btnPendientes.setVerticalTextPosition(SwingConstants.BOTTOM);
-		btnPendientes.setHorizontalTextPosition(SwingConstants.CENTER);
-		//btnPendientes.setBounds(10, 272, 158, 38);
+		btnPendientes.setText("F5 Pendientes");
 		panelAcciones.add(btnPendientes);
 		
-		btnCierreCaja = new JButton("F6 Cierre");
-		btnCierreCaja.setFont(new Font("Georgia", Font.PLAIN, 13));
-		btnCierreCaja.setForeground(Color.WHITE);
+		btnCierreCaja = new BotonCierreCaja();// JButton("F6 Cierre");
 		btnCierreCaja.setBackground(color1);
-		btnCierreCaja.setIcon(new ImageIcon(ViewFacturar.class.getResource("/view/recursos/cierre_caja_2.png")));
-		btnCierreCaja.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnCierreCaja.setText("F6 Cierre");
 		btnCierreCaja.setHorizontalTextPosition(SwingConstants.CENTER);
-		//btnCierreCaja.setBounds(10, 334, 158, 38);
 		panelAcciones.add(btnCierreCaja);
 		
 		btnActualizar=new BotonActualizar();
-		btnActualizar.setFont(new Font("Georgia", Font.PLAIN, 13));
-		btnActualizar.setForeground(Color.WHITE);
 		btnActualizar.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnActualizar.setBackground(color1);
 		btnActualizar.setText("F7 Actualizar");
-		//btnActualizar.setBounds(10, 210, 158, 38);
-		//getContentPane().add(btnActualizar);
 		panelAcciones.add(btnActualizar);
 		btnActualizar.setVisible(false);
 		
 		btnCerrar = new BotonCancelar();
-		btnCerrar.setFont(new Font("Georgia", Font.PLAIN, 13));
-		btnCerrar.setForeground(Color.WHITE);
 		btnCerrar.setBackground(color1);
 		btnCerrar.setText("Esc Cerrar");
-		//btnCerrar.setBounds(10, 396, 158, 38);
 		panelAcciones.add(btnCerrar);
 		
 		

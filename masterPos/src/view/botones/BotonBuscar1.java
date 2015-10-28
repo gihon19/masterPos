@@ -21,7 +21,7 @@ public BotonBuscar1(){
 		 imgGuardar.setImage(image);
 	
 		this.setIcon(imgGuardar);*/
-		this.setIcon(new ImageIcon(BotonActualizar.class.getResource("/view/recursos/buscar_2.png")));
+		this.setIcon(new ImageIcon(BotonBuscar1.class.getResource("/view/recursos/buscar.png")));
 		this.setVerticalTextPosition(SwingConstants.BOTTOM);
 		this.setHorizontalTextPosition(SwingConstants.CENTER);
 			

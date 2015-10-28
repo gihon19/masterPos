@@ -22,7 +22,7 @@ public class BotonBuscarClientes extends BotonesApp  {
 		
 			this.setIcon(imgGuardar);*/
 			
-			this.setIcon(new ImageIcon(BotonActualizar.class.getResource("/view/recursos/clientes_2.png")));
+			this.setIcon(new ImageIcon(BotonBuscarClientes.class.getResource("/view/recursos/clientes.png")));
 			this.setVerticalTextPosition(SwingConstants.BOTTOM);
 			this.setHorizontalTextPosition(SwingConstants.CENTER);
 				

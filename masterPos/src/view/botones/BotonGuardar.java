@@ -23,7 +23,7 @@ public class BotonGuardar extends BotonesApp {
 	
 		this.setIcon(imgGuardar);*/
 		
-		this.setIcon(new ImageIcon(BotonActualizar.class.getResource("/view/recursos/guardar_2.png")));
+		this.setIcon(new ImageIcon(BotonGuardar.class.getResource("/view/recursos/guardar.png")));
 		this.setVerticalTextPosition(SwingConstants.BOTTOM);
 		this.setHorizontalTextPosition(SwingConstants.CENTER);
 			

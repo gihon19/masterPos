@@ -20,7 +20,7 @@ private ImageIcon imgGuardar;
 			 imgGuardar.setImage(image);
 		
 			this.setIcon(imgGuardar);*/
-			this.setIcon(new ImageIcon(BotonActualizar.class.getResource("/view/recursos/cobrar_2.png")));
+			this.setIcon(new ImageIcon(BotonCobrar.class.getResource("/view/recursos/cobrar.png")));
 			this.setVerticalTextPosition(SwingConstants.BOTTOM);
 			this.setHorizontalTextPosition(SwingConstants.CENTER);
 				
