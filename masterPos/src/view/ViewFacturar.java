@@ -136,7 +136,8 @@ public class ViewFacturar extends JDialog {
 		modeloTabla=new TablaModeloFactura();
 		RenderizadorTablaFactura renderizador = new RenderizadorTablaFactura();
 		miEsquema=new BorderLayout();
-		Color color1 =Color.decode("#0009999");
+		//Color color1 =Color.decode("#0009999");
+		Color color1 =new Color(60, 179, 113);
 		Color color2 =Color.decode("#33cccc");
 		Color color3 =Color.decode("#d4f4ff");
 		Color color4 =Color.decode("#f4fbfe");
@@ -316,12 +317,12 @@ public class ViewFacturar extends JDialog {
 		panelBuscar.add(lblPrecio);
 		
 		txtBuscar = new JTextField();
-		txtBuscar.setBackground(color2);
+		txtBuscar.setBackground(color1);
 		panelBuscar.add(txtBuscar);
 		txtBuscar.setColumns(10);
 		
 		txtArticulo = new JTextField();
-		txtArticulo.setBackground(color2);
+		txtArticulo.setBackground(color1);
 		txtArticulo.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		txtArticulo.setForeground(new Color(0, 0, 255));
 		txtArticulo.setEditable(false);
@@ -329,7 +330,7 @@ public class ViewFacturar extends JDialog {
 		txtArticulo.setColumns(10);
 		
 		txtPrecio = new JTextField();
-		txtPrecio.setBackground(color2);
+		txtPrecio.setBackground(color1);
 		txtPrecio.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		txtPrecio.setForeground(new Color(0, 0, 255));
 		txtPrecio.setHorizontalAlignment(SwingConstants.RIGHT);

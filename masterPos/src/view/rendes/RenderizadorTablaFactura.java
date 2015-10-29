@@ -19,7 +19,8 @@ public class RenderizadorTablaFactura implements TableCellRenderer{
 		Font myFont=new Font(Font.SANS_SERIF, Font.PLAIN, 14);
 		 JTextField editor = new JTextField();
 		 Color color3 =Color.decode("#d4f4ff");
-		 Color color1 =Color.decode("#0009999");
+		 //Color color1 =Color.decode("#0009999");
+		 Color color1 =new Color(60, 179, 113);
 		 editor.setFont(myFont);
 		 editor.setText("");
 		    if (value != null)
