@@ -22,15 +22,16 @@ import org.apache.commons.dbcp.BasicDataSource;
 public class Conexion {
 	
 	
-	/*static String bd = "miswendy_admin_tools";
+		/*static String bd = "miswendy_admin_tools";
 	   static String login = "miswendy_pos";
 	   static String password = "bTp.rxN-*~Z4";
-	   static String server = "www.miscelaneaswyc.com";*/
+	   static String server = "108.167.189.55";
+	   static String url = "jdbc:mysql://108.167.189.55:3306/"+bd;*/
 	
 	
 	//10.10.10.8:3306
 		
-	  /* static String bd = "jdmayorg_admin_tools";
+	   /*static String bd = "jdmayorg_admin_tools";
 	   static String login = "jdmayorg_user";
 	   static String password = "Admin321?";
 	   static String url = "jdbc:mysql://108.179.234.89:3306/"+bd;*/

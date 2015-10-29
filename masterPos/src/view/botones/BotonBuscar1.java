@@ -1,5 +1,6 @@
 package view.botones;
 
+import java.awt.Dimension;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
@@ -24,6 +25,8 @@ public BotonBuscar1(){
 		this.setIcon(new ImageIcon(BotonBuscar1.class.getResource("/view/recursos/buscar.png")));
 		this.setVerticalTextPosition(SwingConstants.BOTTOM);
 		this.setHorizontalTextPosition(SwingConstants.CENTER);
+		this.setPreferredSize(new Dimension(128,200));
+		
 			
 		
 	}

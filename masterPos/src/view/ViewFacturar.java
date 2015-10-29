@@ -118,6 +118,8 @@ public class ViewFacturar extends JDialog {
 	protected CbxTmEmpleado modeloEmpleado;//=new ComboBoxImpuesto();
 	protected JPanel panel;
 	protected JLabel lblBuscar;
+	private JPanel panel_2;
+	private JLabel lblLogo;
 	
 	public ViewFacturar(Window view) {
 		
@@ -141,12 +143,13 @@ public class ViewFacturar extends JDialog {
 		
 		panelNorte=new JPanel();
 	
-		this.getContentPane().setBackground(color4);
+		this.getContentPane().setBackground(color3);
 		
 		//this.setTitle("Articulos");
 		getContentPane().setLayout(miEsquema);
 		panelAcciones=new JPanel();
-		panelAcciones.setBackground(color1);
+		panelAcciones.setPreferredSize(new Dimension(140,128));
+		panelAcciones.setBackground(color3);
 		//panelAcciones.setBounds(20, 11, 178, 459);
 		//panelAcciones.setLayout(null);
 		//panelAcciones.setVisible(false);
@@ -187,8 +190,15 @@ public class ViewFacturar extends JDialog {
 		
 		JScrollPane scrollPane = new JScrollPane(tableDetalle);
 		
-		scrollPane.setBackground(color4);
-		scrollPane.getViewport().setBackground(color4);
+		scrollPane.setBackground(color3);
+		scrollPane.getViewport().setBackground(color3);
+		
+		panel_2 = new JPanel();
+		panelNorte.add(panel_2, BorderLayout.WEST);
+		
+		lblLogo = new JLabel("");
+		lblLogo.setIcon(new ImageIcon(ViewFacturar.class.getResource("/view/recursos/Stop.png")));
+		panel_2.add(lblLogo);
 		
 		panel_1 = new JPanel();
 		panel_1.setLayout(new BorderLayout(0, 0));
@@ -198,7 +208,7 @@ public class ViewFacturar extends JDialog {
 		
 		
 		panelDatosFactura=new JPanel();
-		panel_1.add(panelDatosFactura, BorderLayout.NORTH);
+		panel_1.add(panelDatosFactura, BorderLayout.CENTER);
 		panelDatosFactura.setBackground(color3);
 		
 		//panelDatosFactura.setBackground(Color.WHITE);
@@ -238,20 +248,24 @@ public class ViewFacturar extends JDialog {
 		panelDatosFactura.add(lblVendedor);
 		
 		txtFechafactura = new JTextField();
+		txtFechafactura.setBackground(color4);
 		txtFechafactura.setEditable(false);
 		panelDatosFactura.add(txtFechafactura);
 		txtFechafactura.setColumns(10);
 		
 		txtIdcliente = new JTextField();
+		txtIdcliente.setBackground(color4);
 		panelDatosFactura.add(txtIdcliente);
 		txtIdcliente.setColumns(10);
 		
 		txtNombrecliente = new JTextField();
+		txtNombrecliente.setBackground(color4);
 		txtNombrecliente.setToolTipText("Nombre Cliente");
 		panelDatosFactura.add(txtNombrecliente);
 		txtNombrecliente.setColumns(10);
 		
 		txtRtn = new JTextField();
+		txtRtn.setBackground(color4);
 		panelDatosFactura.add(txtRtn);
 		txtRtn.setColumns(10);
 		
@@ -302,10 +316,12 @@ public class ViewFacturar extends JDialog {
 		panelBuscar.add(lblPrecio);
 		
 		txtBuscar = new JTextField();
+		txtBuscar.setBackground(color2);
 		panelBuscar.add(txtBuscar);
 		txtBuscar.setColumns(10);
 		
 		txtArticulo = new JTextField();
+		txtArticulo.setBackground(color2);
 		txtArticulo.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		txtArticulo.setForeground(new Color(0, 0, 255));
 		txtArticulo.setEditable(false);
@@ -313,6 +329,7 @@ public class ViewFacturar extends JDialog {
 		txtArticulo.setColumns(10);
 		
 		txtPrecio = new JTextField();
+		txtPrecio.setBackground(color2);
 		txtPrecio.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		txtPrecio.setForeground(new Color(0, 0, 255));
 		txtPrecio.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -381,7 +398,7 @@ public class ViewFacturar extends JDialog {
 		Font myFont=new Font("OCR A Extended", Font.PLAIN, 45);
 		
 		panel = new JPanel();
-		panel.setBackground(color4);
+		panel.setBackground(color3);
 		getContentPane().add(panel, BorderLayout.EAST);
 		panel.setLayout(new GridLayout(10, 1, 0, 0));
 		//lblImpuesto_1.setBounds(424, 490, 82, 14);
@@ -392,6 +409,7 @@ public class ViewFacturar extends JDialog {
 		panel.add(lblTotal);
 		
 		txtTotal = new JTextField();
+		txtTotal.setBackground(color4);
 		panel.add(txtTotal);
 		txtTotal.setForeground(Color.RED);
 		txtTotal.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -408,6 +426,7 @@ public class ViewFacturar extends JDialog {
 		panel.add(lblImpuesto_1);
 		
 		txtImpuesto18 = new JTextField();
+		txtImpuesto18.setBackground(color4);
 		panel.add(txtImpuesto18);
 		txtImpuesto18.setText("00");
 		txtImpuesto18.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -423,6 +442,7 @@ public class ViewFacturar extends JDialog {
 		panel.add(lblImpuesto);
 		
 		txtImpuesto = new JTextField();
+		txtImpuesto.setBackground(color4);
 		panel.add(txtImpuesto);
 		txtImpuesto.setHorizontalAlignment(SwingConstants.RIGHT);
 		txtImpuesto.setFont(myFont);
@@ -438,6 +458,7 @@ public class ViewFacturar extends JDialog {
 		panel.add(lblDescuento);
 		
 		txtDescuento = new JTextField();
+		txtDescuento.setBackground(color4);
 		panel.add(txtDescuento);
 		txtDescuento.setHorizontalAlignment(SwingConstants.RIGHT);
 		txtDescuento.setEditable(false);
@@ -456,6 +477,7 @@ public class ViewFacturar extends JDialog {
 		
 		
 		txtSubtotal = new JTextField();
+		txtSubtotal.setBackground(color4);
 		panel.add(txtSubtotal);
 		txtSubtotal.setFont(myFont);
 		txtSubtotal.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -621,6 +643,7 @@ public class ViewFacturar extends JDialog {
 		//txtBuscar.
 		txtArticulo.addKeyListener(c);
 		txtPrecio.addKeyListener(c);
+		cbxEmpleados.addKeyListener(c);
 		//KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
 		//manager.addKeyEventDispatcher( c);
 		//this.addWindowListener(c);
