@@ -1134,8 +1134,8 @@ public void calcularTotal(DetalleFactura detalle){
 		// TODO Auto-generated method stub
 		this.myFactura=f;
 		cargarFacturaView();
-		this.view.getBtnGuardar().setVisible(false);
-		this.view.getBtnActualizar().setVisible(true);
+		this.view.getBtnGuardar().setEnabled(false);
+		this.view.getBtnActualizar().setEnabled(true);
 		this.view.getModeloTabla().agregarDetalle();
 		tipoView=2;
 		this.view.setVisible(true);

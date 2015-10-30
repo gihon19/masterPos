@@ -195,10 +195,11 @@ public class ViewFacturar extends JDialog {
 		scrollPane.getViewport().setBackground(color3);
 		
 		panel_2 = new JPanel();
+		panel_2.setBackground(color3);
 		panelNorte.add(panel_2, BorderLayout.WEST);
 		
 		lblLogo = new JLabel("");
-		lblLogo.setIcon(new ImageIcon(ViewFacturar.class.getResource("/view/recursos/Stop.png")));
+		lblLogo.setIcon(new ImageIcon(ViewFacturar.class.getResource("/view/recursos/logo_facturar.png")));
 		panel_2.add(lblLogo);
 		
 		panel_1 = new JPanel();
@@ -317,6 +318,7 @@ public class ViewFacturar extends JDialog {
 		panelBuscar.add(lblPrecio);
 		
 		txtBuscar = new JTextField();
+		txtBuscar.setForeground(Color.WHITE);
 		txtBuscar.setBackground(color1);
 		panelBuscar.add(txtBuscar);
 		txtBuscar.setColumns(10);
@@ -324,7 +326,7 @@ public class ViewFacturar extends JDialog {
 		txtArticulo = new JTextField();
 		txtArticulo.setBackground(color1);
 		txtArticulo.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		txtArticulo.setForeground(new Color(0, 0, 255));
+		txtArticulo.setForeground(Color.WHITE);
 		txtArticulo.setEditable(false);
 		panelBuscar.add(txtArticulo);
 		txtArticulo.setColumns(10);
@@ -332,7 +334,7 @@ public class ViewFacturar extends JDialog {
 		txtPrecio = new JTextField();
 		txtPrecio.setBackground(color1);
 		txtPrecio.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		txtPrecio.setForeground(new Color(0, 0, 255));
+		txtPrecio.setForeground(Color.WHITE);
 		txtPrecio.setHorizontalAlignment(SwingConstants.RIGHT);
 		txtPrecio.setEditable(false);
 		panelBuscar.add(txtPrecio);
@@ -378,11 +380,12 @@ public class ViewFacturar extends JDialog {
 		panelAcciones.add(btnCierreCaja);
 		
 		btnActualizar=new BotonActualizar();
+		btnActualizar.setEnabled(false);
 		btnActualizar.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnActualizar.setBackground(color1);
 		btnActualizar.setText("F7 Actualizar");
 		panelAcciones.add(btnActualizar);
-		btnActualizar.setVisible(false);
+		//btnActualizar.setVisible(false);
 		
 		btnCerrar = new BotonCancelar();
 		btnCerrar.setBackground(color1);

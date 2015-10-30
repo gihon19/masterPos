@@ -53,7 +53,8 @@ public class ViewCambioPago extends JDialog {
 		setUndecorated(true);
 		Font myFont=new Font("OCR A Extended", Font.PLAIN, 45);
 		 grupoOpciones = new ButtonGroup(); // crea ButtonGroup//para el grupo de la forma de pago
-		 Color color1 =Color.decode("#0009999");
+		 //Color color1 =Color.decode("#0009999");
+		 Color color1 =Color.decode("#d4f4ff");
 		 this.getContentPane().setBackground(color1);
 		this.setSize(588, 300);
 		this.setPreferredSize(new Dimension(588, 300));
@@ -69,7 +70,7 @@ public class ViewCambioPago extends JDialog {
 		
 		JLabel lblPagaCon = new JLabel("Paga con:");
 		lblPagaCon.setFont(new Font("Georgia", Font.BOLD, 13));
-		lblPagaCon.setForeground(Color.WHITE);
+		lblPagaCon.setForeground(Color.BLACK);
 		lblPagaCon.setBounds(6, 6, 77, 14);
 		panel.add(lblPagaCon);
 		
@@ -81,7 +82,7 @@ public class ViewCambioPago extends JDialog {
 		
 		JLabel lblCambio = new JLabel("Cambio:");
 		lblCambio.setFont(new Font("Georgia", Font.BOLD, 13));
-		lblCambio.setForeground(Color.WHITE);
+		lblCambio.setForeground(Color.BLACK);
 		lblCambio.setBounds(6, 92, 77, 14);
 		panel.add(lblCambio);
 		
@@ -115,7 +116,7 @@ public class ViewCambioPago extends JDialog {
 		panel_1.setLayout(null);
 		
 		JLabel lblReferencia = new JLabel("Referencia:");
-		lblReferencia.setForeground(Color.WHITE);
+		lblReferencia.setForeground(Color.BLACK);
 		lblReferencia.setFont(new Font("Georgia", Font.BOLD, 13));
 		lblReferencia.setBounds(6, 6, 102, 14);
 		panel_1.add(lblReferencia);
@@ -129,23 +130,23 @@ public class ViewCambioPago extends JDialog {
 		
 		btnCobrar = new BotonCobrar();
 		btnCobrar.setFont(new Font("Georgia", Font.BOLD, 13));
-		btnCobrar.setForeground(Color.WHITE);
+		btnCobrar.setForeground(Color.BLACK);
 		btnCobrar.setBackground(color1);
 		btnCobrar.setText("F2 Cobrar");
-		btnCobrar.setBounds(418, 179, 144, 82);
+		btnCobrar.setBounds(418, 199, 144, 82);
 		getContentPane().add(btnCobrar);
 		
 		btnCerrar = new BotonCancelar();
 		btnCerrar.setFont(new Font("Georgia", Font.BOLD, 13));
-		btnCerrar.setForeground(Color.WHITE);
+		btnCerrar.setForeground(Color.BLACK);
 		btnCerrar.setBackground(color1);
 		btnCerrar.setText("Esc Cerrar");
-		btnCerrar.setBounds(233, 179, 156, 82);
+		btnCerrar.setBounds(233, 199, 156, 82);
 		getContentPane().add(btnCerrar);
 		
 		panel_2 = new JPanel();
 		panel_2.setBackground(new Color(60, 179, 113));
-		panel_2.setBounds(0, 0, 219, 271);
+		panel_2.setBounds(0, 0, 219, 300);
 		getContentPane().add(panel_2);
 		panel_2.setLayout(null);
 		
