@@ -1,5 +1,6 @@
 package view.botones;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 
@@ -15,6 +16,8 @@ public class BotonesApp extends JButton {
 		this.setSize(ancho, alto);
 		myFon=new Font("Georgia", Font.PLAIN, 13);
 		this.setFont(myFon);
+		Color color1 =new Color(60, 179, 113);
+		setBackground(color1);
 		//this.setPreferredSize(dim);
 		
 	}
@@ -23,6 +26,8 @@ public class BotonesApp extends JButton {
 		this.setSize(ancho, alto);
 		myFon=new Font("Georgia", Font.PLAIN, 13);
 		this.setFont(myFon);
+		Color color1 =new Color(60, 179, 113);
+		setBackground(color1);
 		
 	}
 	

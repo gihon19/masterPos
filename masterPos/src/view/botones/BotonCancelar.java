@@ -1,5 +1,6 @@
 package view.botones;
 
+import java.awt.Dimension;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
@@ -10,6 +11,8 @@ public class BotonCancelar extends BotonesApp {
 	private ImageIcon imgCancelar;
 	public BotonCancelar(){
 		super("Cancelar");
+		this.setPreferredSize(new Dimension(136, 77));
+		this.setSize(136, 77);
 		
 		/*imgCancelar=new ImageIcon(BotonCancelar.class.getResource("/view/recursos/cerrar_2.png"));
 		

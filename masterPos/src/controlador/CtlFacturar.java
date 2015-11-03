@@ -31,6 +31,7 @@ import modelo.Empleado;
 import modelo.Factura;
 import modelo.dao.FacturaDao;
 import view.ViewCambioPago;
+import view.ViewCargarVenderor;
 import view.ViewFacturar;
 import view.ViewListaArticulo;
 import view.ViewListaClientes;
@@ -846,34 +847,84 @@ public void calcularTotal(DetalleFactura detalle){
 		//verificamos que se agregaron articulos a la factura
 		if(view.getModeloTabla().getRowCount()>1){
 			
+			ViewCargarVenderor viewVendedor=new ViewCargarVenderor(view);
+			CtlCargarVendedor ctlVendedor=new CtlCargarVendedor(viewVendedor,conexion);
 			
-			if(!view.getRdbtnCredito().isSelected()){
-		
-				//se muestra la vista para cobrar y introducir el cambio
-				ViewCambioPago viewPago=new ViewCambioPago(this.view);
-				CtlCambioPago ctlPago=new CtlCambioPago(viewPago,myFactura.getTotal());
-				//se muestra y ventana del cobro y se devuelve un resultado del cobro
-				boolean resulPago=ctlPago.pagar();
-				
-				//se procede a verificar si se cobro
-				if(resulPago)
-				{
-					//si la forma de pago fue en efectivo
-					if(ctlPago.getFormaPago()==1){
-						myFactura.setPago(ctlPago.getEfectivo());
-						myFactura.setCambio(ctlPago.getCambio());
-						myFactura.setTipoPago(1);
-					}
-					//si la forma de pago fue con tarjeta de credito o debito
-					if(ctlPago.getFormaPago()==2){
-						myFactura.setPago(myFactura.getTotal());
-						myFactura.setCambio(new BigDecimal(00));
-						myFactura.setTipoPago(2);
-						myFactura.setObservacion(ctlPago.getRefencia());
-					}
-					setFactura();
-					boolean resul=facturaDao.registrarFactura(myFactura);
+			boolean resulVendedor=ctlVendedor.cargarVendedor();
+			
+			if(resulVendedor)//verifica si ingreso el codigo del bombero
+			{
+			
+			
+				if(!view.getRdbtnCredito().isSelected()){
+			
+					//se muestra la vista para cobrar y introducir el cambio
+					ViewCambioPago viewPago=new ViewCambioPago(this.view);
+					CtlCambioPago ctlPago=new CtlCambioPago(viewPago,myFactura.getTotal());
+					//se muestra y ventana del cobro y se devuelve un resultado del cobro
+					boolean resulPago=ctlPago.pagar();
+					
+					//se procede a verificar si se cobro
+					if(resulPago)
+					{
+						//si la forma de pago fue en efectivo
+						if(ctlPago.getFormaPago()==1){
+							myFactura.setPago(ctlPago.getEfectivo());
+							myFactura.setCambio(ctlPago.getCambio());
+							myFactura.setTipoPago(1);
+						}
+						//si la forma de pago fue con tarjeta de credito o debito
+						if(ctlPago.getFormaPago()==2){
+							myFactura.setPago(myFactura.getTotal());
+							myFactura.setCambio(new BigDecimal(00));
+							myFactura.setTipoPago(2);
+							myFactura.setObservacion(ctlPago.getRefencia());
+						}
+						setFactura();
+						boolean resul=facturaDao.registrarFactura(myFactura);
+							
+						if(resul){
+							myFactura.setIdFactura(facturaDao.getIdFacturaGuardada());
+							
+								try {
+									/*this.view.setVisible(false);
+									this.view.dispose();*/
+									//AbstractJasperReports.createReportFactura( conexion.getPoolConexion().getConnection(), "Factura_Saint_Paul.jasper",myFactura.getIdFactura() );
+									AbstractJasperReports.createReport(conexion.getPoolConexion().getConnection(), 1, myFactura.getIdFactura());
+									//AbstractJasperReports.showViewer(view);
+									AbstractJasperReports.imprimierFactura();
+									AbstractJasperReports.imprimierFactura();
+									//myFactura=null;
+									setEmptyView();
+									
+									//si la view es de actualizacion al cobrar se cierra la view
+									if(this.tipoView==2){
+										myFactura=null;
+										view.setVisible(false);
+									}
+									//myFactura.
+								} catch (SQLException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							
+							
+						}else{
+							JOptionPane.showMessageDialog(view, "No se guardo la factura", "Error Base de Datos", JOptionPane.ERROR_MESSAGE);
+							this.view.setVisible(false);
+							this.view.dispose();
+						}//fin el if donde se guarda la factura
 						
+					}//fin de la ventana en cobro
+				
+				}else{//si la factura es al contado se procede a guardar e imprimir 
+					setFactura();
+					
+					
+					
+					boolean resul=facturaDao.registrarFactura(myFactura);
+					
+					
 					if(resul){
 						myFactura.setIdFactura(facturaDao.getIdFacturaGuardada());
 						
@@ -882,9 +933,8 @@ public void calcularTotal(DetalleFactura detalle){
 								this.view.dispose();*/
 								//AbstractJasperReports.createReportFactura( conexion.getPoolConexion().getConnection(), "Factura_Saint_Paul.jasper",myFactura.getIdFactura() );
 								AbstractJasperReports.createReport(conexion.getPoolConexion().getConnection(), 1, myFactura.getIdFactura());
-								//AbstractJasperReports.showViewer(view);
-								AbstractJasperReports.imprimierFactura();
-								AbstractJasperReports.imprimierFactura();
+								AbstractJasperReports.showViewer(view);
+								//AbstractJasperReports.imprimierFactura();
 								//myFactura=null;
 								setEmptyView();
 								
@@ -905,48 +955,9 @@ public void calcularTotal(DetalleFactura detalle){
 						this.view.setVisible(false);
 						this.view.dispose();
 					}//fin el if donde se guarda la factura
-					
-				}//fin de la ventana en cobro
-			
-			}else{//si la factura es al contado se procede a guardar e imprimir 
-				setFactura();
+				}
 				
-				
-				
-				boolean resul=facturaDao.registrarFactura(myFactura);
-				
-				
-				if(resul){
-					myFactura.setIdFactura(facturaDao.getIdFacturaGuardada());
-					
-						try {
-							/*this.view.setVisible(false);
-							this.view.dispose();*/
-							//AbstractJasperReports.createReportFactura( conexion.getPoolConexion().getConnection(), "Factura_Saint_Paul.jasper",myFactura.getIdFactura() );
-							AbstractJasperReports.createReport(conexion.getPoolConexion().getConnection(), 1, myFactura.getIdFactura());
-							AbstractJasperReports.showViewer(view);
-							//AbstractJasperReports.imprimierFactura();
-							//myFactura=null;
-							setEmptyView();
-							
-							//si la view es de actualizacion al cobrar se cierra la view
-							if(this.tipoView==2){
-								myFactura=null;
-								view.setVisible(false);
-							}
-							//myFactura.
-						} catch (SQLException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					
-					
-				}else{
-					JOptionPane.showMessageDialog(view, "No se guardo la factura", "Error Base de Datos", JOptionPane.ERROR_MESSAGE);
-					this.view.setVisible(false);
-					this.view.dispose();
-				}//fin el if donde se guarda la factura
-			}
+			}//sin del if donde se pide el codigo del vendedor
 				
 					
 		}//fin del if donde se verifica que hay articulos que facturar

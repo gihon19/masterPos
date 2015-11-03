@@ -14,9 +14,11 @@ import javax.swing.ListSelectionModel;
 import view.botones.BotonActualizar;
 import view.botones.BotonCancelar;
 import view.botones.BotonGuardar;
+import view.rendes.PanelPadre;
 import controlador.CtlProveedor;
 import controlador.CtlProveedorLista;
 import modelo.Proveedor;
+
 
 
 import java.awt.event.WindowAdapter;
@@ -51,6 +53,7 @@ public class ViewCrearProveedor extends JDialog {
 		
 		setResizable(false);
 		getContentPane().setLayout(null);
+		getContentPane().setBackground(PanelPadre.color1);
 		
 		JLabel lblNombre = new JLabel("Nombre");
 		lblNombre.setBounds(24, 4, 52, 25);
@@ -89,19 +92,19 @@ public class ViewCrearProveedor extends JDialog {
 		
 		//botones
 		btnActualizar=new BotonActualizar();
-		btnActualizar.setSize(128, 66);
-		btnActualizar.setLocation(24, 341);
+		//btnActualizar.setSize(128, 66);
+		btnActualizar.setLocation(29, 341);
 		getContentPane().add(btnActualizar);
 		btnActualizar.setVisible(false);
 		
 		btnGuardar = new BotonGuardar();
-		btnGuardar.setLocation(24, 362);
+		btnGuardar.setLocation(29, 341);
 		//tnCancelar.setLocation(42, 175);
 		getContentPane().add(btnGuardar);
 		
 		btnCancelar = new BotonCancelar();
-		btnCancelar.setSize(128, 66);
-		btnCancelar.setLocation(210, 341);
+		//btnCancelar.setSize(128, 66);
+		btnCancelar.setLocation(194, 341);
 		getContentPane().add(btnCancelar);
 		
 		setSize(367,456);

@@ -28,6 +28,7 @@ import javax.swing.DefaultComboBoxModel;
 import view.botones.BotonActualizar;
 import view.botones.BotonCancelar;
 import view.botones.BotonGuardar;
+import view.rendes.PanelPadre;
 import view.rendes.RenderizadorTablaFactura;
 import view.rendes.RoundJTextField;
 import view.rendes.RtPrecios;
@@ -83,6 +84,7 @@ public class ViewCrearArticulo extends JDialog {
 	private Color colorBorde;
 	private JPanel panel_2;
 	private JPanel panel_3,panel_4,panel_5;
+	private JPanel panel_6;
 	
 	
 
@@ -111,39 +113,12 @@ super(view,"Agregar Articulos",Dialog.ModalityType.DOCUMENT_MODAL);
 		mntmImprimir = new JMenuItem("IMPRIMIR");
 		menuContextual.add(mntmImprimir);
 		
-		
-		
-		//botones
-		btnGuardar = new BotonGuardar();
-		btnGuardar.setSize(136, 77);
-		btnGuardar.setLocation(20, 577);
-		//tnCancelar.setLocation(42, 175);
-		getContentPane().add(btnGuardar);
-		
-		btnActualizar=new BotonActualizar();
-		btnActualizar.setSize(136, 77);
-		btnActualizar.setLocation(20, 577);
-		getContentPane().add(btnActualizar);
-		btnActualizar.setVisible(false);
-		
-		btnCancelar = new BotonCancelar();
-		btnCancelar.setSize(128, 77);
-		//btnCancelar.setBounds(212, 175, 135, 39);
-		btnCancelar.setLocation(184, 577);
-		getContentPane().add(btnCancelar);
-		
 		modeloCodBarra=new ListaModeloCodBarra();
-		
-		txtPrecio = new JTextField();
-		txtPrecio.setBounds(136, 577, 257, 20);
-		txtPrecio.setVisible(false);
-		getContentPane().add(txtPrecio);
-		txtPrecio.setColumns(10);
 		this.modeloPrecio=new TmPrecios();
 		
 		RtPrecios renderizador = new RtPrecios();
 		
-		panel = new JPanel();
+		panel = new PanelPadre();
 		panel.setBorder(BorderFactory.createCompoundBorder(
 	              BorderFactory.createMatteBorder(0, 0, 2, 2, Color.WHITE),
 	              BorderFactory.createMatteBorder(0, 0, 2, 2, Color.GRAY)
@@ -165,7 +140,7 @@ super(view,"Agregar Articulos",Dialog.ModalityType.DOCUMENT_MODAL);
 		panel.add(txtNombre);
 		txtNombre.setFont(myFont);
 		
-		panel_1 = new JPanel();
+		panel_1 = new PanelPadre();
 		panel_1.setBorder(BorderFactory.createCompoundBorder(
 	              BorderFactory.createMatteBorder(0, 0, 2, 2, Color.WHITE),
 	              BorderFactory.createMatteBorder(0, 0, 2, 2, Color.GRAY)
@@ -184,12 +159,12 @@ super(view,"Agregar Articulos",Dialog.ModalityType.DOCUMENT_MODAL);
 		panel_1.add(cbxTipo);
 		cbxTipo.setModel(new DefaultComboBoxModel(new String[] {"Bienes", "Servicio"}));
 		
-		panel_2 = new JPanel();
+		panel_2 = new PanelPadre();
 		panel_2.setBorder(BorderFactory.createCompoundBorder(
 	              BorderFactory.createMatteBorder(0, 0, 2, 2, Color.WHITE),
 	              BorderFactory.createMatteBorder(0, 0, 2, 2, Color.GRAY)
 	              ));
-		panel_2.setBounds(0, 153, 341, 76);
+		panel_2.setBounds(0, 141, 341, 88);
 		getContentPane().add(panel_2);
 		panel_2.setLayout(null);
 		
@@ -210,7 +185,7 @@ super(view,"Agregar Articulos",Dialog.ModalityType.DOCUMENT_MODAL);
 		btnBuscar.setBounds(302, 31, 18, 32);
 		panel_2.add(btnBuscar);
 		
-		panel_3 = new JPanel();
+		panel_3 = new PanelPadre();
 		panel_3.setBorder(BorderFactory.createCompoundBorder(
 	              BorderFactory.createMatteBorder(0, 0, 2, 2, Color.WHITE),
 	              BorderFactory.createMatteBorder(0, 0, 2, 2, Color.GRAY)
@@ -236,7 +211,7 @@ super(view,"Agregar Articulos",Dialog.ModalityType.DOCUMENT_MODAL);
 		panel_3.add(cbxImpuesto);
 		cbxImpuesto.setFont(myFont);
 		
-		panel_4 = new JPanel();
+		panel_4 = new PanelPadre();
 		panel_4.setBorder(BorderFactory.createCompoundBorder(
 	              BorderFactory.createMatteBorder(0, 0, 2, 2, Color.WHITE),
 	              BorderFactory.createMatteBorder(0, 0, 2, 2, Color.GRAY)
@@ -247,7 +222,7 @@ super(view,"Agregar Articulos",Dialog.ModalityType.DOCUMENT_MODAL);
 		
 				
 		JLabel lblCodigoBarra = new JLabel("Codigo Barra");
-		lblCodigoBarra.setBounds(23, 7, 89, 14);
+		lblCodigoBarra.setBounds(23, 10, 89, 14);
 		panel_4.add(lblCodigoBarra);
 		lblCodigoBarra.setFont(myFont);
 		
@@ -266,7 +241,7 @@ super(view,"Agregar Articulos",Dialog.ModalityType.DOCUMENT_MODAL);
 		listCodigos.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		scrollPane.setViewportView(listCodigos);
 		
-		panel_5 = new JPanel();
+		panel_5 = new PanelPadre();
 		panel_5.setBorder(BorderFactory.createCompoundBorder(
 	              BorderFactory.createMatteBorder(0, 0, 2, 2, Color.WHITE),
 	              BorderFactory.createMatteBorder(0, 0, 2, 2, Color.GRAY)
@@ -294,11 +269,38 @@ super(view,"Agregar Articulos",Dialog.ModalityType.DOCUMENT_MODAL);
 		panel_5.add(lblOtrosPrecios);
 		lblOtrosPrecios.setFont(myFont);
 		
+		panel_6 = new PanelPadre();
+		panel_6.setBounds(0, 564, 341, 101);
+		getContentPane().add(panel_6);
+		panel_6.setLayout(null);
+		
+		
+		
+		//botones
+		btnGuardar = new BotonGuardar();
+		btnGuardar.setBounds(23, 11, 136, 77);
+		panel_6.add(btnGuardar);
+		
+		btnActualizar=new BotonActualizar();
+		btnActualizar.setBounds(23, 11, 136, 77);
+		panel_6.add(btnActualizar);
+		
+		btnCancelar = new BotonCancelar();
+		btnCancelar.setBounds(182, 11, 136, 77);
+		panel_6.add(btnCancelar);
+		
+		txtPrecio = new JTextField();
+		txtPrecio.setBounds(39, 62, 257, 20);
+		panel_6.add(txtPrecio);
+		txtPrecio.setVisible(false);
+		txtPrecio.setColumns(10);
+		
 		JLabel lblPrecio = new JLabel("Precio Venta");
-		lblPrecio.setBounds(24, 591, 89, 14);
-		getContentPane().add(lblPrecio);
+		lblPrecio.setBounds(213, 37, 89, 14);
+		panel_6.add(lblPrecio);
 		lblPrecio.setFont(myFont);
 		lblPrecio.setVisible(false);
+		btnActualizar.setVisible(false);
 		
 		setSize(347,694);
 		

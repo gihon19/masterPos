@@ -28,6 +28,8 @@ import java.awt.Font;
 import javax.swing.ImageIcon;
 
 import view.botones.BotonCancelar;
+import view.botones.BotonesApp;
+import view.rendes.PanelPadre;
 
 public class ViewLogin extends JDialog{
 	private JTextField txtUser, txtPass;
@@ -44,6 +46,7 @@ public class ViewLogin extends JDialog{
 		
 		Container contenedor = getContentPane();
 		getContentPane().setLayout(null);
+		getContentPane().setBackground(PanelPadre.color1);
 		
 		setUndecorated(true);
 		JPanel panel = new JPanel();
@@ -65,7 +68,7 @@ public class ViewLogin extends JDialog{
 		image = image.getScaledInstance(image.getWidth(null)/22, image.getHeight(null)/22, Image.SCALE_SMOOTH);
 		imgLogo.setImage(image);
 		
-		panel_1 = new JPanel();
+		panel_1 = new PanelPadre();
 		panel_1.setBounds(0, 0, 400, 250);
 		getContentPane().add(panel_1);
 		panel_1.setLayout(null);
@@ -92,14 +95,14 @@ public class ViewLogin extends JDialog{
 		txtPass.setToolTipText("Escriba su contraseña");
 		
 		//Crear y agregar los botones 
-		btnAceptar = new JButton("Aceptar");
-		btnAceptar.setBounds(42, 186, 102, 37);
+		btnAceptar = new BotonesApp("Aceptar");
+		btnAceptar.setLocation(48, 186);
 		panel_1.add(btnAceptar);
 		//establecer Boton aceptar por defecto
 		getRootPane().setDefaultButton(btnAceptar);
 		
-		btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(263, 186, 102, 37);
+		btnCancelar = new BotonesApp("Cancelar");
+		btnCancelar.setLocation(224, 186);
 		panel_1.add(btnCancelar);
 		
 		lblNewLabel = new JLabel("");
@@ -107,10 +110,7 @@ public class ViewLogin extends JDialog{
 		lblNewLabel.setBounds(288, 57, 102, 92);
 		panel_1.add(lblNewLabel);
 		
-		this.setResizable(false);
-		
-		
-		
+			
 		
 		
 		
@@ -156,5 +156,4 @@ public class ViewLogin extends JDialog{
 		      super.paintComponent(g);
 		   }
 	}
-
 }

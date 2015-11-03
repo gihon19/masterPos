@@ -1,5 +1,6 @@
 package view.botones;
 
+import java.awt.Dimension;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
@@ -22,6 +23,8 @@ public class BotonGuardar extends BotonesApp {
 		 imgGuardar.setImage(image);
 	
 		this.setIcon(imgGuardar);*/
+		this.setSize(136, 77);
+		this.setPreferredSize(new Dimension(136, 77));
 		
 		this.setIcon(new ImageIcon(BotonGuardar.class.getResource("/view/recursos/guardar.png")));
 		this.setVerticalTextPosition(SwingConstants.BOTTOM);
