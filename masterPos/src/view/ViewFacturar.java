@@ -112,8 +112,6 @@ public class ViewFacturar extends JDialog {
 	protected BotonPendientes btnPendientes;
 	
 	protected JTextField txtRtn;
-	
-	protected JComboBox cbxEmpleados;
 	//se crea el modelo de la lista de los impuestos
 	protected CbxTmEmpleado modeloEmpleado;//=new ComboBoxImpuesto();
 	protected JPanel panel;
@@ -177,7 +175,7 @@ public class ViewFacturar extends JDialog {
 		tableDetalle.setDefaultRenderer(String.class, renderizador);
 		//tableDetalle.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-		tableDetalle.getColumnModel().getColumn(0).setPreferredWidth(50);     //Tamaño de las columnas de las tablas
+		tableDetalle.getColumnModel().getColumn(0).setPreferredWidth(50);     //Tamaï¿½o de las columnas de las tablas
 		tableDetalle.getColumnModel().getColumn(1).setPreferredWidth(200);	//
 		tableDetalle.getColumnModel().getColumn(2).setPreferredWidth(80);	//
 		tableDetalle.getColumnModel().getColumn(3).setPreferredWidth(80);	//
@@ -217,7 +215,7 @@ public class ViewFacturar extends JDialog {
 		panelDatosFactura.setBorder(new TitledBorder(new LineBorder(new Color(130, 135, 144)), "Datos Generales", TitledBorder.LEFT, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		//panelDatosFactura.setBounds(196, 11, 802, 84);
 		//panelDatosFactura.setVisible(false);
-		panelDatosFactura.setLayout(new GridLayout(0, 7, 10, 0));
+		panelDatosFactura.setLayout(new GridLayout(0, 6, 10, 0));
 		lblFecha = new JLabel("Fecha");
 		lblFecha.setFont(new Font("Georgia", Font.BOLD, 13));
 		panelDatosFactura.add(lblFecha);
@@ -244,10 +242,6 @@ public class ViewFacturar extends JDialog {
 		lblCredito.setFont(new Font("Georgia", Font.BOLD, 13));
 		lblCredito.setHorizontalAlignment(SwingConstants.CENTER);
 		panelDatosFactura.add(lblCredito);
-		
-		JLabel lblVendedor = new JLabel("Vendedor");
-		lblVendedor.setFont(new Font("Georgia", Font.BOLD, 13));
-		panelDatosFactura.add(lblVendedor);
 		
 		txtFechafactura = new JTextField();
 		txtFechafactura.setBackground(color4);
@@ -280,10 +274,6 @@ public class ViewFacturar extends JDialog {
 		rdbtnCredito.setHorizontalAlignment(SwingConstants.CENTER);
 		grupoOpciones.add(rdbtnCredito);
 		panelDatosFactura.add(rdbtnCredito);
-		
-		cbxEmpleados = new JComboBox();
-		cbxEmpleados.setModel(modeloEmpleado);//comentar para moder ver la vista de diseño
-		panelDatosFactura.add(cbxEmpleados);
 		
 		
 		
@@ -503,9 +493,7 @@ public class ViewFacturar extends JDialog {
 		
 			
 	}
-	public JComboBox getCbxEmpleados(){
-		return cbxEmpleados;
-	}
+	
 	public CbxTmEmpleado getModeloEmpleados(){
 		return this.modeloEmpleado;
 	}
@@ -647,10 +635,6 @@ public class ViewFacturar extends JDialog {
 		//txtBuscar.
 		txtArticulo.addKeyListener(c);
 		txtPrecio.addKeyListener(c);
-		cbxEmpleados.addKeyListener(c);
-		//KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
-		//manager.addKeyEventDispatcher( c);
-		//this.addWindowListener(c);
-		//this.addw
+		
 	}
 }

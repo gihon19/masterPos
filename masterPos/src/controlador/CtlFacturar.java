@@ -105,11 +105,11 @@ public class CtlFacturar  implements ActionListener, MouseListener, TableModelLi
 		//se obtiene la lista de los impuesto y se le pasa al modelo de la lista
 		this.view.getModeloEmpleados().setLista(myEmpleadoDao.todoEmpleadosVendedores());
 		
-		
+		/*
 		//se remueve la lista por defecto
 		this.view.getCbxEmpleados().removeAllItems();
 	
-		this.view.getCbxEmpleados().setSelectedIndex(0);
+		this.view.getCbxEmpleados().setSelectedIndex(0);*/
 	}
 	private static boolean isNumber(String string){
 		return string !=null && numberPattern.matcher(string).matches();
@@ -236,6 +236,8 @@ public class CtlFacturar  implements ActionListener, MouseListener, TableModelLi
 		myFactura.setCliente(myCliente);
 		myFactura.setDetalles(this.view.getModeloTabla().getDetalles());
 		myFactura.setFecha(facturaDao.getFechaSistema());
+		
+		/*
 		//Se establece el vendedor seleccionado
 		Empleado emp= (Empleado) this.view .getCbxEmpleados().getSelectedItem();
 		myFactura.setVendedor(emp);
@@ -608,7 +610,7 @@ public void calcularTotal(DetalleFactura detalle){
 			}
 		}*/
 		
-		//Recoger qué fila se ha pulsadao en la tabla
+		//Recoger quï¿½ fila se ha pulsadao en la tabla
 		filaPulsada = this.view.getTableDetalle().getSelectedRow();
 		
 		if(e.getKeyCode()==KeyEvent.VK_F1){
@@ -717,7 +719,7 @@ public void calcularTotal(DetalleFactura detalle){
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
-		//Recoger qué fila se ha pulsadao en la tabla
+		//Recoger quï¿½ fila se ha pulsadao en la tabla
 		filaPulsada = this.view.getTableDetalle().getSelectedRow();
 		char caracter = e.getKeyChar();
 		
@@ -847,6 +849,9 @@ public void calcularTotal(DetalleFactura detalle){
 		//verificamos que se agregaron articulos a la factura
 		if(view.getModeloTabla().getRowCount()>1){
 			
+			
+			
+			
 			ViewCargarVenderor viewVendedor=new ViewCargarVenderor(view);
 			CtlCargarVendedor ctlVendedor=new CtlCargarVendedor(viewVendedor,conexion);
 			
@@ -955,7 +960,7 @@ public void calcularTotal(DetalleFactura detalle){
 						this.view.setVisible(false);
 						this.view.dispose();
 					}//fin el if donde se guarda la factura
-				}
+				}//fin del factura al credito
 				
 			}//sin del if donde se pide el codigo del vendedor
 				

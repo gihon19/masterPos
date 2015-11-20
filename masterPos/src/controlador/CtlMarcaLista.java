@@ -25,15 +25,15 @@ import view.ViewListaMarca;
 public class CtlMarcaLista implements ActionListener, MouseListener,WindowListener, ItemListener {
 	
 	//formulario para Modificar, insertar marcas
-	public ViewCrearMarca viewMarca;
+	private ViewCrearMarca viewMarca;
 	//lista de marcas
-	public ViewListaMarca view;
+	private ViewListaMarca view;
 	
 	//modelo para consultar la base de datos
-	public MarcaDao myMarcaDao;
+	private MarcaDao myMarcaDao;
 	
 	//modelo de datos
-	public Marca myMarca;
+	private Marca myMarca;
 	
 	//fila selecciona enla lista
 	private int filaPulsada;
@@ -86,7 +86,7 @@ public class CtlMarcaLista implements ActionListener, MouseListener,WindowListen
 			break;
 		case "ELIMINAR":
 			if(myMarcaDao.eliminarMarca(myMarca.getId())){//llamamos al metodo para agregar 
-				JOptionPane.showMessageDialog(this.view, "Se elimino exitosamente","Información",JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this.view, "Se elimino exitosamente","Informacion",JOptionPane.INFORMATION_MESSAGE);
 				this.view.getModelo().eliminarMarca(filaPulsada);
 				this.view.getBtnEliminar().setEnabled(false);
 				
@@ -131,7 +131,7 @@ public class CtlMarcaLista implements ActionListener, MouseListener,WindowListen
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
-		//Recoger qué fila se ha pulsadao en la tabla
+		//Recoger quï¿½ fila se ha pulsadao en la tabla
         filaPulsada = this.view.getTablaMarca().getSelectedRow();
         
         //si seleccion una fila

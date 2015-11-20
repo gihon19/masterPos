@@ -55,7 +55,8 @@ public class ViewCargarVenderor extends JDialog {
 		getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblPagaCon = new JLabel("Codigo bombero:");
+		JLabel lblPagaCon = new JLabel("Codigo:");
+		lblPagaCon.setFont(new Font("Georgia", Font.BOLD, 13));
 		lblPagaCon.setBounds(0, 11, 106, 14);
 		panel.add(lblPagaCon);
 		
@@ -66,6 +67,7 @@ public class ViewCargarVenderor extends JDialog {
 		txtEfectivo.setColumns(10);
 		
 		JLabel lblCambio = new JLabel("Nombre:");
+		lblCambio.setFont(new Font("Georgia", Font.BOLD, 13));
 		lblCambio.setBounds(0, 63, 106, 14);
 		panel.add(lblCambio);
 		
@@ -77,6 +79,7 @@ public class ViewCargarVenderor extends JDialog {
 		txtCambio.setColumns(10);
 		
 		lblApellido = new JLabel("Apellido:");
+		lblApellido.setFont(new Font("Georgia", Font.BOLD, 13));
 		lblApellido.setBounds(0, 112, 90, 14);
 		panel.add(lblApellido);
 		
@@ -97,6 +100,7 @@ public class ViewCargarVenderor extends JDialog {
 		
 				
 		btnCobrar = new BotonCobrar();
+		btnCobrar.setSize(128, 77);
 		btnCobrar.setText("F2 Cobrar");
 		//btnCobrar.setBounds(424, 209, 144, 38);
 		btnCobrar.setLocation(424, 209);
@@ -115,7 +119,7 @@ public class ViewCargarVenderor extends JDialog {
 		getContentPane().add(panel_2);
 		panel_2.setLayout(null);
 		
-		tglbtnEfectivo = new JToggleButton("Bomberos");
+		tglbtnEfectivo = new JToggleButton("Vendedor");
 		tglbtnEfectivo.setBounds(10, 27, 199, 111);
 		panel_2.add(tglbtnEfectivo);
 		

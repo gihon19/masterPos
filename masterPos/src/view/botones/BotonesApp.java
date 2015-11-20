@@ -14,21 +14,22 @@ public class BotonesApp extends JButton {
 	
 	public BotonesApp(){
 		this.setSize(ancho, alto);
-		myFon=new Font("Georgia", Font.PLAIN, 13);
-		this.setFont(myFon);
-		Color color1 =new Color(60, 179, 113);
-		setBackground(color1);
-		//this.setPreferredSize(dim);
+		setBoton();
 		
 	}
 	public BotonesApp(String titulo){
 		super(titulo);
+		setBoton();
+		
+	}
+	
+	private void setBoton(){
 		this.setSize(ancho, alto);
+		//this.setPreferredSize(new Dimension(ancho, alto));
 		myFon=new Font("Georgia", Font.PLAIN, 13);
 		this.setFont(myFon);
 		Color color1 =new Color(60, 179, 113);
 		setBackground(color1);
-		
 	}
 	
 

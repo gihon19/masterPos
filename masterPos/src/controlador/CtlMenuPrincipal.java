@@ -13,6 +13,7 @@ import modelo.AbstractJasperReports;
 import modelo.dao.CierreCajaDao;
 import modelo.Conexion;
 import view.ViewAgregarCompras;
+import view.ViewCrearUsuario;
 import view.ViewCxCPagos;
 import view.ViewFacturar;
 import view.ViewFacturas;
@@ -26,6 +27,7 @@ import view.ViewListaPagos;
 import view.ViewListaPrecioProgramar;
 import view.ViewListaProveedor;
 import view.ViewListaRequisiciones;
+import view.ViewListaUsuarios;
 import view.ViewMenuPrincipal;
 import view.ViewRequisicion;
 
@@ -46,6 +48,9 @@ public class CtlMenuPrincipal implements ActionListener {
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -190,6 +195,19 @@ public class CtlMenuPrincipal implements ActionListener {
 				ViewFiltroReportDei viewFiltroDei=new ViewFiltroReportDei(view);
 				CtlFiltroRepDei ctlFiltroDei=new CtlFiltroRepDei(viewFiltroDei,conexion);
 				break;
+			case "USUARIOS":
+				
+				ViewListaUsuarios viewListaUsuarios=new ViewListaUsuarios(view);
+				CtlUsuariosLista ctlUsuarios=new CtlUsuariosLista(viewListaUsuarios,conexion);
+				viewListaUsuarios.dispose();
+				viewListaUsuarios=null;
+				ctlUsuarios=null;
+				/*ViewCrearUsuario viewCrearUsuario=new ViewCrearUsuario(view);
+				CtlUsuario ctlUsuario=new CtlUsuario(viewCrearUsuario, conexion);
+				viewCrearUsuario.setVisible(true);*/
+				
+				break;
+				
 		}
 		
 	}
