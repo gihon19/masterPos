@@ -10,6 +10,7 @@ import java.awt.Window;
 import javax.swing.SpringLayout;
 
 import controlador.CtlUsuario;
+import view.botones.BotonActualizar;
 import view.botones.BotonCancelar;
 import view.botones.BotonGuardar;
 import view.rendes.PanelPadre;
@@ -31,6 +32,7 @@ public class ViewCrearUsuario extends JDialog {
 	private JRadioButton rdbtnAdministrador;
 	private BotonCancelar btnCancelar;
 	private ButtonGroup grupoOpciones;
+	private BotonActualizar btnActualizar;
 	
 	
 	public ViewCrearUsuario(Window view) {
@@ -39,6 +41,8 @@ public class ViewCrearUsuario extends JDialog {
 		this.setTitle("Crear Usuario");
 		this.setLocationRelativeTo(view);
 		this.setModal(true);
+		
+		this.setResizable(false);
 		
 		grupoOpciones = new ButtonGroup();
 		this.setSize(423, 537);
@@ -108,8 +112,19 @@ public class ViewCrearUsuario extends JDialog {
 		getContentPane().add(txtUsuario);
 		txtUsuario.setColumns(10);
 		
+		btnActualizar=new BotonActualizar();
+		btnActualizar.setLocation(39, 429);
+		getContentPane().add(btnActualizar);
+		
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+	}
+	
+	public BotonActualizar getBtnActualizar(){
+		return btnActualizar;
+	}
+	public BotonGuardar getBtnGuardar(){
+		return btnGuardar;
 	}
 	public JRadioButton getRdbtnAdministrador(){
 		return rdbtnAdministrador;
@@ -139,6 +154,9 @@ public class ViewCrearUsuario extends JDialog {
 		
 		btnCancelar.addActionListener(c);
 		btnCancelar.setActionCommand("CANCELAR");
+		
+		btnActualizar.addActionListener(c);
+		btnActualizar.setActionCommand("ACTUALIZAR");
 		
 		
 	}

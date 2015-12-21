@@ -37,12 +37,43 @@ public class CtlUsuario implements ActionListener {
 		case "GUARDAR":
 			if(validar()){
 				setUser();
+				guardarUsuario();
 			}
 			break;
 		case "CANCELAR":
+			view.setVisible(false);
+			break;
+		case "ACTUALIZAR":
+			
+			if(validar()){
+				setUser();
+				actualizarUsuario();
+			}
+			
 			break;
 		}
 		
+	}
+	
+	private void actualizarUsuario() {
+		// TODO Auto-generated method stub
+		if(myDao.actualizar(myUsuario)){
+			JOptionPane.showMessageDialog(view, "El Usuario se actualizo correctamente.");
+			this.resultaOperacion=true;
+			view.setVisible(false);
+		}else{
+			JOptionPane.showMessageDialog(view, "Ocurrio un problema para actualizar el usuario");
+		}
+	}
+
+	private void guardarUsuario(){
+		if(myDao.registrar(myUsuario)){
+			JOptionPane.showMessageDialog(view, "El Usuario se guardo correctamente.");
+			this.resultaOperacion=true;
+			view.setVisible(false);
+		}else{
+			JOptionPane.showMessageDialog(view, "Ocurrio un problema para guardar el usuario");
+		}
 	}
 
 	private void setUser() {
@@ -60,13 +91,7 @@ public class CtlUsuario implements ActionListener {
 			myUsuario.setPermiso("Cajero");
 		}
 		
-		if(myDao.registrar(myUsuario)){
-			JOptionPane.showMessageDialog(view, "El Usuario se guardo correctamente.");
-			this.resultaOperacion=true;
-			view.setVisible(false);
-		}else{
-			JOptionPane.showMessageDialog(view, "Ocurrio un problema para guardar el usuario");
-		}
+		
 	}
 
 	private boolean validar() {
@@ -114,6 +139,31 @@ public class CtlUsuario implements ActionListener {
 	public Usuario getUsuario() {
 		// TODO Auto-generated method stub
 		return myUsuario;
+	}
+	public void loadUsuario(){
+		view.getTxtUser().setText(myUsuario.getUser());
+		view.getTxtNombre().setText(myUsuario.getNombre());
+		view.getTxtApellido().setText(myUsuario.getApellido());
+		
+		if(myUsuario.getTipoPermiso()==1){
+			view.getRdbtnAdministrador().setSelected(true);
+		}
+		if(myUsuario.getTipoPermiso()==2){
+			view.getRdbtnCajero().setSelected(true);
+		}
+	}
+	
+	public boolean actualizarUsuario(Usuario user){
+		myUsuario=user;
+		myUsuario.setUserOld(new String(user.getUser()));
+		
+		//JOptionPane.showMessageDialog(view, myUsuario);
+		
+		view.getBtnActualizar().setVisible(true);
+		view.getBtnGuardar().setVisible(false);
+		loadUsuario();
+		view.setVisible(true);
+		return resultaOperacion;
 	}
 
 }

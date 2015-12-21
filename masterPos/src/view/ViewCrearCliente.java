@@ -11,6 +11,8 @@ import view.rendes.PanelPadre;
 import controlador.CtlCliente;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
 import javax.swing.JPanel;
 
@@ -98,6 +100,11 @@ public class ViewCrearCliente extends JDialog{
 		btnActualizar.setLocation(25, 283);
 		JplPrincipal.add(btnActualizar);
 		btnActualizar.setVisible(false);
+		
+		setResizable(false);
+		
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		
 		
 	}

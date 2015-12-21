@@ -46,9 +46,8 @@ public class ViewListaUsuarios extends JDialog {
 	protected JButton btnLimpiar;
 	
 	
-	private JRadioButton rdbtnId;
-	private JRadioButton rdbtnObservacion;
-	private JRadioButton rdbtnMarca;
+	private JRadioButton rdbtnUser;
+	private JRadioButton rdbtnNombre;
 	private ButtonGroup grupoOpciones; // grupo de botones que contiene los botones de opci�n
 	private JRadioButton rdbtnTodos;
 	protected BotonBuscar btnBuscar;
@@ -109,17 +108,14 @@ public class ViewListaUsuarios extends JDialog {
 		grupoOpciones.add(rdbtnTodos);
 		
 		//opciones de busquedas
-		rdbtnId = new JRadioButton("ID",false);
-		panelBusqueda.add(rdbtnId);
-		grupoOpciones.add(rdbtnId);
+		rdbtnUser = new JRadioButton("User",false);
+		panelBusqueda.add(rdbtnUser);
+		grupoOpciones.add(rdbtnUser);
 		
-		rdbtnMarca = new JRadioButton("Marca",false);
-		panelBusqueda.add(rdbtnMarca);
-		grupoOpciones.add(rdbtnMarca);
+		rdbtnNombre = new JRadioButton("Nombre",false);
+		panelBusqueda.add(rdbtnNombre);
+		grupoOpciones.add(rdbtnNombre);
 		
-		rdbtnObservacion = new JRadioButton("Observacion",false);
-		panelBusqueda.add(rdbtnObservacion);
-		grupoOpciones.add(rdbtnObservacion);
 		
 		//elementos del panel buscar
 		txtBuscar=new JTextField(10);
@@ -151,6 +147,7 @@ public class ViewListaUsuarios extends JDialog {
 		getContentPane().add(scrollPane, BorderLayout.CENTER);
 		setSize(718,591);
 		
+		this.btnEliminar.setEnabled(false);
 		//se hace visible
 		//setVisible(true);
 		
@@ -165,6 +162,18 @@ public class ViewListaUsuarios extends JDialog {
 	public JTable getTabla(){
 		return tablaUsuarios;
 	}
+	public JRadioButton getRdbtnNombre(){
+		return rdbtnNombre;
+	}
+	public JRadioButton getRdbtnUser(){
+		return rdbtnUser;
+	}
+	public JRadioButton getRdbtnTodos(){
+		return rdbtnTodos;
+	}
+	public JTextField getTxtBuscar(){
+		return this.txtBuscar;
+	}
 	
 	public void conectarCtl(CtlUsuariosLista c){
 		btnAgregar.addActionListener(c);
@@ -172,6 +181,12 @@ public class ViewListaUsuarios extends JDialog {
 		
 		btnEliminar.addActionListener(c);
 		btnEliminar.setActionCommand("ELIMINAR");
+		
+		btnBuscar.addActionListener(c);
+		btnBuscar.setActionCommand("BUSCAR");
+		
+		txtBuscar.addActionListener(c);
+		txtBuscar.setActionCommand("BUSCAR");
 		
 		
 		tablaUsuarios.addMouseListener(c);

@@ -13,13 +13,16 @@ import modelo.AbstractJasperReports;
 import modelo.dao.CierreCajaDao;
 import modelo.Conexion;
 import view.ViewAgregarCompras;
+import view.ViewCrearEmpleado;
 import view.ViewCrearUsuario;
 import view.ViewCxCPagos;
 import view.ViewFacturar;
 import view.ViewFacturas;
 import view.ViewFiltroReportDei;
 import view.ViewListaArticulo;
+import view.ViewListaCierresCaja;
 import view.ViewListaClientes;
+import view.ViewListaEmpleados;
 import view.ViewListaFactura;
 import view.ViewListaFacturasCompra;
 import view.ViewListaMarca;
@@ -206,6 +209,62 @@ public class CtlMenuPrincipal implements ActionListener {
 				CtlUsuario ctlUsuario=new CtlUsuario(viewCrearUsuario, conexion);
 				viewCrearUsuario.setVisible(true);*/
 				
+				break;
+			case "INVENTARIO":
+				try {
+					//AbstractJasperReports.createReportFactura( conexion.getPoolConexion().getConnection(), "Cierre_Caja_Saint_Paul.jasper",1 );
+					AbstractJasperReports.createReportInventario(conexion.getPoolConexion().getConnection(), conexion.getUsuarioLogin().getUser());
+					
+					//this.view.setModal(false);
+					//AbstractJasperReports.imprimierFactura();
+					AbstractJasperReports.showViewer(this.view);
+					
+					
+				} catch (SQLException ee) {
+					// TODO Auto-generated catch block
+					ee.printStackTrace();
+				}
+				break;
+				
+			case "CIERRES_CAJA":
+				
+				ViewListaCierresCaja viewCierres=new ViewListaCierresCaja(view);
+				CtlCierresCajaLista ctlCierres=new CtlCierresCajaLista(viewCierres,conexion);
+				
+				viewCierres.dispose();
+				viewCierres=null;
+				ctlCierres=null;
+				/*try {
+					//AbstractJasperReports.createReportFactura( conexion.getPoolConexion().getConnection(), "Cierre_Caja_Saint_Paul.jasper",1 );
+					AbstractJasperReports.createReportCierresCaja(conexion.getPoolConexion().getConnection(), conexion.getUsuarioLogin().getUser());
+					
+					//this.view.setModal(false);
+					//AbstractJasperReports.imprimierFactura();
+					AbstractJasperReports.showViewer(this.view);
+					
+					
+				} catch (SQLException ee) {
+					// TODO Auto-generated catch block
+					ee.printStackTrace();
+				}*/
+				break;
+				
+			case "EMPLEADOS":
+				
+				ViewListaEmpleados viewEmpleados=new ViewListaEmpleados(view);
+				CtlEmpleadosLista ctlListaEmpleados=new CtlEmpleadosLista(viewEmpleados,conexion);
+				
+				viewEmpleados.dispose();
+				viewEmpleados=null;
+				ctlListaEmpleados=null;
+				
+				
+					/*ViewCrearEmpleado viewCrearEmpleado=new ViewCrearEmpleado(view);
+					CtlEmpleado ctlCrearEmpleado=new CtlEmpleado(viewCrearEmpleado, conexion);
+					ctlCrearEmpleado.agregarEmpleado();
+					viewCrearEmpleado.dispose();
+					viewCrearEmpleado=null;
+					ctlCrearEmpleado=null;*/
 				break;
 				
 		}

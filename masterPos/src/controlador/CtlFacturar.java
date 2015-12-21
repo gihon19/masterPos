@@ -219,7 +219,7 @@ public class CtlFacturar  implements ActionListener, MouseListener, TableModelLi
 			myCliente=new Cliente();
 			myCliente.setId(Integer.parseInt(this.view.getTxtIdcliente().getText()));
 			myCliente.setNombre(this.view.getTxtNombrecliente().getText());
-			//myCliente.setRtn(view.getTxtRtn().getText());
+			myCliente.setRtn(view.getTxtRtn().getText());
 			
 		}
 		

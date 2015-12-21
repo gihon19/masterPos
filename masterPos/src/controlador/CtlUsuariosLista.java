@@ -67,16 +67,33 @@ public class CtlUsuariosLista implements ActionListener, MouseListener {
         	String user=(String)view.getModelo().getValueAt(filaPulsada, 0);
         	myUsuario=view.getModelo().getUsuario(filaPulsada);  
         	
+        	
+        	
         	//si fue doble click mostrar modificar
         	if (e.getClickCount() == 2) {
+        		
+        		
+        		ViewCrearUsuario viewCrear=new ViewCrearUsuario(view);
+        		CtlUsuario ctlUsuario=new CtlUsuario(viewCrear,conexion);
+        		
+        		boolean resul=ctlUsuario.actualizarUsuario(myUsuario);
+        		
+        		if(resul){
+        			
+        			this.view.getModelo().fireTableDataChanged();//se refrescan los cambios
+        		}
+        		
+        		viewCrear.dispose();
+        		view=null;
+        		ctlUsuario=null;
         		
         	}
         	
         }
         
-        if(e.getClickCount()==1){
+        /*if(e.getClickCount()==1){
         	this.view.getBtnEliminar().setEnabled(true);
-        }
+        }*/
 		
 	}
 
@@ -138,6 +155,18 @@ public class CtlUsuariosLista implements ActionListener, MouseListener {
 			else{
 				JOptionPane.showMessageDialog(null, "No se Registro");
 			}
+			break;
+		case "BUSCAR":
+			if(view.getRdbtnTodos().isSelected()){
+				view.getTxtBuscar().setText("");;
+				cargarTabla(myDao.todos());
+			}else
+				if(view.getRdbtnNombre().isSelected()){
+					cargarTabla(myDao.porNombre(view.getTxtBuscar().getText()));
+				}else
+					if(view.getRdbtnUser().isSelected()){
+						cargarTabla(myDao.porUser(view.getTxtBuscar().getText()));
+					}
 			break;
 		}
 		

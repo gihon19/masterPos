@@ -391,10 +391,10 @@ public class ProveedorDao {
 		return this;
 	}
 	
-/*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<cierra la conexión a la base de datos>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+/*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<cierra la conexiï¿½n a la base de datos>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 	/*public void close()
 		{
 			conexion.desconectar();
-		} //// fin del método close*/
+		} //// fin del mï¿½todo close*/
 
 }
