@@ -26,6 +26,7 @@ import javax.swing.JTextField;
 import view.botones.BotonBuscar1;
 import view.botones.BotonCancelar;
 import view.botones.BotonGuardar;
+import view.rendes.PanelPadre;
 import view.tablemodel.CbxTmDepartamento;
 import view.tablemodel.TabloModeloRequisicion;
 import controlador.CtlRequisicion;
@@ -65,7 +66,7 @@ public class ViewRequisicion extends JDialog {
 	
 	
 	public ViewRequisicion(Window view){
-		super(view,"Requisicion de insumos",Dialog.ModalityType.DOCUMENT_MODAL);
+		super(view,"Requisicion de articulos",Dialog.ModalityType.DOCUMENT_MODAL);
 		Font myFont=new Font("OCR A Extended", Font.PLAIN, 45);
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -74,15 +75,17 @@ public class ViewRequisicion extends JDialog {
 			}
 		});
 		
-		panelAcciones=new JPanel();
+		panelAcciones=new PanelPadre();
 		panelAcciones.setBorder(new TitledBorder(new LineBorder(new Color(130, 135, 144)), "Opciones", TitledBorder.LEFT, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panelAcciones.setBounds(20, 11, 164, 459);
 		panelAcciones.setLayout(null);
 		
 		getContentPane().add(panelAcciones);
 		
+		getContentPane().setBackground(PanelPadre.color1);
 		
-		panelDatosFactura=new JPanel();
+		
+		panelDatosFactura=new PanelPadre();
 		//panelDatosFactura.setBackground(Color.WHITE);
 		panelDatosFactura.setBorder(new TitledBorder(new LineBorder(new Color(130, 135, 144)), "Datos Generales", TitledBorder.LEFT, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panelDatosFactura.setBounds(208, 11, 709, 73);
@@ -101,29 +104,29 @@ public class ViewRequisicion extends JDialog {
 		panelDatosFactura.add(txtFecha);
 		
 		lblDepartamento = new JLabel("Departamento Origen de los Articulos");
-		lblDepartamento.setBounds(124, 11, 235, 29);
+		lblDepartamento.setBounds(124, 11, 249, 29);
 		panelDatosFactura.add(lblDepartamento);
 		
 		cbxModeloOrigen= new CbxTmDepartamento();
 		cbxModeloDestino= new CbxTmDepartamento();
 		
 		cbxDepatOrigen = new JComboBox();
-		cbxDepatOrigen.setModel(cbxModeloOrigen);//comentar para ver la view
+		//cbxDepatOrigen.setModel(cbxModeloOrigen);//comentar para ver la view
 		cbxDepatOrigen.setBounds(124, 32, 235, 30);
 		panelDatosFactura.add(cbxDepatOrigen);
 		
 		JLabel lblDepartamentoDestinoDe = new JLabel("Departamento Destino de los Articulos");
-		lblDepartamentoDestinoDe.setBounds(399, 11, 235, 29);
+		lblDepartamentoDestinoDe.setBounds(399, 11, 282, 29);
 		panelDatosFactura.add(lblDepartamentoDestinoDe);
 		
 		cbxDepartDestino = new JComboBox();
-		cbxDepartDestino.setModel(cbxModeloDestino);//comentar para ver la view
+		//cbxDepartDestino.setModel(cbxModeloDestino);//comentar para ver la view
 		cbxDepartDestino.setBounds(399, 32, 282, 29);
 		panelDatosFactura.add(cbxDepartDestino);
 		
 		
 		
-		panelBuscar= new JPanel();
+		panelBuscar= new PanelPadre();
 		panelBuscar.setBorder(new TitledBorder(new LineBorder(new Color(130, 135, 144)), "Buscar Articulo", TitledBorder.LEFT, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panelBuscar.setBounds(208, 95, 709, 73);
 		panelBuscar.setLayout(null);
@@ -177,7 +180,7 @@ public class ViewRequisicion extends JDialog {
 		txtTotal.setFont(myFont);
 		txtTotal.setText("00");
 		txtTotal.setEditable(false);
-		txtTotal.setBounds(697, 506, 220, 44);
+		txtTotal.setBounds(697, 506, 220, 53);
 		getContentPane().add(txtTotal);
 		txtTotal.setColumns(10);
 		
