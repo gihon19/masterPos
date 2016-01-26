@@ -26,6 +26,7 @@ import view.botones.BotonBuscar;
 import view.botones.BotonCobrarSmall;
 import view.botones.BotonEliminar;
 import view.botones.BotonImprimirSmall;
+import view.rendes.PanelPadre;
 import view.rendes.RenderizadorTablaFacturas;
 import view.tablemodel.TablaModeloFacturados;
 import view.tablemodel.TablaModeloFacturas;
@@ -48,7 +49,7 @@ public class ViewListaPagos extends JDialog {
 	
 	private JRadioButton rdbtnId;
 	private JRadioButton rdbtnFecha;
-	private ButtonGroup grupoOpciones; // grupo de botones que contiene los botones de opción
+	private ButtonGroup grupoOpciones; // grupo de botones que contiene los botones de opciï¿½n
 	private JRadioButton rdbtnTodos;
 	protected BotonBuscar btnBuscar;
 	protected JTextField txtBuscar1;
@@ -69,9 +70,9 @@ public class ViewListaPagos extends JDialog {
 		
 		
 		//creacion de los paneles
-		panelAccion=new JPanel();
-		panelBusqueda=new JPanel();
-		panelSuperior=new JPanel();
+		panelAccion=new PanelPadre();
+		panelBusqueda=new PanelPadre();
+		panelSuperior=new PanelPadre();
 		
 		panelAccion.setBorder(new TitledBorder(new LineBorder(new Color(130, 135, 144)), "Acciones de registro", TitledBorder.LEFT, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panelBusqueda.setBorder(new TitledBorder(new LineBorder(new Color(130, 135, 144)), "Busqueda de registros", TitledBorder.LEFT, TitledBorder.TOP, null, new Color(0, 0, 0)));
@@ -127,7 +128,7 @@ public class ViewListaPagos extends JDialog {
 		RenderizadorTablaFacturas renderizador = new RenderizadorTablaFacturas();
 		tablaPagos.setDefaultRenderer(String.class, renderizador);
 		
-		tablaPagos.getColumnModel().getColumn(0).setPreferredWidth(20);     //Tamaño de las columnas de las tablas
+		tablaPagos.getColumnModel().getColumn(0).setPreferredWidth(20);     //Tamaï¿½o de las columnas de las tablas
 		tablaPagos.getColumnModel().getColumn(1).setPreferredWidth(20);	//de las columnas
 		tablaPagos.getColumnModel().getColumn(2).setPreferredWidth(250);	//en la tabla
 		tablaPagos.getColumnModel().getColumn(3).setPreferredWidth(70);	//

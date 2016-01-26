@@ -69,6 +69,8 @@ public class Principal {
 				CtlFacturar ctlFacturar=new CtlFacturar(vistaFacturar,conexion );
 				vistaFacturar.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE); //.setDefaultCloseOperation(JDialog.EXIT_ON_CLOSE);
 				vistaFacturar.setVisible(true);
+				System.exit(0);
+				
 			}
 		
 			

@@ -104,7 +104,7 @@ public class CtlArticuloBuscar implements ActionListener,MouseListener, WindowLi
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		//Recoger qué fila se ha pulsadao en la tabla
+		//Recoger quï¿½ fila se ha pulsadao en la tabla
         filaPulsada = this.view.getTablaArticulos().getSelectedRow();
         //JOptionPane.showMessageDialog(view, filaPulsada);
 		if (e.getClickCount() == 2){
@@ -122,6 +122,8 @@ public class CtlArticuloBuscar implements ActionListener,MouseListener, WindowLi
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
+		
+		
 		
 	}
 
@@ -222,6 +224,37 @@ public class CtlArticuloBuscar implements ActionListener,MouseListener, WindowLi
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
+			if(e.getComponent()==this.view.getTxtBuscar()&&view.getTxtBuscar().getText().trim().length()!=0){
+						
+						//si esta activado la busqueda por articulo
+						if(this.view.getRdbtnArticulo().isSelected()){
+							
+							int fila=this.view.getTablaArticulos().getSelectedRow();
+							
+							if(e.getKeyCode()==KeyEvent.VK_DOWN){
+								fila++;
+								this.view.getTablaArticulos().setRowSelectionInterval(0	,fila);
+								
+								myArticulo=myArticulo=view.getModelo().getArticulo(fila);
+								
+							}else
+								if(e.getKeyCode()==KeyEvent.VK_UP){
+									
+									fila--;
+									this.view.getTablaArticulos().setRowSelectionInterval(0	, fila);
+									myArticulo=myArticulo=view.getModelo().getArticulo(fila);
+								}
+							
+							
+							
+							//this.view.getTablaArticulos().setRowSelectionInterval(0	, 0);
+							
+							//myArticulo=view.getModelo().getArticulo(0);
+						}
+						
+						
+				}
+		
 	}
 
 	@Override
@@ -249,7 +282,7 @@ public class CtlArticuloBuscar implements ActionListener,MouseListener, WindowLi
 			}
 		}
 		
-		if(e.getComponent()==this.view.getTxtBuscar()&&view.getTxtBuscar().getText().trim().length()!=0){
+		if(e.getComponent()==this.view.getTxtBuscar()&&view.getTxtBuscar().getText().trim().length()!=0&&e.getKeyCode()!=KeyEvent.VK_UP&&e.getKeyCode()!=KeyEvent.VK_DOWN){
 			
 			//si esta activado la busqueda por articulo
 			if(this.view.getRdbtnArticulo().isSelected()){

@@ -64,6 +64,7 @@ public abstract class AbstractJasperReports
 	private static InputStream codigoBarra=null;
 	private static InputStream inventario=null;
 	private static InputStream cierresCaja=null;
+	private static InputStream salidaCaja=null;
 	
 	private static JasperReport	reportFactura;
 	private static JasperReport	reportFacturaCompra;
@@ -75,6 +76,7 @@ public abstract class AbstractJasperReports
 	private static JasperReport	reportCodigoBarra;
 	private static JasperReport	reportInventario;
 	private static JasperReport	reportCierresCaja;
+	private static JasperReport	reportSalidaCaja;
 	
 	
 	public static void loadFileReport(){
@@ -89,6 +91,7 @@ public abstract class AbstractJasperReports
 		codigoBarra=AbstractJasperReports.class.getResourceAsStream("/reportes/codigo_barra.jasper");
 		inventario=AbstractJasperReports.class.getResourceAsStream("/reportes/ReporteExistencia.jasper");
 		cierresCaja=AbstractJasperReports.class.getResourceAsStream("/reportes/cierres_caja_expreso.jasper");
+		salidaCaja=AbstractJasperReports.class.getResourceAsStream("/reportes/salida_caja.jasper");
 		
 		
 		try {
@@ -102,6 +105,7 @@ public abstract class AbstractJasperReports
 			reportCodigoBarra= (JasperReport) JRLoader.loadObject( codigoBarra );
 			reportInventario= (JasperReport) JRLoader.loadObject( inventario );
 			reportCierresCaja= (JasperReport) JRLoader.loadObject( cierresCaja );
+			reportSalidaCaja= (JasperReport) JRLoader.loadObject( salidaCaja );
 		} catch (JRException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -116,6 +120,26 @@ public abstract class AbstractJasperReports
 		 
 		 try {
 			reportFilled = JasperFillManager.fillReport( reportDei, parametros, conn );
+		} catch (JRException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 try {
+				conn.close();
+			} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+			}
+	}
+	
+	public static void createReportSalidaCaja(Connection conn,int codigo){
+		 Map parametros = new HashMap();
+		 parametros.put("codigo_salida",codigo);
+		 
+		 
+		 
+		 try {
+			reportFilled = JasperFillManager.fillReport( reportSalidaCaja, parametros, conn );
 		} catch (JRException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -166,6 +190,11 @@ public abstract class AbstractJasperReports
 				reportFilled = JasperFillManager.fillReport( reportFacturaReimpresion, parametros, conn );
 			}
 			if(tipoReporte==4){
+				
+				//se le pasa la direccion del sub informe de las salidas de caja
+				InputStream subInputStream = AbstractJasperReports.class.getClass().getResourceAsStream("/reportes/cierre_salida.jasper");
+				parametros.put("SUBREPORT_INPUT_STREAM", subInputStream);
+				
 				reportFilled = JasperFillManager.fillReport( reportFacturaCierreCaja, parametros, conn );
 			}
 			if(tipoReporte==5){

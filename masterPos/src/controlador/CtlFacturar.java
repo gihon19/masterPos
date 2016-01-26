@@ -19,6 +19,7 @@ import javax.swing.event.TableModelListener;
 
 import modelo.AbstractJasperReports;
 import modelo.Articulo;
+import modelo.CierreCaja;
 import modelo.dao.ArticuloDao;
 import modelo.dao.CierreCajaDao;
 import modelo.dao.EmpleadoDao;
@@ -30,12 +31,15 @@ import modelo.DetalleFactura;
 import modelo.Empleado;
 import modelo.Factura;
 import modelo.dao.FacturaDao;
+import view.ViewCambio;
 import view.ViewCambioPago;
 import view.ViewCargarVenderor;
+import view.ViewCobro;
 import view.ViewFacturar;
 import view.ViewListaArticulo;
 import view.ViewListaClientes;
 import view.ViewListaFactura;
+import view.ViewSalidaCaja;
 
 public class CtlFacturar  implements ActionListener, MouseListener, TableModelListener, WindowListener, KeyListener  {
 	
@@ -54,7 +58,10 @@ public class CtlFacturar  implements ActionListener, MouseListener, TableModelLi
 	
 	private int tipoView=1;
 	private int netBuscar=0;
+	private CierreCajaDao cierreDao;
 	private static final Pattern numberPattern=Pattern.compile("-?\\d+");
+	
+	private CierreCaja myCierre;
 	//private ViewListaArticulo viewListaArticulo=null;
 	//private CtlArticuloBuscar ctlArticulo=null;
 	
@@ -64,36 +71,42 @@ public class CtlFacturar  implements ActionListener, MouseListener, TableModelLi
 		conexion=conn;	
 		//se inicializan atributos de la factura
 		myFactura=new Factura();
+		myCierre=new CierreCaja();
 		myArticuloDao=new ArticuloDao(conexion);
 		clienteDao=new ClienteDao(conexion);
 		facturaDao=new FacturaDao(conexion);
 		myEmpleadoDao=new EmpleadoDao(conexion);
 		preciosDao=new PrecioArticuloDao(conexion);
+		cierreDao=new CierreCajaDao(conexion);
 		this.setEmptyView();
-		cargarComboBox();
+		//cargarComboBox();
+		
+		//se estable el cierre de caja 
+		this.setCierre();
+		
+		/*seccion de cierre de caja
+		
+		//se consiguie el ultimo cierre del usuario
+		myCierre=cierreDao.getCierreUltimoUser();
+		
+		
+		if(myCierre.getEstado()==false){//si el ultimo cierre esta inactivo se  registras el nuevo
+
+			String entrada=JOptionPane.showInputDialog(view, "Ingrese la cantidad de efectivo inicial de la caja");
+			
+			CierreCaja newCierre=new CierreCaja();
+			if(entrada.trim().length()==0){
+				entrada="0.00";
+			}
+			newCierre.setEfectivoInicial(new BigDecimal(entrada));
+			newCierre.setUsuario(conexion.getUsuarioLogin().getUser());
+			newCierre.setNoFacturaInicio(myCierre.getNoFacturaFinal()+1);//se estable la factura incial sumandole uno a la ultima factura realizada por el usuario
+			newCierre.setNoSalidaInicial(myCierre.getNoSalidaFinal()+1);//se estable la salida incial sumandole uno a la ultima salida realizada por el usuario
+			newCierre.setNoCobroInicial(myCierre.getNoCobroFinal()+1);
+			cierreDao.registrarCierre(newCierre);
+		}*/
 		
 		this.view.getTxtBuscar().requestFocusInWindow();
-		
-		/*view.getModeloTabla().agregarDetalle();
-		myFactura=new Factura();
-		myArticuloDao=new ArticuloDao(conexion);
-		clienteDao=new ClienteDao(conexion);
-		facturaDao=new FacturaDao(conexion);
-		
-		//conseguir la fecha la facturaa
-		view.getTxtFechafactura().setText(facturaDao.getFechaSistema());
-		//view.setVisible(true);
-		this.view.getTxtIdcliente().setText("1");;
-		this.view.getTxtNombrecliente().setText("Cliente Normal");
-		
-		this.view.getTxtBuscar().requestFocusInWindow();*/
-		
-		//this.view.setVisible(true);
-		//la ventana buscar articulo y su controlador
-		//viewListaArticulo=new ViewListaArticulo(this.view);
-		//view.getTxtBuscar().requestFocusInWindow();
-		//ctlArticulo =new CtlArticuloBuscar(viewListaArticulo,conexion);
-		//viewListaArticulo.conectarControladorBuscar(ctlArticulo);
 	
 		
 	}
@@ -613,7 +626,95 @@ public void calcularTotal(DetalleFactura detalle){
 		//Recoger qu� fila se ha pulsadao en la tabla
 		filaPulsada = this.view.getTableDetalle().getSelectedRow();
 		
-		if(e.getKeyCode()==KeyEvent.VK_F1){
+		
+		switch(e.getKeyCode()){
+		
+		case KeyEvent.VK_F1:
+			buscarArticulo();
+			break;
+			
+		case KeyEvent.VK_F2:
+			cobrar();
+			break;
+			
+		case KeyEvent.VK_F3:
+				buscarCliente();
+			break;
+			
+		case KeyEvent.VK_F4:
+			guardar();
+			break;
+			
+		case KeyEvent.VK_F5:
+			showPendientes();
+			break;
+			
+		case KeyEvent.VK_F6:
+			cierreCaja();
+			break;
+			
+		case KeyEvent.VK_F7:
+			cierreCaja();
+			break;
+			
+		case KeyEvent.VK_F8:
+			
+			break;
+		case KeyEvent.VK_F9:
+			
+			break;
+			
+		case KeyEvent.VK_F10:
+			ViewCobro viewCobro=new ViewCobro(view);
+			CtlCobro ctlCobro=new CtlCobro(viewCobro,conexion);
+			
+			break;
+			
+		case KeyEvent.VK_F11:
+			
+			break;
+			
+		case KeyEvent.VK_F12:
+			ViewSalidaCaja viewSalida=new ViewSalidaCaja(view);
+			CtlSalidaCaja ctlSalida=new CtlSalidaCaja(viewSalida,conexion);
+			break;
+			
+		case  KeyEvent.VK_ESCAPE:
+			salir();
+		break;
+		
+		case KeyEvent.VK_DELETE:
+			if(filaPulsada>=0){
+				 this.view.getModeloTabla().eliminarDetalle(filaPulsada);
+				 this.calcularTotales();
+			 }
+			break;
+			
+		case KeyEvent.VK_DOWN:
+			this.netBuscar++;
+			this.buscarMasOmenos(netBuscar);
+			break;
+		case KeyEvent.VK_UP:
+			if(netBuscar>=1){
+				this.netBuscar--;
+				this.buscarMasOmenos(netBuscar);
+			}
+			break;
+		case KeyEvent.VK_LEFT:
+			if(filaPulsada>=0){
+				 this.view.getModeloTabla().getDetalle(filaPulsada).getArticulo().netPrecio();
+				 this.calcularTotales();
+			 }
+			break;
+		case KeyEvent.VK_RIGHT:
+			if(filaPulsada>=0){
+				 this.view.getModeloTabla().getDetalle(filaPulsada).getArticulo().lastPrecio();
+				 this.calcularTotales();
+			 }
+			break;
+		}
+		
+		/*if(e.getKeyCode()==KeyEvent.VK_F1){
 			buscarArticulo();
 		}else
 			if(e.getKeyCode()==KeyEvent.VK_F2){
@@ -641,34 +742,44 @@ public void calcularTotal(DetalleFactura detalle){
 							}else
 								if(e.getKeyCode()==KeyEvent.VK_F6){
 									cierreCaja();
-								}else
-									if(e.getKeyCode()==KeyEvent.VK_F7){
-										actualizar();
+								}
+								else
+									if(e.getKeyCode()==KeyEvent.VK_F11){
+										
 									}else
-										if(e.getKeyCode()==KeyEvent.VK_DOWN){
-											
-											this.netBuscar++;
-											this.buscarMasOmenos(netBuscar);
+										if(e.getKeyCode()==KeyEvent.VK_F7){
+											actualizar();
 										}else
-											if(e.getKeyCode()==KeyEvent.VK_UP){
-												if(netBuscar>=1){
-													this.netBuscar--;
-													this.buscarMasOmenos(netBuscar);
-												}
-													
+											if(e.getKeyCode()==KeyEvent.VK_F12){
+	
+												ViewSalidaCaja viewSalida=new ViewSalidaCaja(view);
+												CtlSalidaCaja ctlSalida=new CtlSalidaCaja(viewSalida,conexion);
+												
 											}else
-												if(e.getKeyCode()==KeyEvent.VK_LEFT){
-													if(filaPulsada>=0){
-														 this.view.getModeloTabla().getDetalle(filaPulsada).getArticulo().netPrecio();
-														 this.calcularTotales();
-													 }
+												if(e.getKeyCode()==KeyEvent.VK_DOWN){
+													
+													this.netBuscar++;
+													this.buscarMasOmenos(netBuscar);
 												}else
-													if(e.getKeyCode()==KeyEvent.VK_RIGHT){
-														if(filaPulsada>=0){
-															 this.view.getModeloTabla().getDetalle(filaPulsada).getArticulo().lastPrecio();
-															 this.calcularTotales();
-														 }
-													}
+													if(e.getKeyCode()==KeyEvent.VK_UP){
+														if(netBuscar>=1){
+															this.netBuscar--;
+															this.buscarMasOmenos(netBuscar);
+														}
+														
+													}else
+														if(e.getKeyCode()==KeyEvent.VK_LEFT){
+															if(filaPulsada>=0){
+																 this.view.getModeloTabla().getDetalle(filaPulsada).getArticulo().netPrecio();
+																 this.calcularTotales();
+															 }
+														}else
+															if(e.getKeyCode()==KeyEvent.VK_RIGHT){
+																if(filaPulsada>=0){
+																	 this.view.getModeloTabla().getDetalle(filaPulsada).getArticulo().lastPrecio();
+																	 this.calcularTotales();
+																 }
+															}*/
 								 
 							
 								
@@ -682,37 +793,43 @@ public void calcularTotal(DetalleFactura detalle){
 	}
 	private void cierreCaja() {
 		// TODO Auto-generated method stub
-		CierreCajaDao cierre=new CierreCajaDao(conexion);
 		
-		if(cierre.registrarCierre())
-		{
-			try {
-				//AbstractJasperReports.createReportFactura( conexion.getPoolConexion().getConnection(), "Cierre_Caja_Saint_Paul.jasper",1 );
-				AbstractJasperReports.createReport(conexion.getPoolConexion().getConnection(), 4, cierre.idUltimoRequistro);
-				
-				AbstractJasperReports.Imprimir2();
-				JOptionPane.showMessageDialog(view, "Se realizo el corte correctamente.");
-				//AbstractJasperReports.showViewer(view);
-				
-				//this.view.setModal(false);
-				//AbstractJasperReports.imprimierFactura();
-				
-				
-				
-				
-				/*if(!cierre.registrarCierre()){
-					JOptionPane.showMessageDialog(view, "No se guardo el cierre de corte. Vuelva a hacer el corte.");
-				}else{
-					AbstractJasperReports.Imprimir2();
-					JOptionPane.showMessageDialog(view, "Se realizo el corte correctamente.");
-				}*/
-				
-			} catch (SQLException ee) {
-				// TODO Auto-generated catch block
-				ee.printStackTrace();
+		// se verifica que hay facturas para crear un cierre
+		if(cierreDao.verificarCierre()){
+			if(cierreDao.actualizarCierre())
+			{
+				try {
+					//AbstractJasperReports.createReportFactura( conexion.getPoolConexion().getConnection(), "Cierre_Caja_Saint_Paul.jasper",1 );
+					AbstractJasperReports.createReport(conexion.getPoolConexion().getConnection(), 4, cierreDao.idUltimoRequistro);
+					
+					//AbstractJasperReports.Imprimir2();
+					//JOptionPane.showMessageDialog(view, "Se realizo el corte correctamente.");
+					
+					AbstractJasperReports.showViewer(view);
+					
+					//this.view.setModal(false);
+					//AbstractJasperReports.imprimierFactura();
+					
+					
+					
+					
+					/*if(!cierre.registrarCierre()){
+						JOptionPane.showMessageDialog(view, "No se guardo el cierre de corte. Vuelva a hacer el corte.");
+					}else{
+						AbstractJasperReports.Imprimir2();
+						JOptionPane.showMessageDialog(view, "Se realizo el corte correctamente.");
+					}*/
+					
+				} catch (SQLException ee) {
+					// TODO Auto-generated catch block
+					ee.printStackTrace();
+				}
+			}else{
+				JOptionPane.showMessageDialog(view, "No se guardo el cierre de corte. Vuelva a hacer el corte.");
 			}
-		}else{
-			JOptionPane.showMessageDialog(view, "No se guardo el cierre de corte. Vuelva a hacer el corte.");
+		}//fin de la verificacion de las facturas 
+		else{
+			JOptionPane.showMessageDialog(view, "No hay facturas para crear un cierre de caja. Primero debe facturar.");
 		}
 	}
 	@Override
@@ -861,7 +978,7 @@ public void calcularTotal(DetalleFactura detalle){
 			{
 			
 			
-				if(!view.getRdbtnCredito().isSelected()){
+				if(view.getRdbtnContado().isSelected()){
 			
 					//se muestra la vista para cobrar y introducir el cambio
 					ViewCambioPago viewPago=new ViewCambioPago(this.view);
@@ -872,6 +989,8 @@ public void calcularTotal(DetalleFactura detalle){
 					//se procede a verificar si se cobro
 					if(resulPago)
 					{
+						
+						
 						//si la forma de pago fue en efectivo
 						if(ctlPago.getFormaPago()==1){
 							myFactura.setPago(ctlPago.getEfectivo());
@@ -885,10 +1004,13 @@ public void calcularTotal(DetalleFactura detalle){
 							myFactura.setTipoPago(2);
 							myFactura.setObservacion(ctlPago.getRefencia());
 						}
+						
+						
 						setFactura();
 						boolean resul=facturaDao.registrarFactura(myFactura);
 							
 						if(resul){
+							
 							myFactura.setIdFactura(facturaDao.getIdFacturaGuardada());
 							
 								try {
@@ -897,8 +1019,21 @@ public void calcularTotal(DetalleFactura detalle){
 									//AbstractJasperReports.createReportFactura( conexion.getPoolConexion().getConnection(), "Factura_Saint_Paul.jasper",myFactura.getIdFactura() );
 									AbstractJasperReports.createReport(conexion.getPoolConexion().getConnection(), 1, myFactura.getIdFactura());
 									//AbstractJasperReports.showViewer(view);
+									
+									
+									
+									
 									AbstractJasperReports.imprimierFactura();
 									AbstractJasperReports.imprimierFactura();
+									
+									
+									//muestra en la pantalla el cambio y lo mantiene permanente
+									ViewCambio cambio=new ViewCambio(view);
+									cambio.getTxtCambio().setText(myFactura.getCambio().toString());
+									cambio.getTxtEfectivo().setText(myFactura.getPago().toString());
+									cambio.setVisible(true);
+									
+									
 									//myFactura=null;
 									setEmptyView();
 									
@@ -923,6 +1058,9 @@ public void calcularTotal(DetalleFactura detalle){
 					}//fin de la ventana en cobro
 				
 				}else{//si la factura es al contado se procede a guardar e imprimir 
+					
+					
+					//se estable los datos de la factura
 					setFactura();
 					
 					
@@ -961,6 +1099,8 @@ public void calcularTotal(DetalleFactura detalle){
 						this.view.dispose();
 					}//fin el if donde se guarda la factura
 				}//fin del factura al credito
+				
+				
 				
 			}//sin del if donde se pide el codigo del vendedor
 				
@@ -1182,6 +1322,30 @@ public void calcularTotal(DetalleFactura detalle){
 	public Factura getFactura() {
 		// TODO Auto-generated method stub
 		return this.myFactura;
+	}
+	
+	private void setCierre(){
+		//seccion de cierre de caja
+		
+		//se consiguie el ultimo cierre del usuario
+		myCierre=cierreDao.getCierreUltimoUser();
+		
+		
+		if(myCierre.getEstado()==false){//si el ultimo cierre no esta inactivo se  registras el nuevo
+
+			String entrada=JOptionPane.showInputDialog(view, "Ingrese la cantidad de efectivo inicial de la caja");
+			
+			CierreCaja newCierre=new CierreCaja();
+			if(entrada.trim().length()==0){
+				entrada="0.00";
+			}
+			newCierre.setEfectivoInicial(new BigDecimal(entrada));
+			newCierre.setUsuario(conexion.getUsuarioLogin().getUser());
+			newCierre.setNoFacturaInicio(myCierre.getNoFacturaFinal()+1);//se estable la factura incial sumandole uno a la ultima factura realizada por el usuario
+			newCierre.setNoSalidaInicial(myCierre.getNoSalidaFinal()+1);//se estable la salida incial sumandole uno a la ultima salida realizada por el usuario
+			newCierre.setNoCobroInicial(myCierre.getNoCobroFinal()+1);//se estable la cobro incial sumandole uno a la ultima cobro realizada por el usuario
+			cierreDao.registrarCierre(newCierre);
+		}
 	}
 
 }
