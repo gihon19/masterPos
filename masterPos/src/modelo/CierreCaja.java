@@ -22,6 +22,7 @@ public class CierreCaja {
 	private BigDecimal totalIsv18=new BigDecimal(0.0);
 	private BigDecimal totalSalida=new BigDecimal(0.0);
 	private BigDecimal totalCobro=new BigDecimal(0.0);
+	private BigDecimal totalEfectivoCaja=new BigDecimal(0.0);
 	
 	private int noSalidaInicial=0;
 	private int noSalidaFinal=0;
@@ -33,6 +34,13 @@ public class CierreCaja {
 	private boolean estado=false;
 	
 	private String usuario="";
+	
+	public void setEfectivoCaja(BigDecimal t){
+		totalEfectivoCaja=t;
+	}
+	public BigDecimal getEfectivoCaja(){
+		return totalEfectivoCaja;
+	}
 	
 	
 	public void setTotalCobro(BigDecimal t){

@@ -191,8 +191,12 @@ public class FacturaDao {
 				+ "usuario,"
 				+ "total_letras,"
 				+ "codigo_vendedor,"
-				+ "estado_pago)"
-				+ " VALUES (now(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ "estado_pago,"
+				+ "subtotal_excento,"
+				+ "subtotal15,"
+				+ "subtotal18,"
+				+ "isvOtros)"
+				+ " VALUES (now(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		
 		try 
 		{
@@ -218,10 +222,14 @@ public class FacturaDao {
 			agregarFactura.setBigDecimal(10, myFactura.getTotalImpuesto18());
 			agregarFactura.setBigDecimal(11, myFactura.getPago());
 			agregarFactura.setString(12, conexion.getUsuarioLogin().getUser());
-			agregarFactura.setString(13, NumberToLetterConverter.convertNumberToLetter(myFactura.getTotal().setScale(0, BigDecimal.ROUND_HALF_EVEN).doubleValue()));
+			agregarFactura.setString(13, NumberToLetterConverter.convertNumberToLetter(myFactura.getTotal().setScale(2, BigDecimal.ROUND_HALF_EVEN).doubleValue()));
 			agregarFactura.setInt(14, myFactura.getVendedor().getCodigo());
 			//agregarFactura.setInt(15, myFactura.getCodigo());
 			agregarFactura.setInt(15,myFactura.getEstadoPago());
+			agregarFactura.setBigDecimal(16, myFactura.getSubTotalExcento());
+			agregarFactura.setBigDecimal(17, myFactura.getSubTotal15());
+			agregarFactura.setBigDecimal(18, myFactura.getSubTotal18());
+			agregarFactura.setBigDecimal(19, myFactura.getTotalOtrosImpuesto1());
 			
 			
 			

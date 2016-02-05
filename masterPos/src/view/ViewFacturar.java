@@ -175,8 +175,8 @@ public class ViewFacturar extends JDialog {
 		tableDetalle.setDefaultRenderer(String.class, renderizador);
 		//tableDetalle.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-		tableDetalle.getColumnModel().getColumn(0).setPreferredWidth(50);     //Tama�o de las columnas de las tablas
-		tableDetalle.getColumnModel().getColumn(1).setPreferredWidth(200);	//
+		tableDetalle.getColumnModel().getColumn(0).setPreferredWidth(30);     //Tama�o de las columnas de las tablas
+		tableDetalle.getColumnModel().getColumn(1).setPreferredWidth(350);	//
 		tableDetalle.getColumnModel().getColumn(2).setPreferredWidth(80);	//
 		tableDetalle.getColumnModel().getColumn(3).setPreferredWidth(80);	//
 		tableDetalle.getColumnModel().getColumn(4).setPreferredWidth(80);	//
@@ -391,7 +391,7 @@ public class ViewFacturar extends JDialog {
 		
 		Font myFont=new Font("OCR A Extended", Font.PLAIN, 45);
 		
-		panel = new JPanel();
+		/*panel = new JPanel();
 		panel.setBackground(color3);
 		getContentPane().add(panel, BorderLayout.EAST);
 		panel.setLayout(new GridLayout(10, 1, 0, 0));
@@ -479,7 +479,98 @@ public class ViewFacturar extends JDialog {
 		
 		txtSubtotal.setEditable(false);
 		//txtSubtotal.setBounds(20, 506, 207, 44);
-		//txtSubtotal.setColumns(10);
+		//txtSubtotal.setColumns(10);*/
+		
+		panel = new JPanel();
+		panel.setBackground(color3);
+		getContentPane().add(panel, BorderLayout.SOUTH);
+		panel.setLayout(new GridLayout(2, 10, -20, -20));
+		//lblImpuesto_1.setBounds(424, 490, 82, 14);
+		
+		lblSubtotal = new JLabel("SubTotal");
+		lblSubtotal.setFont(new Font("Georgia", Font.BOLD, 13));
+		lblSubtotal.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(lblSubtotal);
+		
+		JLabel lblDescuento = new JLabel("Descuento");
+		lblDescuento.setFont(new Font("Georgia", Font.BOLD, 13));
+		lblDescuento.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(lblDescuento);
+		
+		lblImpuesto = new JLabel("Impuesto 15");
+		lblImpuesto.setFont(new Font("Georgia", Font.BOLD, 13));
+		lblImpuesto.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(lblImpuesto);
+		
+		JLabel lblImpuesto_1 = new JLabel("Impuesto 18");
+		lblImpuesto_1.setFont(new Font("Georgia", Font.BOLD, 13));
+		lblImpuesto_1.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(lblImpuesto_1);
+		
+		lblTotal = new JLabel("Total");
+		lblTotal.setFont(new Font("Georgia", Font.BOLD, 13));
+		lblTotal.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(lblTotal);
+		
+		
+		//lblImpuesto.setBounds(237, 490, 92, 14);
+		
+		
+		txtSubtotal = new JTextField();
+		txtSubtotal.setBackground(color4);
+		panel.add(txtSubtotal);
+		txtSubtotal.setFont(new Font("Dialog", Font.PLAIN, 35));
+		txtSubtotal.setHorizontalAlignment(SwingConstants.RIGHT);
+		txtSubtotal.setText("00");
+		txtSubtotal.setEditable(false);
+		
+		
+		txtDescuento = new JTextField();
+		txtDescuento.setBackground(color4);
+		panel.add(txtDescuento);
+		txtDescuento.setHorizontalAlignment(SwingConstants.RIGHT);
+		txtDescuento.setEditable(false);
+		txtDescuento.setText("00");
+		txtDescuento.setFont(new Font("Dialog", Font.PLAIN, 35));
+		
+		
+		
+		txtImpuesto = new JTextField();
+		txtImpuesto.setBackground(color4);
+		panel.add(txtImpuesto);
+		txtImpuesto.setHorizontalAlignment(SwingConstants.RIGHT);
+		txtImpuesto.setFont(new Font("Dialog", Font.PLAIN, 35));
+		txtImpuesto.setText("00");
+		txtImpuesto.setEditable(false);
+		
+		
+		
+		txtImpuesto18 = new JTextField();
+		txtImpuesto18.setBackground(color4);
+		panel.add(txtImpuesto18);
+		txtImpuesto18.setText("00");
+		txtImpuesto18.setHorizontalAlignment(SwingConstants.RIGHT);
+		txtImpuesto18.setFont(new Font("Dialog", Font.PLAIN, 35));
+		txtImpuesto18.setEditable(false);
+		//txtImpuesto18.setBounds(424, 506, 171, 44);
+		//txtImpuesto18.setColumns(10);
+		//lblDescuento.setBounds(605, 490, 92, 14);
+		
+		
+		
+		
+		
+		
+		txtTotal = new JTextField();
+		txtTotal.setBackground(color4);
+		panel.add(txtTotal);
+		txtTotal.setForeground(Color.RED);
+		txtTotal.setHorizontalAlignment(SwingConstants.RIGHT);
+		txtTotal.setFont(new Font("Dialog", Font.PLAIN, 35));
+		txtTotal.setText("00");
+		txtTotal.setEditable(false);
+		//txtTotal.setBounds(778, 506, 220, 44);
+		txtTotal.setColumns(8);
 		
 		
 		//setSize(1024, 600);

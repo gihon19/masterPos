@@ -103,7 +103,7 @@ public class CierreCajaDao {
 		
 		return resultado;
 	}
-	public boolean actualizarCierre(){
+	public boolean actualizarCierre(BigDecimal total){
 		boolean resultado=false;
 		 Connection con = null;
 		 
@@ -111,6 +111,10 @@ public class CierreCajaDao {
 		 
 		 //SE CONSIGUE EL ITEM PARA EL CIERRE DE CAJA
 		 CierreCaja unCierre=this.getCierre(1);
+		 
+		 unCierre.setEfectivoCaja(total);
+		 
+		 
 		 String sql= "update cierre_caja set "
 		 		+ "fecha=now(),"
 		 		+ "factura_final=?,"
@@ -128,7 +132,8 @@ public class CierreCajaDao {
 		 		+ "no_salida_final=?, "
 		 		+ "total_salida=?,  "
 		 		+ "no_cobro_final=?, "
-		 		+ "total_cobro=?  "
+		 		+ "total_cobro=?,"
+		 		+ "efectivo_caja =? "
 		 		
 		 		+ " where "
 		 		+ "idCierre=?";
@@ -188,7 +193,9 @@ public class CierreCajaDao {
 						
 						registrarCierre.setBigDecimal(16, unCierre.getTotalCobro().setScale(2, BigDecimal.ROUND_HALF_EVEN));
 						
-						registrarCierre.setInt(17, unCierre.getId());
+						registrarCierre.setBigDecimal(17, unCierre.getEfectivoCaja().setScale(2, BigDecimal.ROUND_HALF_EVEN));
+						
+						registrarCierre.setInt(18, unCierre.getId());
 						
 						
 						

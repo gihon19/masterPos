@@ -111,7 +111,7 @@ public class ViewRequisicion extends JDialog {
 		cbxModeloDestino= new CbxTmDepartamento();
 		
 		cbxDepatOrigen = new JComboBox();
-		//cbxDepatOrigen.setModel(cbxModeloOrigen);//comentar para ver la view
+		cbxDepatOrigen.setModel(cbxModeloOrigen);//comentar para ver la view
 		cbxDepatOrigen.setBounds(124, 32, 235, 30);
 		panelDatosFactura.add(cbxDepatOrigen);
 		
@@ -120,7 +120,7 @@ public class ViewRequisicion extends JDialog {
 		panelDatosFactura.add(lblDepartamentoDestinoDe);
 		
 		cbxDepartDestino = new JComboBox();
-		//cbxDepartDestino.setModel(cbxModeloDestino);//comentar para ver la view
+		cbxDepartDestino.setModel(cbxModeloDestino);//comentar para ver la view
 		cbxDepartDestino.setBounds(399, 32, 282, 29);
 		panelDatosFactura.add(cbxDepartDestino);
 		

@@ -35,6 +35,7 @@ import view.ViewCambio;
 import view.ViewCambioPago;
 import view.ViewCargarVenderor;
 import view.ViewCobro;
+import view.ViewCuentaEfectivo;
 import view.ViewFacturar;
 import view.ViewListaArticulo;
 import view.ViewListaClientes;
@@ -499,12 +500,29 @@ public void calcularTotales(){
 				
 				//se estable el total y impuesto en el modelo
 				myFactura.setTotal(totalItem);
-				if(porcentaImpuesto.intValue()==15){
-					myFactura.setTotalImpuesto(impuestoItem);
+				if(porcentaImpuesto.intValue()==0){
+					myFactura.setSubTotalExcento(totalsiniva);
+				}else
+					if(porcentaImpuesto.intValue()==15){
+						myFactura.setTotalImpuesto(impuestoItem);
+						myFactura.setSubTotal15(totalsiniva);
+					}else
+						if(porcentaImpuesto.intValue()==18){
+							myFactura.setTotalImpuesto18(impuestoItem);
+							myFactura.setSubTotal18(totalsiniva);
+						}
+				
+				//se calcuala el total del impuesto de los articulo que son servicios de turismo
+				if(detalle.getArticulo().getTipoArticulo()==3){
+					BigDecimal totalOtrosImp= new BigDecimal("0.0");
+					
+					totalOtrosImp=totalsiniva.multiply(new BigDecimal(0.04));
+					
+					myFactura.setTotalOtrosImpuesto(totalOtrosImp);
+					myFactura.setTotal(totalOtrosImp);
+					
 				}
-				if(porcentaImpuesto.intValue()==18){
-					myFactura.setTotalImpuesto18(impuestoItem);
-				}
+				
 				myFactura.setSubTotal(totalsiniva);
 				//myFactura.getDetalles().add(detalle);
 				myFactura.setTotalDescuento(detalle.getDescuentoItem());
@@ -796,7 +814,12 @@ public void calcularTotal(DetalleFactura detalle){
 		
 		// se verifica que hay facturas para crear un cierre
 		if(cierreDao.verificarCierre()){
-			if(cierreDao.actualizarCierre())
+			
+			ViewCuentaEfectivo viewContar=new ViewCuentaEfectivo(view);
+			CtlContarEfectivo ctlContar=new CtlContarEfectivo(viewContar);
+			
+			
+			if(cierreDao.actualizarCierre(ctlContar.getTotal()))
 			{
 				try {
 					//AbstractJasperReports.createReportFactura( conexion.getPoolConexion().getConnection(), "Cierre_Caja_Saint_Paul.jasper",1 );
@@ -810,7 +833,9 @@ public void calcularTotal(DetalleFactura detalle){
 					//this.view.setModal(false);
 					//AbstractJasperReports.imprimierFactura();
 					
-					
+					viewContar.dispose();
+					viewContar=null;
+					ctlContar=null;
 					
 					
 					/*if(!cierre.registrarCierre()){
@@ -977,7 +1002,9 @@ public void calcularTotal(DetalleFactura detalle){
 			if(resulVendedor)//verifica si ingreso el codigo del bombero
 			{
 			
-			
+				//se agrega el vendedor a la factura
+				myFactura.setVendedor(ctlVendedor.getVendetor());
+				
 				if(view.getRdbtnContado().isSelected()){
 			
 					//se muestra la vista para cobrar y introducir el cambio
@@ -1005,8 +1032,10 @@ public void calcularTotal(DetalleFactura detalle){
 							myFactura.setObservacion(ctlPago.getRefencia());
 						}
 						
-						
+						//se estable los datos de la factura
 						setFactura();
+						
+						//se guarda la factura
 						boolean resul=facturaDao.registrarFactura(myFactura);
 							
 						if(resul){
@@ -1018,13 +1047,13 @@ public void calcularTotal(DetalleFactura detalle){
 									this.view.dispose();*/
 									//AbstractJasperReports.createReportFactura( conexion.getPoolConexion().getConnection(), "Factura_Saint_Paul.jasper",myFactura.getIdFactura() );
 									AbstractJasperReports.createReport(conexion.getPoolConexion().getConnection(), 1, myFactura.getIdFactura());
-									//AbstractJasperReports.showViewer(view);
+									AbstractJasperReports.showViewer(view);
 									
 									
 									
 									
-									AbstractJasperReports.imprimierFactura();
-									AbstractJasperReports.imprimierFactura();
+									//AbstractJasperReports.imprimierFactura();
+									//AbstractJasperReports.imprimierFactura();
 									
 									
 									//muestra en la pantalla el cambio y lo mantiene permanente
@@ -1333,18 +1362,26 @@ public void calcularTotal(DetalleFactura detalle){
 		
 		if(myCierre.getEstado()==false){//si el ultimo cierre no esta inactivo se  registras el nuevo
 
-			String entrada=JOptionPane.showInputDialog(view, "Ingrese la cantidad de efectivo inicial de la caja");
+			//String entrada=JOptionPane.showInputDialog(view, "Ingrese la cantidad de efectivo inicial de la caja");
+			ViewCuentaEfectivo viewContar=new ViewCuentaEfectivo(view);
+			CtlContarEfectivo ctlContar=new CtlContarEfectivo(viewContar);
 			
 			CierreCaja newCierre=new CierreCaja();
-			if(entrada.trim().length()==0){
+			
+			/*if(entrada.trim().length()==0){
 				entrada="0.00";
-			}
-			newCierre.setEfectivoInicial(new BigDecimal(entrada));
+			}*/
+			//newCierre.setEfectivoInicial(new BigDecimal(entrada));
+			newCierre.setEfectivoInicial(ctlContar.getTotal());
 			newCierre.setUsuario(conexion.getUsuarioLogin().getUser());
 			newCierre.setNoFacturaInicio(myCierre.getNoFacturaFinal()+1);//se estable la factura incial sumandole uno a la ultima factura realizada por el usuario
 			newCierre.setNoSalidaInicial(myCierre.getNoSalidaFinal()+1);//se estable la salida incial sumandole uno a la ultima salida realizada por el usuario
 			newCierre.setNoCobroInicial(myCierre.getNoCobroFinal()+1);//se estable la cobro incial sumandole uno a la ultima cobro realizada por el usuario
 			cierreDao.registrarCierre(newCierre);
+			
+			viewContar.dispose();
+			viewContar=null;
+			ctlContar=null;
 		}
 	}
 

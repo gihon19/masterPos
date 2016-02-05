@@ -65,6 +65,7 @@ public abstract class AbstractJasperReports
 	private static InputStream inventario=null;
 	private static InputStream cierresCaja=null;
 	private static InputStream salidaCaja=null;
+	private static InputStream kardex=null;
 	
 	private static JasperReport	reportFactura;
 	private static JasperReport	reportFacturaCompra;
@@ -77,6 +78,7 @@ public abstract class AbstractJasperReports
 	private static JasperReport	reportInventario;
 	private static JasperReport	reportCierresCaja;
 	private static JasperReport	reportSalidaCaja;
+	private static JasperReport	reportKardex;
 	
 	
 	public static void loadFileReport(){
@@ -92,6 +94,7 @@ public abstract class AbstractJasperReports
 		inventario=AbstractJasperReports.class.getResourceAsStream("/reportes/ReporteExistencia.jasper");
 		cierresCaja=AbstractJasperReports.class.getResourceAsStream("/reportes/cierres_caja_expreso.jasper");
 		salidaCaja=AbstractJasperReports.class.getResourceAsStream("/reportes/salida_caja.jasper");
+		kardex=AbstractJasperReports.class.getResourceAsStream("/reportes/ReporteKardex.jasper");
 		
 		
 		try {
@@ -106,6 +109,7 @@ public abstract class AbstractJasperReports
 			reportInventario= (JasperReport) JRLoader.loadObject( inventario );
 			reportCierresCaja= (JasperReport) JRLoader.loadObject( cierresCaja );
 			reportSalidaCaja= (JasperReport) JRLoader.loadObject( salidaCaja );
+			reportKardex= (JasperReport) JRLoader.loadObject( kardex );
 		} catch (JRException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -170,6 +174,28 @@ public abstract class AbstractJasperReports
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 			}
+	}
+	
+	public static void createReportKardex(Connection conn,Integer idArticulo,Integer idBodega,String user){
+		 Map parametros = new HashMap();
+		 parametros.put("cod_articulo",idArticulo);
+		 parametros.put("cod_bodega",idBodega);
+		 parametros.put("usuario",user);
+		 
+		 
+		 try {
+			reportFilled = JasperFillManager.fillReport( reportKardex, parametros, conn );
+		} catch (JRException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 try {
+				conn.close();
+			} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+			}
+		
 	}
 	
 	public static void createReport( Connection conn, int tipoReporte,Integer idFactura )
