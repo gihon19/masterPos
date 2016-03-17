@@ -11,9 +11,11 @@ import javax.swing.UIManager.LookAndFeelInfo;
 
 import controlador.CtlAgregarCompras;
 import controlador.CtlFacturar;
+import controlador.CtlFacturarTouch;
 import controlador.CtlLogin;
 import controlador.CtlMenuPrincipal;
 import view.ViewFacturar;
+import view.ViewFacturarTouch;
 import view.ViewLogin;
 import view.ViewMenuPrincipal;
 
@@ -64,9 +66,9 @@ public class Principal {
 			}
 			if(conexion.getUsuarioLogin().getTipoPermiso()==2){
 				//JOptionPane.showMessageDialog(viewLogin, "jola");
-				ViewFacturar vistaFacturar=new ViewFacturar(null);
+				ViewFacturarTouch vistaFacturar=new ViewFacturarTouch(null);
 				//vistaFacturar.pack();
-				CtlFacturar ctlFacturar=new CtlFacturar(vistaFacturar,conexion );
+				CtlFacturarTouch ctlFacturar=new CtlFacturarTouch(vistaFacturar,conexion );
 				vistaFacturar.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE); //.setDefaultCloseOperation(JDialog.EXIT_ON_CLOSE);
 				vistaFacturar.setVisible(true);
 				System.exit(0);

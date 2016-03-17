@@ -84,5 +84,9 @@ public class ReciboPago {
 		saldo=BigDecimal.ZERO;
 		saldoAnterior=BigDecimal.ZERO;
 	}
+	public void setSaldos0(){
+		saldo=BigDecimal.ZERO;
+		saldoAnterior=BigDecimal.ZERO;
+	}
 
 }

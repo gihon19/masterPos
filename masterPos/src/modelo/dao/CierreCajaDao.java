@@ -727,6 +727,7 @@ public CierreCaja getCierre(int x){
 				unaCierre.setId(ultimoCierreUser.getId());
 				unaCierre.setNoFacturaInicio(ultimoCierreUser.getNoFacturaInicio());
 				unaCierre.setNoSalidaInicial(ultimoCierreUser.getNoSalidaInicial());/// este es el error
+				unaCierre.setNoCobroInicial(ultimoCierreUser.getNoCobroInicial());
 				unaCierre.setNoFacturaFinal(res.getInt("no_factura_final"));
 				unaCierre.setEfectivo(res.getBigDecimal("total_efectivo"));
 				unaCierre.setCredito(res.getBigDecimal("total_credito"));

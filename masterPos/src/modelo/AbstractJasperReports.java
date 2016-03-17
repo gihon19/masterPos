@@ -36,6 +36,8 @@ import javax.swing.JPanel;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.export.JRPrintServiceExporter;
 import net.sf.jasperreports.engine.export.JRPrintServiceExporterParameter;
+import net.sf.jasperreports.engine.export.JRTextExporter;
+import net.sf.jasperreports.engine.export.JRTextExporterParameter;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.engine.JRExporter;
 import net.sf.jasperreports.engine.JRExporterParameter;
@@ -79,11 +81,12 @@ public abstract class AbstractJasperReports
 	private static JasperReport	reportCierresCaja;
 	private static JasperReport	reportSalidaCaja;
 	private static JasperReport	reportKardex;
+	private static Object strOutputFileName;
 	
 	
 	public static void loadFileReport(){
 		
-		factura=AbstractJasperReports.class.getResourceAsStream("/reportes/factura_texaco2.jasper");
+		factura=AbstractJasperReports.class.getResourceAsStream("/reportes/factura_datatec.jasper");
 		facturaCompra=AbstractJasperReports.class.getResourceAsStream("/reportes/Factura_Compra_Saint_Paul.jasper");
 		facturaReimpresion=AbstractJasperReports.class.getResourceAsStream("/reportes/factura_texaco_reimpresion2.jasper");
 		cierreCaja=AbstractJasperReports.class.getResourceAsStream("/reportes/cierre_caja.jasper");
@@ -490,6 +493,29 @@ public abstract class AbstractJasperReports
 	{
 		try { 
 			JasperExportManager.exportReportToPdfFile( reportFilled, destination );
+		}
+		catch( JRException ex ) {
+			ex.printStackTrace();
+		}
+	}
+	
+	public static void exportToTXT( )
+	{
+		try { 
+			JRTextExporter exporterTxt = new JRTextExporter();
+			exporterTxt.setParameter(JRExporterParameter.JASPER_PRINT, reportFilled);
+
+			exporterTxt.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, strOutputFileName );
+
+			exporterTxt.setParameter(JRTextExporterParameter.CHARACTER_WIDTH, new Integer(4));
+
+			exporterTxt.setParameter(JRTextExporterParameter.CHARACTER_HEIGHT, new Integer(12));
+
+			exporterTxt.setParameter(JRTextExporterParameter.BETWEEN_PAGES_TEXT, " ");
+
+			exporterTxt.exportReport();
+			JasperPrintManager.printReport(exporterTxt.getCurrentJasperPrint(), false);
+			//JasperExportManager.exportReportToPdfFile( reportFilled, destination );
 		}
 		catch( JRException ex ) {
 			ex.printStackTrace();

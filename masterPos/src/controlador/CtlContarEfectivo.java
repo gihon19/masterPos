@@ -24,11 +24,17 @@ public class CtlContarEfectivo implements ActionListener, KeyListener{
 	private BigDecimal cien=new BigDecimal(0.0);
 	private BigDecimal quinientos=new BigDecimal(0.0);
 
+	private boolean resultado;
+
 	public CtlContarEfectivo(ViewCuentaEfectivo v) {
 		// TODO Auto-generated constructor stub
 		view=v;
 		view.conectarControlador(this);
 		view.setVisible(true);
+	}
+	
+	public boolean getEstado(){
+		return resultado;
 	}
 
 	@Override
@@ -73,6 +79,8 @@ public class CtlContarEfectivo implements ActionListener, KeyListener{
 		
 		quinientos=new BigDecimal(view.getTxtQuiniento().getText());
 		total=total.add(quinientos.multiply(new BigDecimal(500)));
+		
+		this.resultado=true;
 		
 		view.setVisible(false);
 		

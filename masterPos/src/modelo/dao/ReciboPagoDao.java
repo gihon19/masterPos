@@ -13,7 +13,6 @@ import modelo.Cliente;
 import modelo.Conexion;
 import modelo.Factura;
 import modelo.ReciboPago;
-import modelo.SalidaCaja;
 
 public class ReciboPagoDao {
 	
@@ -49,11 +48,16 @@ public class ReciboPagoDao {
 			ClienteDao clienteDao= new ClienteDao(conexion);
 			myRecibo.setCliente(clienteDao.buscarCliente(myRecibo.getCliente().getId()));
 			
+			//se establece los saldo en 0
+			myRecibo.setSaldos0();
+			
 			//el salado anterio
-			myRecibo.setSaldoAnterior(new BigDecimal(myRecibo.getCliente().getSaldoCuenta().toString()));
+			myRecibo.setSaldoAnterior(clienteDao.getSaldoCliente(myRecibo.getCliente().getId()));
+			
 			//el saldo actural
 			myRecibo.setSaldo(myRecibo.getSaldoAnterior().subtract(myRecibo.getTotal()));
 			
+			//insertar=con.prepareStatement( "INSERT INTO recibo_pago(fecha,codigo_cliente,total_letras,total,concepto,usuario) VALUES (now(),?,?,?,?,?)");
 			insertar=con.prepareStatement( "INSERT INTO recibo_pago(fecha,codigo_cliente,total_letras,total,concepto,usuario,saldo_anterio,saldo) VALUES (now(),?,?,?,?,?,?,?)");
 			
 			insertar.setInt(1, myRecibo.getCliente().getId());
@@ -166,7 +170,7 @@ public class ReciboPagoDao {
 		
 		boolean existe=false;
 		try {
-			con = Conexion.getPoolConexion().getConnection();
+			con = conexion.getPoolConexion().getConnection();
 			
 			todos = con.prepareStatement(sql);
 			
@@ -243,7 +247,7 @@ public class ReciboPagoDao {
 		
 		boolean existe=false;
 		try {
-			con = Conexion.getPoolConexion().getConnection();
+			con = conexion.getPoolConexion().getConnection();
 			
 			todos = con.prepareStatement(sql);
 			
@@ -319,7 +323,7 @@ public class ReciboPagoDao {
 		
 		boolean existe=false;
 		try {
-			con = Conexion.getPoolConexion().getConnection();
+			con = conexion.getPoolConexion().getConnection();
 			
 			
 			todos = con.prepareStatement(sql);
@@ -368,7 +372,7 @@ public class ReciboPagoDao {
 			}
 			else return null;
 		}
-
+	
 	public void calcularTotalCierre(CierreCaja unaCierre) {
 		// TODO Auto-generated method stub
 

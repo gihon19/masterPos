@@ -205,7 +205,9 @@ public class FacturaDao {
 			
 			//si el cliente en escrito por el bombero
 			if(myFactura.getCliente().getId()<0){
-				myClienteDao.registrarCliente(myFactura.getCliente());
+				//myClienteDao.registrarCliente(myFactura.getCliente());
+				
+				myClienteDao.registrarClienteContado(myFactura.getCliente());
 				myFactura.getCliente().setId(myClienteDao.getIdClienteRegistrado());
 			}
 			conn=conexion.getPoolConexion().getConnection();
@@ -477,7 +479,7 @@ public class FacturaDao {
 		
         Connection con = null;
         
-    	String sql="SELECT "
+    	/*String sql="SELECT "
 				+ "encabezado_factura_temp.numero_factura, "
 				+ "DATE_FORMAT(encabezado_factura_temp.fecha, '%d/%m/%Y') as fecha,"
 				+ " encabezado_factura_temp.subtotal, "
@@ -491,7 +493,9 @@ public class FacturaDao {
 				+ "encabezado_factura_temp.descuento,"
 				+ "encabezado_factura_temp.pago, "
 				+ "encabezado_factura_temp.usuario "
-				+ "FROM encabezado_factura_temp";
+				+ "FROM encabezado_factura_temp";*/
+    	
+    	 String sql="select * from v_encabezado_factura_temp where usuario=?; ";
         //Statement stmt = null;
        	List<Factura> facturas=new ArrayList<Factura>();
 		
@@ -502,13 +506,17 @@ public class FacturaDao {
 			con = conexion.getPoolConexion().getConnection();
 			
 			seleccionarFacturasPendientes = con.prepareStatement(sql);
+			seleccionarFacturasPendientes.setString(1, conexion.getUsuarioLogin().getUser());
 			
 			res = seleccionarFacturasPendientes.executeQuery();
 			while(res.next()){
 				Factura unaFactura=new Factura();
 				existe=true;
 				unaFactura.setIdFactura(res.getInt("numero_factura"));
-				Cliente unCliente=myClienteDao.buscarCliente(res.getInt("codigo_cliente"));
+				
+				Cliente unCliente=new Cliente();//myClienteDao.buscarCliente(res.getInt("codigo_cliente"));
+				unCliente.setId(res.getInt("codigo_cliente"));
+				unCliente.setNombre(res.getString("nombre_cliente"));
 				
 				unaFactura.setCliente(unCliente);
 				
